@@ -1,22 +1,74 @@
+---
+// Propiedades para el layout
+interface Props {
+  title?: string;
+}
+
+// Determinar el idioma basado en la URL
+const { pathname } = Astro.url;
+const isSpanish = pathname.startsWith("/es/");
+const lang = isSpanish ? "es" : "en";
+
+// Título predeterminado si no se proporciona uno específico
+const {
+  title = isSpanish
+    ? "SIMG - Seminario de Investigación en Inteligencia Artificial"
+    : "SIMG - Artificial Intelligence Research Seminar",
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/jpg" href="/SIMG_LOGO.jpg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <!-- Agregar información para SEO y social media -->
+    <meta
+      name="description"
+      content={isSpanish
+        ? "Seminario de Investigación en Imágenes y Aprendizaje Automático de la Universidad Nacional de Colombia"
+        : "Image and Machine Learning Research Seminar at the National University of Colombia"}
+    />
+    <!-- Enlace para alternar idiomas para SEO -->
+    <link
+      rel="alternate"
+      hreflang={isSpanish ? "en" : "es"}
+      href={isSpanish
+        ? `https://tu-dominio.com${pathname.replace("/es", "")}`
+        : `https://tu-dominio.com/es${pathname}`}
+    />
+  </head>
+  <body>
+    <!-- Incluir el encabezado con selector de idioma -->
+    <slot name="header">
+      <!-- Se importa el encabezado que tiene el selector de idioma -->
+      <div id="header-placeholder"></div>
+    </slot>
+
+    <!-- Contenido principal -->
+    <slot />
+
+    <!-- Footer común para todas las páginas -->
+    <footer>
+      <p>
+        © {new Date().getFullYear()} SIMG - {
+          isSpanish
+            ? "Universidad Nacional de Colombia"
+            : "National University of Colombia"
+        }
+      </p>
+    </footer>
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
