@@ -18,7 +18,8 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     <section class="hero">
       <h1>Nuestro Equipo de Investigación</h1>
       <p class="lead">
-        Conoce a los investigadores, estudiantes y colaboradores que trabajan en el Seminario de Investigación SIMG
+        Conoce a los investigadores, estudiantes y colaboradores que trabajan en
+        el Seminario de Investigación SIMG
       </p>
     </section>
 
@@ -27,9 +28,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
         sortedMembers.map((member) => (
           <div class="member-card">
             <div class="member-image">
-              <img 
-                src={member.data.image || "/members/default-profile.jpg"} 
-                alt={member.data.name} 
+              <img
+                src={member.data.image || "/members/default-profile.jpg"}
+                alt={member.data.name}
               />
             </div>
             <div class="member-info">
@@ -37,12 +38,20 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
               <p class="position">{member.data.position}</p>
               <div class="member-links">
                 {member.data.email && (
-                  <a href={`mailto:${member.data.email}`} class="member-link email">
+                  <a
+                    href={`mailto:${member.data.email}`}
+                    class="member-link email"
+                  >
                     <span>Email</span>
                   </a>
                 )}
                 {member.data.website && (
-                  <a href={member.data.website} target="_blank" rel="noopener noreferrer" class="member-link website">
+                  <a
+                    href={member.data.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="member-link website"
+                  >
                     <span>Sitio Web</span>
                   </a>
                 )}
@@ -55,7 +64,10 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
 
     <section class="join-us">
       <h2>¿Interesado en unirte a nuestro equipo?</h2>
-      <p>Siempre estamos buscando investigadores y estudiantes talentosos para unirse a nuestro seminario.</p>
+      <p>
+        Siempre estamos buscando investigadores y estudiantes talentosos para
+        unirse a nuestro seminario.
+      </p>
       <a href="/es/contact" class="cta-button">Contáctanos</a>
     </section>
   </main>
@@ -98,7 +110,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .member-card:hover {
@@ -196,12 +210,12 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   .cta-button:hover {
     background-color: #005fa3;
   }
-  
+
   @media (max-width: 768px) {
     .members-grid {
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
-    
+
     .member-image {
       height: 200px;
     }

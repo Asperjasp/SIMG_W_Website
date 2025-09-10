@@ -22,7 +22,7 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/jpg" href="/SIMG_LOGO.jpg" />
+    <link rel="icon" type="image/x-icon" href="/website/SIMG_LOGO.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <!-- Agregar información para SEO y social media -->
@@ -37,9 +37,12 @@ const {
       rel="alternate"
       hreflang={isSpanish ? "en" : "es"}
       href={isSpanish
-        ? `https://tu-dominio.com${pathname.replace("/es", "")}`
-        : `https://tu-dominio.com/es${pathname}`}
+        ? `https://simg-seminar.com${pathname.replace("/es", "")}`
+        : `https://simg-seminar.com/es${pathname}`}
     />
+
+    <!-- Permitir insertar elementos adicionales en el head desde los componentes hijo -->
+    <slot name="head" />
   </head>
   <body>
     <!-- Incluir el encabezado con selector de idioma -->

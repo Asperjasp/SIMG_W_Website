@@ -6,19 +6,29 @@ const currentLanguage = isSpanish ? "es" : "en";
 
 // Función para traducir la ruta entre idiomas
 function getAlternateUrl(path: string, targetLang: string): string {
-  const currentLang = path.startsWith("/es/") ? "es" : "en";
+  const isSpanishPath = path.startsWith("/es/");
+  const isEnglishPath = path.startsWith("/en/");
+  const currentLang = isSpanishPath ? "es" : "en";
 
   if (currentLang === targetLang) return path;
 
-  // Si cambiamos de español a inglés, eliminamos el prefijo '/es/'
+  // Si cambiamos de español a inglés
   if (currentLang === "es" && targetLang === "en") {
-    return path.replace("/es/", "/");
+    // Reemplazamos /es/ por /en/
+    return path.replace("/es/", "/en/");
   }
 
-  // Si cambiamos de inglés a español, añadimos el prefijo '/es/'
+  // Si cambiamos de inglés a español
   if (currentLang === "en" && targetLang === "es") {
-    // Manejamos la página principal
+    // Si estamos en la página principal
     if (path === "/") return "/es/";
+
+    // Si la ruta comienza con /en/
+    if (isEnglishPath) {
+      return path.replace("/en/", "/es/");
+    }
+
+    // Para otras rutas en inglés, añadimos el prefijo /es
     return "/es" + path;
   }
 
@@ -29,7 +39,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
 <!-- Header con selector de idioma -->
 <header class="header">
   <div class="logo">
-    <img src="website/SIMG_LOGO.jpg" alt="SIMG Logo" width="50" height="50" />
+    <img src="/website/SIMG_LOGO.jpg" alt="SIMG Logo" width="50" height="50" />
     <h1>SIMG Seminar</h1>
   </div>
   <nav>

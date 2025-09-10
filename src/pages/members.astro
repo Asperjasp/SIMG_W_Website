@@ -1,9 +1,9 @@
 ---
 // Redireccionar a la versión en inglés por defecto
-import { getLanguageFromURL } from '../utils/i18n.js';
+import { getLanguageFromURL } from "../utils/i18n.js";
 
-const lang = getLanguageFromURL(Astro.url.pathname) || 'en';
-const destination = lang === 'es' ? '/es/members' : '/en/members';
+const lang = getLanguageFromURL(Astro.url.pathname) || "en";
+const destination = lang === "es" ? "/es/members" : "/en/members";
 ---
 
 <meta http-equiv="refresh" content={`0;url=${destination}`} />
@@ -11,4 +11,3 @@ const destination = lang === 'es' ? '/es/members' : '/en/members';
 <script define:vars={{ destination }}>
   window.location.href = destination;
 </script>
-    
