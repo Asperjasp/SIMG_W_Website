@@ -53,62 +53,44 @@ function getAlternateUrl(path: string, targetLang: string): string {
       {isSpanish ? "Miembros" : "Members"}
     </a>
     <a
-      href={isSpanish ? "/es/contact" : "/en_contact"}
+      href={isSpanish ? "/es/contact" : "/en/contact"}
       class={currentPath.includes("contact") ? "active" : ""}
     >
       {isSpanish ? "Contacto" : "Contact"}
     </a>
 
-    <!-- Selector de idioma con ícono de esfera global -->
+    <!-- Selector de idioma con ícono de mundo -->
     <div class="language-selector">
-      <a
-        href={getAlternateUrl(currentPath, "en")}
-        class={currentLanguage === "en" ? "active" : ""}
-        title="English"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"></circle>
-          <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5"
-          ></path>
-        </svg>
-        EN
-      </a>
-      <a
-        href={getAlternateUrl(currentPath, "es")}
-        class={currentLanguage === "es" ? "active" : ""}
-        title="Español"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="2"
-            fill="none"></circle>
-          <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5"
-          ></path>
-        </svg>
-        ES
-      </a>
+      <div class="language-dropdown">
+        <button class="language-button" aria-label="Select Language">
+          <img
+            src="/website/world.png"
+            alt="Language Selection"
+            width="24"
+            height="24"
+            class="world-icon"
+          />
+          <span class="current-lang"
+            >{currentLanguage === "en" ? "EN" : "ES"}</span
+          >
+        </button>
+        <div class="language-dropdown-content">
+          <a
+            href={getAlternateUrl(currentPath, "en")}
+            class={currentLanguage === "en" ? "active" : ""}
+            title="English"
+          >
+            English
+          </a>
+          <a
+            href={getAlternateUrl(currentPath, "es")}
+            class={currentLanguage === "es" ? "active" : ""}
+            title="Español"
+          >
+            Español
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
@@ -157,20 +139,106 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .language-selector {
-    display: flex;
-    gap: 0.5rem;
     margin-left: 1rem;
     border-left: 1px solid #ddd;
     padding-left: 1rem;
+    position: relative;
   }
 
-  .language-selector a {
+  .language-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .language-button {
+    background: none;
+    border: none;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.3s;
   }
 
-  .language-selector svg {
+  .language-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .world-icon {
     vertical-align: middle;
   }
+
+  .current-lang {
+    font-size: 0.9rem;
+  }
+
+  .language-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .language-dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.2s;
+  }
+
+  .language-dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .language-dropdown-content a.active {
+    color: #0077cc;
+    font-weight: bold;
+  }
+
+  .language-dropdown:hover .language-dropdown-content {
+    display: block;
+  }
 </style>
+
+<script>
+  // Script para manejar el menú de idiomas en dispositivos táctiles
+  document.addEventListener("DOMContentLoaded", () => {
+    const langButton = document.querySelector(
+      ".language-button"
+    ) as HTMLElement;
+    const langDropdown = document.querySelector(
+      ".language-dropdown-content"
+    ) as HTMLElement;
+
+    if (langButton && langDropdown) {
+      langButton.addEventListener("click", (e: Event) => {
+        e.preventDefault();
+        langDropdown.style.display =
+          langDropdown.style.display === "block" ? "none" : "block";
+      });
+
+      // Cerrar el menú si se hace clic fuera
+      document.addEventListener("click", (e: MouseEvent) => {
+        const target = e.target as Node;
+        if (
+          langButton &&
+          !langButton.contains(target) &&
+          !langDropdown.contains(target)
+        ) {
+          langDropdown.style.display = "none";
+        }
+      });
+    }
+  });
+</script>

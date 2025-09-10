@@ -3,22 +3,22 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import { getCollection } from "astro:content";
 
-// Obtener miembros en español
+// Obtener miembros en inglés
 const allMembers = await getCollection("members", ({ data }) => {
-  return data.lang === "es";
+  return data.lang === "en";
 });
 
 // Ordenar por el campo order
 const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title="Miembros | SIMG">
+<Layout title="Members | SIMG">
   <Header slot="header" />
   <main class="container">
     <section class="hero">
-      <h1>Nuestro Equipo de Investigación</h1>
+      <h1>Our Research Team</h1>
       <p class="lead">
-        Conoce a los investigadores, estudiantes y colaboradores que trabajan en el Seminario de Investigación SIMG
+        Meet the researchers, students, and collaborators working at SIMG Research Seminar
       </p>
     </section>
 
@@ -43,7 +43,7 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
                 )}
                 {member.data.website && (
                   <a href={member.data.website} target="_blank" rel="noopener noreferrer" class="member-link website">
-                    <span>Sitio Web</span>
+                    <span>Website</span>
                   </a>
                 )}
               </div>
@@ -54,9 +54,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     </section>
 
     <section class="join-us">
-      <h2>¿Interesado en unirte a nuestro equipo?</h2>
-      <p>Siempre estamos buscando investigadores y estudiantes talentosos para unirse a nuestro seminario.</p>
-      <a href="/es/contact" class="cta-button">Contáctanos</a>
+      <h2>Interested in joining our team?</h2>
+      <p>We're always looking for talented researchers and students to join our seminar.</p>
+      <a href="/en/contact" class="cta-button">Contact Us</a>
     </section>
   </main>
 </Layout>

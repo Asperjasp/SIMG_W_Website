@@ -1,16 +1,55 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout title="Inicio | SIMG">
-  <main>
-    <h1>Bienvenido al Seminario SIMG</h1>
+  <Header slot="header" />
+  <main class="container">
+    <h1>Desarrollando Potencial</h1>
     <p>
-      Esta es la página de inicio en español del Seminario de Imágenes SIMG.
+      Esta es la página de inicio del SIMG - Seminario de Investigación en
+      Inteligencia Artificial.
     </p>
     <p>
-      Aquí puedes encontrar información sobre nuestras investigaciones, miembros
-      y actividades.
+      Ubicado en el corazón de la innovación en Colombia en la Universidad
+      Nacional de Colombia - UNAL, SIMG es una comunidad de investigadores,
+      académicos y entusiastas dedicados a explorar y avanzar en el campo de la
+      inteligencia artificial (IA), teoría de la información y aprendizaje
+      automático, comprometidos con la excelencia y la innovación.
     </p>
+
+    <button class="cta-button">Leer Más</button>
   </main>
 </Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta-button {
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .cta-button:hover {
+    background-color: #005fa3;
+  }
+</style>
