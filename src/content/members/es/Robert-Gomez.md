@@ -1,7 +1,7 @@
 ---
 name: "Robert Gomez"
 position: "Investigador Principal, CTO AI Medic"
-email: ""
+email: "jrgomezp@gmail.com"
 website: "https://example.com/rgomez"
 image: "/members/Robert-Gomez.jpeg"
 order: 2
