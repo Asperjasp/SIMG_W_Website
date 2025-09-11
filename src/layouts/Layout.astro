@@ -1,6 +1,7 @@
 ---
 // Propiedades para el layout
 import Footer from "../components/Footer.astro";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
@@ -24,7 +25,7 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/x-icon" href="/website/SIMG_LOGO.ico" />
+    <link rel="icon" type="image/x-icon" href="/images/website/SIMG_LOGO.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <!-- Agregar información para SEO y social media -->

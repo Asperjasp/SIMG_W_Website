@@ -1,0 +1,296 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+---
+
+<Layout title="Grabaciones de Sesiones | SIMG">
+  <Header slot="header" />
+  <main>
+    <h1>Grabaciones de Sesiones</h1>
+
+    <section class="intro-section">
+      <p>
+        Accede a las grabaciones de nuestras sesiones anteriores para ponerte al
+        día con el contenido perdido o repasar temas importantes. Todas las
+        grabaciones están disponibles exclusivamente para miembros del SIMG y
+        estudiantes registrados.
+      </p>
+    </section>
+
+    <section class="recordings-section">
+      <h2>Grabaciones Recientes</h2>
+
+      <div class="recording-card">
+        <div class="recording-info">
+          <h3>Introducción a Redes Neuronales para NLP</h3>
+          <p class="date">27 de octubre, 2023</p>
+          <p class="description">
+            Esta sesión cubre conceptos fundamentales de redes neuronales y su
+            aplicación en el procesamiento del lenguaje natural. Exploramos
+            embeddings de palabras y arquitecturas básicas para el procesamiento
+            de texto.
+          </p>
+          <div class="tags">
+            <span>NLP</span>
+            <span>Redes Neuronales</span>
+            <span>Embeddings</span>
+          </div>
+        </div>
+        <div class="recording-link">
+          <a href="#" class="watch-button">Ver Grabación</a>
+          <p class="duration">Duración: 1:45:30</p>
+        </div>
+      </div>
+
+      <div class="recording-card">
+        <div class="recording-info">
+          <h3>Análisis Profundo de la Arquitectura Transformer</h3>
+          <p class="date">20 de octubre, 2023</p>
+          <p class="description">
+            Una exploración completa de la arquitectura transformer, incluyendo
+            mecanismos de atención, codificación posicional y la estructura del
+            codificador-decodificador.
+          </p>
+          <div class="tags">
+            <span>Transformers</span>
+            <span>Mecanismos de Atención</span>
+          </div>
+        </div>
+        <div class="recording-link">
+          <a href="#" class="watch-button">Ver Grabación</a>
+          <p class="duration">Duración: 1:52:15</p>
+        </div>
+      </div>
+
+      <div class="recording-card">
+        <div class="recording-info">
+          <h3>Técnicas de Fine-tuning para Modelos Generativos</h3>
+          <p class="date">13 de octubre, 2023</p>
+          <p class="description">
+            Aprende sobre técnicas avanzadas para el ajuste fino de modelos de
+            lenguaje grandes y sistemas de IA generativa para tareas y dominios
+            específicos.
+          </p>
+          <div class="tags">
+            <span>Fine-tuning</span>
+            <span>LLMs</span>
+            <span>Transfer Learning</span>
+          </div>
+        </div>
+        <div class="recording-link">
+          <a href="#" class="watch-button">Ver Grabación</a>
+          <p class="duration">Duración: 1:38:45</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="archive-section">
+      <h2>Archivo</h2>
+      <p>
+        ¿Buscando grabaciones más antiguas? Consulta nuestro archivo completo
+        organizado por semestres.
+      </p>
+
+      <div class="archive-links">
+        <a href="#" class="archive-link">Sesiones 2023-1</a>
+        <a href="#" class="archive-link">Sesiones 2022-2</a>
+      </div>
+    </section>
+
+    <section class="access-info">
+      <h2>Información de Acceso</h2>
+      <p>
+        Para acceder a las grabaciones, necesitas ser un miembro registrado del
+        SIMG. Por favor, contáctanos si tienes problemas para acceder al
+        contenido.
+      </p>
+      <a href="#" class="access-button">Solicitar Acceso</a>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+  }
+
+  h2 {
+    color: #3498db;
+    margin: 2rem 0 1rem;
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin: 0 0 0.75rem;
+    font-size: 1.4rem;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .intro-section {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .recordings-section {
+    margin-bottom: 3rem;
+  }
+
+  .recording-card {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .recording-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .recording-info {
+    flex: 3;
+    padding-right: 1.5rem;
+  }
+
+  .recording-link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid #e0e0e0;
+    padding-left: 1.5rem;
+  }
+
+  .date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    margin-bottom: 1rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tags span {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .watch-button {
+    background-color: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .watch-button:hover {
+    background-color: #2980b9;
+  }
+
+  .duration {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    text-align: center;
+  }
+
+  .archive-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .archive-link {
+    display: inline-block;
+    background-color: #f1f5f9;
+    color: #3498db;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+
+  .archive-link:hover {
+    background-color: #e0f2fe;
+  }
+
+  .access-info {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .access-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+  }
+
+  .access-button:hover {
+    background-color: #2980b9;
+  }
+
+  @media (max-width: 768px) {
+    .recording-card {
+      flex-direction: column;
+    }
+
+    .recording-link {
+      border-left: none;
+      border-top: 1px solid #e0e0e0;
+      padding-left: 0;
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+    }
+  }
+</style>

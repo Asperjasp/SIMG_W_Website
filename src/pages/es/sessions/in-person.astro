@@ -1,0 +1,239 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+---
+
+<Layout title="Sesiones Presenciales | SIMG">
+  <Header slot="header" />
+  <main>
+    <h1>Sesiones Presenciales</h1>
+
+    <section class="session-section">
+      <h2>Clases de Viernes (2:00 PM - 4:00 PM)</h2>
+      <p>
+        Nuestras sesiones de los viernes están dedicadas a la exploración en
+        profundidad de temas clave:
+      </p>
+      <ul>
+        <li>Embeddings</li>
+        <li>Transformers (por ejemplo, construyendo un transformer juntos)</li>
+        <li>
+          Abordando un tema único y particular que se correlaciona con otros
+          temas.
+        </li>
+      </ul>
+
+      <div class="location-info">
+        <h3>Lugar de Encuentro</h3>
+        <p>
+          Nuestras reuniones tienen lugar en la Universidad Nacional de
+          Colombia, sede Bogotá.
+        </p>
+        <p>Edificio: Facultad de Ingeniería</p>
+        <p>
+          <strong>Nota:</strong> Por favor, revisa nuestras redes sociales para cualquier
+          cambio en la ubicación o el horario de las reuniones.
+        </p>
+      </div>
+    </section>
+
+    <section class="session-section">
+      <h2>Próximas Sesiones</h2>
+      <div class="upcoming-session">
+        <h3>Próxima Sesión: Introducción a los Transformers</h3>
+        <p><strong>Fecha:</strong> Viernes, 10 de noviembre de 2023</p>
+        <p><strong>Hora:</strong> 2:00 PM - 4:00 PM</p>
+        <p>
+          <strong>Descripción:</strong> En esta sesión, exploraremos los fundamentos
+          de la arquitectura transformer y sus aplicaciones en el NLP moderno.
+        </p>
+      </div>
+    </section>
+
+    <section class="session-section">
+      <h2>Lineamientos para las Sesiones</h2>
+      <ul>
+        <li>
+          Las sesiones están abiertas a todos los estudiantes e investigadores
+          interesados en modelos generativos.
+        </li>
+        <li>Trae tu laptop para los ejercicios prácticos.</li>
+        <li>Se recomienda un conocimiento básico de programación en Python.</li>
+        <li>
+          Se fomenta la participación y las preguntas durante las sesiones.
+        </li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #7dc8ff);
+    border-radius: 2px;
+  }
+
+  .session-section {
+    margin-bottom: 3rem;
+    background: linear-gradient(to bottom, #ffffff, #f0f7ff);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #3498db;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .session-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(
+      circle,
+      rgba(52, 152, 219, 0.1) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  h2 {
+    color: #2980b9;
+    margin-bottom: 1.5rem;
+    font-size: 1.9rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+
+  h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, transparent);
+    border-radius: 3px;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin: 1.5rem 0 0.8rem;
+    font-size: 1.5rem;
+  }
+
+  p {
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+    color: #34495e;
+  }
+
+  ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.7;
+  }
+
+  li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 0.5rem;
+  }
+
+  li::marker {
+    color: #3498db;
+    font-size: 1.2em;
+  }
+
+  .location-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-left: 4px solid #3498db;
+    background: linear-gradient(
+      135deg,
+      rgba(52, 152, 219, 0.15),
+      rgba(125, 200, 255, 0.1)
+    );
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .location-info::before {
+    content: "📍";
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    font-size: 24px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .upcoming-session {
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(to right, #ffffff, #f0f7ff);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid #3498db;
+  }
+
+  .upcoming-session::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #3498db, #7dc8ff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+
+  .upcoming-session:hover::after {
+    transform: scaleX(1);
+  }
+
+  .upcoming-session h3 {
+    color: #3498db;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(52, 152, 219, 0.2);
+    font-size: 1.5rem;
+  }
+</style>

@@ -155,63 +155,135 @@ const t = {
   .hero {
     margin-bottom: 4rem;
     text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
   }
 
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: #2c3e50;
+    position: relative;
+    display: inline-block;
+  }
+
+  h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #7dc8ff);
+    border-radius: 2px;
   }
 
   .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: #34495e;
     max-width: 800px;
-    margin: 0 auto 1rem;
+    margin: 1.5rem auto 1rem;
+    line-height: 1.6;
   }
 
   .rss-link {
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .rss-button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #f26522;
+    background: linear-gradient(135deg, #f26522, #e74c0e);
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
     text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(242, 101, 34, 0.3);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .rss-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e74c0e, #d04009);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
   }
 
   .rss-button:hover {
-    background-color: #e74c0e;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(242, 101, 34, 0.4);
+  }
+
+  .rss-button:hover::after {
+    opacity: 1;
   }
 
   .rss-icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
   }
 
   .rss-tip {
     display: block;
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    color: #666;
+    margin-top: 1.2rem;
+    font-size: 0.95rem;
+    color: #34495e;
     font-style: italic;
+    line-height: 1.5;
+    padding: 0.8rem;
+    background-color: white;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
   }
 
   .rss-tip a {
     color: #f26522;
-    text-decoration: underline;
-    transition: color 0.2s;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-bottom: 1px dotted #f26522;
+    padding-bottom: 1px;
   }
 
   .rss-tip a:hover {
     color: #e74c0e;
+    border-bottom: 1px solid #e74c0e;
   }
 
   section {
@@ -232,33 +304,79 @@ const t = {
   }
 
   .project-card {
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
+    border: none;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
+    position: relative;
+    background-color: #ffffff;
+    border-top: 5px solid #3498db;
   }
 
   .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-7px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .project-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #7dc8ff);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 
   .project-image {
-    height: 160px;
+    height: 180px;
     overflow: hidden;
+    position: relative;
+  }
+
+  .project-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(52, 152, 219, 0.2), transparent);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .project-card:hover .project-image::before {
+    opacity: 1;
   }
 
   .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
   }
 
   .project-content {
-    padding: 1rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    position: relative;
   }
 
   .project-status {
@@ -267,26 +385,50 @@ const t = {
 
   .status-badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 2rem;
     font-size: 0.8rem;
     font-weight: bold;
     text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .status-badge::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .status-badge:hover::after {
+    transform: translateX(100%);
   }
 
   .status-badge.active {
-    background-color: #d4edda;
-    color: #155724;
+    background: linear-gradient(135deg, #20bf6b, #0fb9b1);
+    color: white;
   }
 
   .status-badge.completed {
-    background-color: #cce5ff;
-    color: #004085;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
   }
 
   .status-badge.planned {
-    background-color: #fff3cd;
-    color: #856404;
+    background: linear-gradient(135deg, #f7b731, #fa8231);
+    color: white;
   }
 
   .project-title {
@@ -301,19 +443,48 @@ const t = {
 
   .button {
     display: inline-block;
-    padding: 0.4rem 0.8rem;
-    background-color: #0077cc;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 5px;
     font-weight: 500;
-    transition: background-color 0.3s;
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(41, 128, 185, 0.2);
+    z-index: 1;
+  }
+
+  .button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2980b9, #1a5fb4);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: -1;
   }
 
   .button:hover {
-    background-color: #005fa3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.3);
+  }
+
+  .button:hover::before {
+    opacity: 1;
+  }
+
+  .button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(41, 128, 185, 0.2);
   }
 
   .publications-list {
@@ -323,20 +494,73 @@ const t = {
   }
 
   .publication-item {
-    padding: 1.5rem;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    position: relative;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    border-left: 5px solid #3498db;
+  }
+
+  .publication-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .publication-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    background: linear-gradient(90deg, #3498db, #7dc8ff);
+    opacity: 0.7;
+    transition: height 0.3s ease;
+    border-radius: 10px 10px 0 0;
+    z-index: 0;
+  }
+
+  .publication-item:hover::before {
+    height: 5px;
+  }
+
+  .publication-item h3 {
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.75rem;
+    margin-top: 0;
+    z-index: 1;
+  }
+
+  .publication-item h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #7dc8ff);
   }
 
   .publication-meta {
-    margin: 1rem 0;
-    font-size: 0.9rem;
-    color: #555;
+    margin: 1.25rem 0;
+    font-size: 0.95rem;
+    color: #34495e;
+    background-color: rgba(52, 152, 219, 0.05);
+    padding: 1rem;
+    border-radius: 5px;
+    border-left: 3px solid #3498db;
   }
 
   .publication-abstract {
-    margin-bottom: 1rem;
-    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    color: #444;
+    font-size: 1.05rem;
   }
 </style>

@@ -61,6 +61,28 @@ function getAlternateUrl(path: string, targetLang: string): string {
     >
       {isSpanish ? "Investigación" : "Research"}
     </a>
+    <!-- Menú desplegable Sesiones -->
+    <div class="dropdown">
+      <button class="dropbtn">{isSpanish ? "Sesiones" : "Sessions"}</button>
+      <div class="dropdown-content">
+        <a
+          href={isSpanish ? "/es/sessions/in-person" : "/en/sessions/in-person"}
+          >{isSpanish ? "Presencial" : "In Person"}</a
+        >
+        <a
+          href={isSpanish
+            ? "/es/sessions/recordings"
+            : "/en/sessions/recordings"}
+          >{isSpanish ? "Grabaciones" : "Recordings"}</a
+        >
+        <a
+          href={isSpanish
+            ? "/es/sessions/support-material"
+            : "/en/sessions/support-material"}
+          >{isSpanish ? "Material de apoyo" : "Support material"}</a
+        >
+      </div>
+    </div>
     <a
       href={isSpanish ? "/es/members" : "/members"}
       class={currentPath.includes("members") ? "active" : ""}
@@ -158,6 +180,61 @@ function getAlternateUrl(path: string, targetLang: string): string {
     border-left: 1px solid #ddd;
     padding-left: 1rem;
     position: relative;
+  }
+
+  /* Estilos para el menú desplegable Sesiones */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropbtn {
+    background-color: #0077cc;
+    color: white;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+
+  .dropbtn:hover {
+    background-color: #005fa3;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    right: 0;
+  }
+
+  .dropdown-content a {
+    color: #0077cc;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+    font-weight: 500;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #e6f0fa;
+    color: #005fa3;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
 
   .language-dropdown {

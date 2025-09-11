@@ -1,0 +1,238 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+---
+
+<Layout title="In-Person Sessions | SIMG">
+  <Header slot="header" />
+  <main>
+    <h1>In-Person Sessions</h1>
+
+    <section class="session-section">
+      <h2>Friday Classes (2:00 PM - 4:00 PM)</h2>
+      <p>
+        Our Friday sessions are dedicated to in-depth exploration of key topics:
+      </p>
+      <ul>
+        <li>Embeddings</li>
+        <li>Transformers (e.g., building a transformer together)</li>
+        <li>
+          Addressing a single, particular topic that is correlated with other
+          subjects.
+        </li>
+      </ul>
+
+      <div class="location-info">
+        <h3>Meeting Location</h3>
+        <p>
+          Our meetings take place at the National University of Colombia, Bogotá
+          campus.
+        </p>
+        <p>Building: Faculty of Engineering</p>
+        <p>
+          <strong>Note:</strong> Please check our social media for any changes to
+          meeting location or schedule.
+        </p>
+      </div>
+    </section>
+
+    <section class="session-section">
+      <h2>Upcoming Sessions</h2>
+      <div class="upcoming-session">
+        <h3>Next Session: Introduction to Transformers</h3>
+        <p><strong>Date:</strong> Friday, November 10, 2023</p>
+        <p><strong>Time:</strong> 2:00 PM - 4:00 PM</p>
+        <p>
+          <strong>Description:</strong> In this session, we will explore the fundamentals
+          of transformer architecture and its applications in modern NLP.
+        </p>
+      </div>
+    </section>
+
+    <section class="session-section">
+      <h2>Session Guidelines</h2>
+      <ul>
+        <li>
+          Sessions are open to all students and researchers interested in
+          generative models.
+        </li>
+        <li>Bring your laptop for practical exercises.</li>
+        <li>Basic knowledge of Python programming is recommended.</li>
+        <li>
+          Questions and participation are encouraged throughout the sessions.
+        </li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #7dc8ff);
+    border-radius: 2px;
+  }
+
+  .session-section {
+    margin-bottom: 3rem;
+    background: linear-gradient(to bottom, #ffffff, #f0f7ff);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #3498db;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .session-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(
+      circle,
+      rgba(52, 152, 219, 0.1) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  h2 {
+    color: #2980b9;
+    margin-bottom: 1.5rem;
+    font-size: 1.9rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+
+  h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, transparent);
+    border-radius: 3px;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin: 1.5rem 0 0.8rem;
+    font-size: 1.5rem;
+  }
+
+  p {
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+    color: #34495e;
+  }
+
+  ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.7;
+  }
+
+  li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 0.5rem;
+  }
+
+  li::marker {
+    color: #3498db;
+    font-size: 1.2em;
+  }
+
+  .location-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-left: 4px solid #3498db;
+    background: linear-gradient(
+      135deg,
+      rgba(52, 152, 219, 0.15),
+      rgba(125, 200, 255, 0.1)
+    );
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .location-info::before {
+    content: "📍";
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    font-size: 24px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .upcoming-session {
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(to right, #ffffff, #f0f7ff);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid #3498db;
+  }
+
+  .upcoming-session::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #3498db, #7dc8ff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+
+  .upcoming-session:hover::after {
+    transform: scaleX(1);
+  }
+
+  .upcoming-session h3 {
+    color: #3498db;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(52, 152, 219, 0.2);
+    font-size: 1.5rem;
+  }
+</style>

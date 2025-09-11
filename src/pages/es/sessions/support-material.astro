@@ -1,0 +1,471 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+---
+
+<Layout title="Material de Apoyo | SIMG">
+  <Header slot="header" />
+  <main>
+    <h1>Material de Apoyo</h1>
+
+    <section class="intro-section">
+      <p>
+        Esta página proporciona acceso a materiales complementarios para mejorar
+        tu experiencia de aprendizaje. Estos recursos están diseñados para
+        complementar nuestras sesiones y proporcionar información adicional
+        sobre modelos generativos y temas relacionados.
+      </p>
+    </section>
+
+    <section class="materials-section">
+      <h2>Materiales del Curso</h2>
+
+      <div class="material-category">
+        <h3>Diapositivas de Clases</h3>
+        <div class="material-cards">
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+                ></path><polyline points="13 2 13 9 20 9"></polyline></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Introducción al NLP</h4>
+              <p class="material-description">
+                Conceptos básicos e historia del Procesamiento del Lenguaje
+                Natural
+              </p>
+              <a href="#" class="material-link">Descargar PDF</a>
+            </div>
+          </div>
+
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+                ></path><polyline points="13 2 13 9 20 9"></polyline></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Arquitectura de Transformers</h4>
+              <p class="material-description">
+                Análisis profundo de modelos transformer y mecanismos de
+                atención
+              </p>
+              <a href="#" class="material-link">Descargar PDF</a>
+            </div>
+          </div>
+
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+                ></path><polyline points="13 2 13 9 20 9"></polyline></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Técnicas de Fine-tuning</h4>
+              <p class="material-description">
+                Métodos avanzados para adaptar modelos pre-entrenados
+              </p>
+              <a href="#" class="material-link">Descargar PDF</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="material-category">
+        <h3>Ejemplos de Código</h3>
+        <div class="material-cards">
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M8 3v4a2 2 0 0 1-2 2H2"></path><path
+                  d="M2 17v.5A2.5 2.5 0 0 0 4.5 20h15a2.5 2.5 0 0 0 2.5-2.5V5A2.5 2.5 0 0 0 19.5 2.5H8.5"
+                ></path><path d="M12 11v8"></path><path d="M8 15l4-4 4 4"
+                ></path></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Notebook Básico de PyTorch</h4>
+              <p class="material-description">
+                Introducción a PyTorch para deep learning
+              </p>
+              <a href="#" class="material-link">Descargar Notebook</a>
+            </div>
+          </div>
+
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M8 3v4a2 2 0 0 1-2 2H2"></path><path
+                  d="M2 17v.5A2.5 2.5 0 0 0 4.5 20h15a2.5 2.5 0 0 0 2.5-2.5V5A2.5 2.5 0 0 0 19.5 2.5H8.5"
+                ></path><path d="M12 11v8"></path><path d="M8 15l4-4 4 4"
+                ></path></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Implementación de LSTM</h4>
+              <p class="material-description">
+                Implementación paso a paso de redes LSTM
+              </p>
+              <a href="#" class="material-link">Descargar Notebook</a>
+            </div>
+          </div>
+
+          <div class="material-card">
+            <div class="material-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M8 3v4a2 2 0 0 1-2 2H2"></path><path
+                  d="M2 17v.5A2.5 2.5 0 0 0 4.5 20h15a2.5 2.5 0 0 0 2.5-2.5V5A2.5 2.5 0 0 0 19.5 2.5H8.5"
+                ></path><path d="M12 11v8"></path><path d="M8 15l4-4 4 4"
+                ></path></svg
+              >
+            </div>
+            <div class="material-info">
+              <h4>Transformer desde Cero</h4>
+              <p class="material-description">
+                Construyendo un modelo transformer desde cero en PyTorch
+              </p>
+              <a href="#" class="material-link">Descargar Notebook</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="references-section">
+      <h2>Lecturas Recomendadas</h2>
+
+      <div class="reference-list">
+        <div class="reference-item">
+          <h4>"Attention Is All You Need" (Vaswani et al., 2017)</h4>
+          <p>El paper original sobre transformers que revolucionó el NLP.</p>
+          <a
+            href="https://arxiv.org/abs/1706.03762"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="reference-link">Ver Paper</a
+          >
+        </div>
+
+        <div class="reference-item">
+          <h4>
+            "BERT: Pre-training of Deep Bidirectional Transformers for Language
+            Understanding" (Devlin et al., 2018)
+          </h4>
+          <p>
+            Introducción al modelo BERT que avanzó el estado del arte en muchas
+            tareas de NLP.
+          </p>
+          <a
+            href="https://arxiv.org/abs/1810.04805"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="reference-link">Ver Paper</a
+          >
+        </div>
+
+        <div class="reference-item">
+          <h4>"Language Models are Few-Shot Learners" (Brown et al., 2020)</h4>
+          <p>
+            El paper de GPT-3 que explora las capacidades de los modelos de
+            lenguaje grandes.
+          </p>
+          <a
+            href="https://arxiv.org/abs/2005.14165"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="reference-link">Ver Paper</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="tools-section">
+      <h2>Herramientas Útiles</h2>
+      <p>
+        Aquí hay algunas herramientas y recursos que pueden ayudarte en tu
+        trabajo de investigación y desarrollo:
+      </p>
+
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h4>Hugging Face Transformers</h4>
+          <p>
+            Biblioteca que proporciona miles de modelos pre-entrenados para
+            tareas de NLP.
+          </p>
+          <a
+            href="https://huggingface.co/transformers/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tool-link">Visitar Sitio Web</a
+          >
+        </div>
+
+        <div class="tool-card">
+          <h4>PyTorch Lightning</h4>
+          <p>
+            Wrapper ligero de PyTorch para investigación en IA de alto
+            rendimiento.
+          </p>
+          <a
+            href="https://www.pytorchlightning.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tool-link">Visitar Sitio Web</a
+          >
+        </div>
+
+        <div class="tool-card">
+          <h4>Weights & Biases</h4>
+          <p>
+            Plataforma MLOps para seguimiento y visualización de experimentos.
+          </p>
+          <a
+            href="https://wandb.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tool-link">Visitar Sitio Web</a
+          >
+        </div>
+
+        <div class="tool-card">
+          <h4>Papers With Code</h4>
+          <p>
+            Recurso gratuito de papers de ML con implementaciones de código.
+          </p>
+          <a
+            href="https://paperswithcode.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tool-link">Visitar Sitio Web</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+  }
+
+  h2 {
+    color: #3498db;
+    margin: 2.5rem 0 1.5rem;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin: 1.5rem 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+    color: #2c3e50;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .intro-section {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .material-category {
+    margin-bottom: 2.5rem;
+  }
+
+  .material-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .material-card {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    background-color: white;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .material-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .material-icon {
+    margin-right: 1rem;
+    color: #3498db;
+    flex-shrink: 0;
+  }
+
+  .material-info {
+    flex-grow: 1;
+  }
+
+  .material-description {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    color: #666;
+  }
+
+  .material-link,
+  .reference-link,
+  .tool-link {
+    display: inline-block;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .material-link:hover,
+  .reference-link:hover,
+  .tool-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
+  .reference-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .reference-item {
+    padding: 1.25rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  .reference-item h4 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .tool-card h4 {
+    margin-bottom: 0.75rem;
+    color: #3498db;
+  }
+
+  @media (max-width: 768px) {
+    .material-cards,
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
