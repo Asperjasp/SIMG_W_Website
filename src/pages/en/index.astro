@@ -18,7 +18,7 @@ import SponsorCarousel from "../../components/SponsorCarousel.astro";
           information theory, and machine learning, committed to excellence and
           innovation.
         </p>
-        <button class="cta-button">Read More</button>
+        <a href="/en/about" class="cta-button">Read More</a>
       </div>
       <div class="hero-image">
         <img src="/images/website/SIMG-semillero.png" alt="SIMG Seminar" />
@@ -97,6 +97,8 @@ import SponsorCarousel from "../../components/SponsorCarousel.astro";
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: inline-block;
+    text-decoration: none;
   }
 
   .cta-button:hover {

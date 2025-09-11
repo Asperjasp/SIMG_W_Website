@@ -22,7 +22,7 @@ import SponsorCarousel from "../../components/SponsorCarousel.astro";
           información y aprendizaje automático, comprometidos con la excelencia
           y la innovación.
         </p>
-        <button class="cta-button">Leer Más</button>
+        <a href="/es/about" class="cta-button">Leer Más</a>
       </div>
       <div class="hero-image">
         <img src="/images/website/SIMG-semillero.png" alt="SIMG Semillero" />
@@ -101,6 +101,8 @@ import SponsorCarousel from "../../components/SponsorCarousel.astro";
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: inline-block;
+    text-decoration: none;
   }
 
   .cta-button:hover {
