@@ -3,164 +3,141 @@
 const { pathname } = Astro.url;
 const isSpanish = pathname.startsWith("/es/");
 
-// Lista de patrocinadores para el carrusel
+// Lista de patrocinadores principales
 const sponsors = [
   {
     name: "Universidad Nacional de Colombia",
-    logo: "/images/website/UNAL.png", // Verificada la ruta correcta
+    logo: "/images/website/UNAL.png",
     url: "https://unal.edu.co/",
-    logoClass: "unal-logo", // Clase especial para el logo de UNAL
+    logoClass: "unal-logo",
   },
   // Aquí se pueden añadir más patrocinadores en el futuro
 ];
+
+// URL alternativa como respaldo
+const alternativeLogoUrl =
+  "https://unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/escudoUnal.svg";
 ---
 
-<!-- Sección de instituciones de confianza --><!-- Carrusel Infinito de logos, con tonos grises basado en consejo 5 de https://elfsight.com/logo-showcase-widget/examples/ -->
-<div class="trusted-section">
-  <h3 class="trusted-title">
-    {
-      isSpanish
-        ? "Instituciones líderes confían en nosotros"
-        : "Trusted by top institutions"
-    }
-  </h3>
-  <div
-    class="logo-carousel"
-    aria-label="Sponsor logos carousel"
-    title="Pause animation on hover"
-  >
-    <div class="logo-track">
-      {
-        /* Mostramos solo los logos que tenemos, sin duplicarlos */
-        sponsors.map((sponsor, index) => (
-          <a
-            href={sponsor.url}
-            target="_blank"
-            rel="noopener"
-            class="sponsor-link"
-            aria-label={`Visit ${sponsor.name} website`}
-          >
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              class={`sponsor-logo ${sponsor.logoClass || ""}`}
-              width="120"
-            />
-          </a>
-        ))
-      }
+<!-- Sección de instituciones de confianza que ocupa todo el ancho de la pantalla -->
+<section class="trusted-section-wrapper">
+  <div class="trusted-section">
+    <div class="content-container">
+      <h3 class="trusted-title">
+        {isSpanish ? "Con el apoyo de" : "Supported by"}
+      </h3>
+      <div class="sponsors-container">
+        {
+          /* Mostramos solo el logo principal sin texto ni decoración */
+          sponsors.map((sponsor) => (
+            <a
+              href={sponsor.url}
+              target="_blank"
+              rel="noopener"
+              class="sponsor-link-clean"
+              aria-label={`Visit ${sponsor.name} website`}
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                class="sponsor-logo-clean"
+                width="180"
+                onerror={`this.onerror=null; this.src='${alternativeLogoUrl}';`}
+              />
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <style>
   /* Estilos para la sección de instituciones de confianza */
+  .trusted-section-wrapper {
+    width: 100%;
+    background-color: #0a1930; /* Azul oscuro casi negro */
+    padding: 0;
+    margin: 3rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
   .trusted-section {
-    padding: 2rem 0 1.5rem;
-    margin-bottom: 2rem;
-    /* Cambiamos a un tono azul muy claro que complementa el azul del sitio */
-    background-color: #f0f7ff;
-    border-radius: 8px;
-    /* Añadimos un borde sutil */
-    border: 1px solid #e0e0e0;
+    width: 100%;
+    padding: 3rem 0;
+  }
+
+  .content-container {
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
   .trusted-title {
     font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-    color: #2c3e50;
-    font-weight: 600;
+    margin-bottom: 1.5rem;
+    /* Texto claro para contrastar con fondo oscuro */
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  .logo-carousel {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 25px 0;
-    background-color: #f0f7ff; /* Mantenemos consistencia con el fondo de la sección */
-    border-radius: 8px;
-  }
-
-  .logo-track {
+  .sponsors-container {
     display: flex;
-    align-items: center;
-    justify-content: center; /* Centramos el logo cuando hay solo uno */
-    width: 100%;
-    padding: 10px;
-  }
-
-  .sponsor-link {
-    display: inline-flex;
-    margin: 0 40px;
-    padding: 10px 15px;
-    transition: transform 0.3s ease;
-    background-color: #ffffff; /* Fondo blanco para cada logo */
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    /* Aseguramos que el contenedor tenga un tamaño adecuado */
-    min-width: 150px;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
   }
 
-  .sponsor-link:hover {
+  /* Estilo minimalista sin cuadro ni decoración */
+  .sponsor-link-clean {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    margin: 0 20px;
+  }
+
+  .sponsor-link-clean:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 
-  .sponsor-logo {
-    height: 60px;
-    max-width: 180px;
+  .sponsor-logo-clean {
+    height: 110px;
+    max-width: 280px;
     object-fit: contain;
-    /* No aplicamos grayscale por defecto para mejor visibilidad */
-    filter: grayscale(0%);
-    /* Opacidad completa */
-    opacity: 1;
+    opacity: 0.95;
     transition:
-      filter 0.3s ease,
+      opacity 0.3s ease,
       transform 0.3s ease;
-    /* Añadimos fondo para logos con transparencia */
-    background-color: transparent;
-    /* Añadimos un borde para logos claros */
-    border-radius: 4px;
+    filter: brightness(1.1); /* Ajustamos el brillo para destacar el blanco */
   }
 
-  /* Estilo específico para el logo de la UNAL */
-  .unal-logo {
-    /* Si el logo tiene fondo blanco, aplicamos un borde para diferenciarlo */
-    border: 1px solid #0066cc;
-    /* Añadimos un poco de padding y aumentamos su tamaño */
-    padding: 8px;
-    /* Ajustamos el brillo y contraste para mayor visibilidad */
-    filter: contrast(1.2) brightness(1.1);
-    background-color: #fff;
-    /* Aumento del tamaño del logo */
-    height: 80px !important;
-    max-width: 250px !important;
-  }
-
-  .sponsor-logo:hover {
-    filter: grayscale(0%);
+  .sponsor-logo-clean:hover {
     transform: scale(1.05);
-    /* Destacamos con sombra al hacer hover */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    opacity: 1;
   }
-
-  /* Ya no necesitamos la animación de scroll ya que solo hay un logo */
 
   @media (max-width: 768px) {
     .sponsor-link {
-      margin: 0 20px;
+      padding: 15px 20px;
+      min-width: 180px;
     }
 
     .sponsor-logo {
-      height: 50px;
-      max-width: 150px;
+      height: 70px;
+      max-width: 180px;
+    }
+
+    .unal-logo {
+      height: 80px !important;
+    }
+
+    .trusted-title {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
     }
   }
 </style>
