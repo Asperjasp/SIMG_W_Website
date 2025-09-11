@@ -62,6 +62,18 @@ const researchCollection = defineCollection({
     tags: z.array(z.string()).default([]),
     lang: z.enum(['en', 'es']),
     translationKey: z.string(),
+    // Opción 1: Un solo enlace externo
+    link: z.string().url().optional(),
+    linkText: z.string().optional(),
+    // Opción 2: Múltiples enlaces externos
+    links: z
+      .array(
+        z.object({
+          url: z.string().url(),
+          text: z.string()
+        })
+      )
+      .optional(),
   })
 });
 

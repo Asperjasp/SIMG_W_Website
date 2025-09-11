@@ -3,10 +3,33 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import { getCollection } from "astro:content";
 
-// Obtener proyectos de investigación en español
+// Obtener proyectos de investigación en español y procesar sus contenidos
 const researchProjects = await getCollection("research", ({ data }) => {
   return data.lang === "es";
 });
+
+// Procesar cada proyecto para usar los enlaces definidos en los metadatos
+const processedProjects = await Promise.all(
+  researchProjects.map(async (project) => {
+    // Si el proyecto tiene enlaces definidos en los metadatos, usarlos directamente
+    const definedLinks = Array.isArray(project.data.links)
+      ? project.data.links
+      : project.data.link
+        ? [
+            {
+              url: project.data.link,
+              text: project.data.linkText || t.viewProject,
+            },
+          ]
+        : [];
+
+    return {
+      ...project,
+      // Los enlaces se definen ahora en los metadatos como un array o como un único enlace
+      externalLinks: definedLinks.length > 0 ? definedLinks : null,
+    };
+  })
+);
 
 // Obtener publicaciones en español
 const publications = await getCollection("publications", ({ data }) => {
@@ -72,7 +95,7 @@ const t = {
       <h2>{t.projects}</h2>
       <div class="projects-grid">
         {
-          researchProjects.map((project) => (
+          processedProjects.map((project) => (
             <div class="project-card">
               {project.data.image && (
                 <div class="project-image">
@@ -93,9 +116,25 @@ const t = {
                     {project.data.researchers.join(", ")}
                   </div>
                 )}
-                <a href={`/es/research/${project.slug}`} class="button">
-                  {t.viewProject}
-                </a>
+                <div class="project-links">
+                  {/* Enlaces externos encontrados en el contenido */}
+                  {project.externalLinks ? (
+                    project.externalLinks.map((link) => (
+                      <a
+                        href={link.url}
+                        class="button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.text || t.viewProject}
+                      </a>
+                    ))
+                  ) : (
+                    <a href={`/es/research/${project.slug}`} class="button">
+                      {t.viewProject}
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))
@@ -300,6 +339,13 @@ const t = {
     font-size: 0.85rem;
   }
 
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+
   .button {
     display: inline-block;
     padding: 0.4rem 0.8rem;
@@ -309,7 +355,6 @@ const t = {
     border-radius: 4px;
     font-weight: 500;
     transition: background-color 0.3s;
-    margin-top: 0.8rem;
     font-size: 0.9rem;
   }
 

@@ -8,6 +8,29 @@ const researchProjects = await getCollection("research", ({ data }) => {
   return data.lang === "en";
 });
 
+// Process each project to use links defined in the metadata
+const processedProjects = await Promise.all(
+  researchProjects.map(async (project) => {
+    // If the project has links defined in metadata, use them directly
+    const definedLinks = Array.isArray(project.data.links)
+      ? project.data.links
+      : project.data.link
+        ? [
+            {
+              url: project.data.link,
+              text: project.data.linkText || t.viewProject,
+            },
+          ]
+        : [];
+
+    return {
+      ...project,
+      // Links are now defined in metadata as an array or as a single link
+      externalLinks: definedLinks.length > 0 ? definedLinks : null,
+    };
+  })
+);
+
 // Obtener publicaciones en inglés
 const publications = await getCollection("publications", ({ data }) => {
   return data.lang === "en";
@@ -71,7 +94,7 @@ const t = {
       <h2>{t.projects}</h2>
       <div class="projects-grid">
         {
-          researchProjects.map((project) => (
+          processedProjects.map((project) => (
             <div class="project-card">
               {project.data.image && (
                 <div class="project-image">
@@ -92,9 +115,25 @@ const t = {
                     {project.data.researchers.join(", ")}
                   </div>
                 )}
-                <a href={`/en/research/${project.slug}`} class="button">
-                  {t.viewProject}
-                </a>
+                <div class="project-links">
+                  {/* External links found in content */}
+                  {project.externalLinks ? (
+                    project.externalLinks.map((link) => (
+                      <a
+                        href={link.url}
+                        class="button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.text || t.viewProject}
+                      </a>
+                    ))
+                  ) : (
+                    <a href={`/en/research/${project.slug}`} class="button">
+                      {t.viewProject}
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))
@@ -439,6 +478,13 @@ const t = {
   .project-researchers {
     margin: 0.8rem 0;
     font-size: 0.85rem;
+  }
+
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
   }
 
   .button {
