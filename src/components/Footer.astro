@@ -1,74 +1,19 @@
 ---
-// Redireccionar a la versión en inglés
-const destination = "/en/contact";
+// Determinar el idioma basado en la URL
+const { pathname } = Astro.url;
+const isSpanish = pathname.startsWith("/es/");
+const lang = isSpanish ? "es" : "en";
+
+// Traducción para el botón de RSS
+const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
 ---
 
-<meta http-equiv="refresh" content={`0;url=${destination}`} />
-
-<script define:vars={{ destination }}>
-  window.location.href = destination;
-</script>
-
-<div class="contact-grid">
-  <section class="contact-info">
-    <h2>Contact Information</h2>
-    <div class="info-item">
-      <div class="icon">📍</div>
-      <div>
-        <h3>Location</h3>
-        <p>Universidad Nacional de Colombia</p>
-        <p>Facultad de Ingeniería</p>
-        <p>Bogotá, Colombia</p>
-      </div>
-    </div>
-
-    <div class="info-item">
-      <div class="icon">📧</div>
-      <div>
-        <h3>Email</h3>
-        <p><a href="mailto:simg@unal.edu.co">simg@unal.edu.co</a></p>
-      </div>
-    </div>
-
-    <div class="info-item">
-      <div class="icon">🕒</div>
-      <div>
-        <h3>Meeting Time</h3>
-        <p>Fridays, 2:00 PM - 4:00 PM</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact-form">
-    <h2>Send Us a Message</h2>
-    <form id="contact-form" action="#" method="POST">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
-      </div>
-      <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" id="subject" name="subject" required />
-      </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-      </div>
-      <button type="submit" class="button">Send Message</button>
-    </form>
-  </section>
-</div>
-
-<section class="social-media">
-  <h2>Connect With Us</h2>
+<footer class="social-media">
+  <h2>{isSpanish ? "Conéctate con nosotros" : "Connect With Us"}</h2>
   <div class="social-links">
     <!-- LinkedIn-->
     <a
-      href="https://www.linkedin.com/in/alejandrosanchezpoveda/"
+      href="https://www.linkedin.com/company/semillero-modelos-generativos-un/"
       target="_blank"
       rel="noopener"
       class="social-link linkedin"
@@ -89,7 +34,7 @@ const destination = "/en/contact";
 
     <!-- Youtube -->
     <a
-      href="https://www.youtube.com/channel/UCI5h3tbo4s7VE-VuMMYptYw"
+      href="https://www.youtube.com/@simg-UN"
       target="_blank"
       rel="noopener"
       class="social-link youtube"
@@ -108,30 +53,9 @@ const destination = "/en/contact";
       <span>YouTube</span>
     </a>
 
-    <!-- Twitter / X-->
-    <a
-      href="https://x.com/Asperjasp/"
-      target="_blank"
-      rel="noopener"
-      class="social-link twitter"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-      >
-        <path
-          d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-        ></path>
-      </svg>
-      <span>Twitter/X</span>
-    </a>
-
     <!-- Instagram -->
     <a
-      href="https://www.instagram.com/alejosanchezpoveda/"
+      href="https://www.instagram.com/modelosgenerativos"
       target="_blank"
       rel="noopener"
       class="social-link instagram"
@@ -152,7 +76,7 @@ const destination = "/en/contact";
 
     <!-- Github -->
     <a
-      href="https://github.com/Asperjasp"
+      href="https://github.com/SIMG-UN"
       target="_blank"
       rel="noopener"
       class="social-link github"
@@ -173,7 +97,7 @@ const destination = "/en/contact";
 
     <!-- Linktree -->
     <a
-      href="https://linktr.ee/Asperjasp"
+      href="https://linktr.ee/simg_un"
       target="_blank"
       rel="noopener"
       class="social-link linktree"
@@ -191,117 +115,46 @@ const destination = "/en/contact";
       </svg>
       <span>Linktree</span>
     </a>
+
+    <!-- RSS Feed -->
+    <div class="social-link-container rss-container">
+      <a
+        href={isSpanish ? "/es/rss.xml" : "/en/rss.xml"}
+        target="_blank"
+        rel="noopener"
+        class="social-link rss"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="rss-icon"
+        >
+          <path
+            d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
+          ></path>
+        </svg>
+        <span>RSS</span>
+      </a>
+    </div>
   </div>
-</section>
+</footer>
 
 <style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
-  .hero {
+  footer.social-media {
     text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
-  }
-
-  .lead {
-    font-size: 1.25rem;
-    color: #555;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .contact-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .contact-info,
-  .contact-form {
+    margin-top: 3rem;
+    padding: 2rem 0;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #eaeaea;
   }
 
   h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     color: #2c3e50;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 0.5rem;
-  }
-
-  .info-item {
-    display: flex;
-    margin-bottom: 1.5rem;
-  }
-
-  .icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    min-width: 40px;
-    text-align: center;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #3498db;
-  }
-
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-
-  .button {
-    background-color: #0077cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .button:hover {
-    background-color: #005fa3;
-  }
-
-  .social-media {
-    text-align: center;
-    margin-top: 3rem;
   }
 
   .social-links {
@@ -310,6 +163,9 @@ const destination = "/en/contact";
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1.5rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .social-link {
@@ -358,18 +214,31 @@ const destination = "/en/contact";
   .linktree:hover {
     color: #43e660;
   }
-</style>
-
-<script>
-  // Simple form validation
-  const contactForm = document.getElementById("contact-form");
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert(
-        "Thank you for your message! This form is not actually connected to a server yet, but in a real implementation, your message would be sent."
-      );
-    });
+  .rss:hover {
+    color: #f26522;
   }
-</script>
+
+  .social-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+  }
+
+  .rss-reader-tip {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .rss-reader-tip a {
+    color: #666;
+    text-decoration: none;
+    font-style: italic;
+    transition: color 0.2s;
+  }
+
+  .rss-reader-tip a:hover {
+    color: #f26522;
+    text-decoration: underline;
+  }
+</style>

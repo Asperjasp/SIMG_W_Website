@@ -3,30 +3,29 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import { getCollection } from "astro:content";
 
-// Obtener proyectos de investigación en español
+// Obtener proyectos de investigación en inglés
 const researchProjects = await getCollection("research", ({ data }) => {
-  return data.lang === "es";
+  return data.lang === "en";
 });
 
-// Obtener publicaciones en español
+// Obtener publicaciones en inglés
 const publications = await getCollection("publications", ({ data }) => {
-  return data.lang === "es";
+  return data.lang === "en";
 });
 
-// Texto para español
+// Texto para inglés
 const t = {
-  title: "Investigación",
-  description:
-    "Explora nuestros proyectos de investigación en curso y publicaciones",
-  projects: "Proyectos de Investigación",
-  publications: "Publicaciones",
-  viewProject: "Ver Proyecto",
-  authors: "Autores",
-  publishedIn: "Publicado en",
+  title: "Research",
+  description: "Explore our ongoing research projects and publications",
+  projects: "Research Projects",
+  publications: "Publications",
+  viewProject: "View Project",
+  authors: "Authors",
+  publishedIn: "Published in",
   status: {
-    active: "Activo",
-    completed: "Completado",
-    planned: "Planificado",
+    active: "Active",
+    completed: "Completed",
+    planned: "Planned",
   },
 };
 ---
@@ -35,8 +34,8 @@ const t = {
   <link
     rel="alternate"
     type="application/rss+xml"
-    title="Feed RSS para SIMG Investigación"
-    href="/es/rss.xml"
+    title="RSS Feed for SIMG Research"
+    href="/en/rss.xml"
     slot="head"
   />
   <Header slot="header" />
@@ -45,7 +44,7 @@ const t = {
       <h1>{t.title}</h1>
       <p class="lead">{t.description}</p>
       <div class="rss-link">
-        <a href="/es/rss.xml" target="_blank" rel="noopener" class="rss-button">
+        <a href="/en/rss.xml" target="_blank" rel="noopener" class="rss-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -58,12 +57,12 @@ const t = {
               d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
             ></path>
           </svg>
-          Suscríbete al RSS
+          Subscribe to RSS
         </a>
         <span class="rss-tip">
-          Prueba <a href="https://folo.is/" target="_blank" rel="noopener"
+          Try <a href="https://folo.is/" target="_blank" rel="noopener"
             >Folo.is</a
-          > para una excelente experiencia de lectura RSS
+          > for a great RSS reading experience
         </span>
       </div>
     </section>
@@ -89,11 +88,11 @@ const t = {
                 <p>{project.data.description}</p>
                 {project.data.researchers && (
                   <div class="project-researchers">
-                    <strong>Investigadores:</strong>{" "}
+                    <strong>Researchers:</strong>{" "}
                     {project.data.researchers.join(", ")}
                   </div>
                 )}
-                <a href={`/es/research/${project.slug}`} class="button">
+                <a href={`/en/research/${project.slug}`} class="button">
                   {t.viewProject}
                 </a>
               </div>
@@ -135,7 +134,7 @@ const t = {
                   rel="noopener noreferrer"
                   class="button"
                 >
-                  Ver Publicación
+                  View Publication
                 </a>
               )}
             </div>

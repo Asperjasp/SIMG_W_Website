@@ -1,30 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
+// Archivo index.astro en la raíz - redirige al idioma adecuado
+import { getLanguageFromURL } from "../utils/i18n.js";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Detectar el idioma preferido del navegador o usar inglés por defecto
+const lang = getLanguageFromURL(Astro.url.pathname) || "en";
+const destination = lang === "es" ? "/es/" : "/en/";
 ---
 
-<Layout title="Home | SIMG">
-  <Header slot="header" />
-  <main class="container">
-    <h1>Developing Potential</h1>
-    <p>
-      This is the home page of the SIMG - Artificial Intelligence Research
-      Seminar website.
-    </p>
-    <p>
-      Located at the heart of innovation in Colombia at the National University
-      of Colombia - UNAL, SIMG is a community of researchers, academics, and
-      enthusiasts dedicated to exploring and advancing the field of artificial
-      intelligence (AI), information theory, and machine learning, committed to
-      excellence and innovation.
-    </p>
-    
-    <button class="cta-button">Read More</button>
-  </main>
-</Layout>
+<meta http-equiv="refresh" content={`0;url=${destination}`} />
+
+<script define:vars={{ destination }}>
+  window.location.href = destination;
+</script>
 
 <style>
   .container {
