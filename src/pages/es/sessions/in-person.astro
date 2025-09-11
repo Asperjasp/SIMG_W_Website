@@ -68,11 +68,12 @@ import Header from "../../../components/Header.astro";
     <section class="session-section">
       <h2>Próximas Sesiones</h2>
       <div class="upcoming-session">
+        <h3>Próxima Sesión: Introducción a los Modelos Generativos</h3>
         <img
           src="/images/website/Sesion_12-09-2025.jpg"
           alt="Sesion Semillero 12-09-2025"
+          class="session-image"
         />
-        <h3>Próxima Sesión: Introducción a los Modelos Generativos</h3>
         <p><strong>Fecha:</strong> Viernes, 12 de septiembre de 2025</p>
         <p><strong>Hora:</strong> 2:00 PM</p>
         <p><strong>Ubicación:</strong> SALÓN 202-405</p>
@@ -92,7 +93,7 @@ import Header from "../../../components/Header.astro";
           Las sesiones están abiertas a todos los estudiantes e investigadores
           interesados en modelos generativos.
         </li>
-        <li>Trae tu laptop para los ejercicios prácticos.</li>
+        <li>De preferencia trae tu laptop para los ejercicios prácticos.</li>
         <li>Se recomienda un conocimiento básico de programación en Python.</li>
         <li>
           Se fomenta la participación y las preguntas durante las sesiones.
@@ -244,6 +245,8 @@ import Header from "../../../components/Header.astro";
     position: relative;
     overflow: hidden;
     border-top: 4px solid #3498db;
+    display: flex;
+    flex-direction: column;
   }
 
   .upcoming-session::after {
@@ -335,5 +338,22 @@ import Header from "../../../components/Header.astro";
     background-color: #2980b9;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .session-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .session-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   }
 </style>
