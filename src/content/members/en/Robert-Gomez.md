@@ -3,7 +3,7 @@ name: "Robert Gomez"
 position: "Principal Researcher, CTO AI Medic"
 email: "jrgomezp@gmail.com"
 website: "https://example.com/rgomez"
-image: "/members/Robert-Gomez.jpeg"
+image: "/images/members/Robert-Gomez.jpeg"
 order: 2
 lang: "en"
 translationKey: "Robert-Gomez"

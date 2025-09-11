@@ -1,13 +1,12 @@
 ---
-title: "Explainable AI for Medical Diagnosis"
-description: "Development of transparent and interpretable deep learning models for medical image analysis with a focus on clinical applicability and trust."
-image: "/images/research/explainable-ai-medical.jpg"
-researchers: ["Juan Pérez", "María Rodríguez", "Carlos Torres"]
-status: "active"
+title: "PhinGPT: A Homemade Language Model for the Financial Sector"
+description: "Large language models are revolutionizing various fields of knowledge. This work aims to train a specialized model for the financial sector by optimizing computational costs with optimal training. We present Qlora, a fine-tuning method that reduces computational costs. We evaluate the performance of the model trained with this method and compare it with the original model in the tasks of named entity recognition (NER) and word analysis."
+researchers: ["Tuli peña", "Robert Gomez", "Francisco Jose"]
+status: "completed"
 startDate: 2024-01-15
-tags: ["Explainable AI", "Medical Imaging", "Deep Learning", "Healthcare"]
+tags: ["Finance", "AI", "PhinGPT", "LLMS"]
 lang: "en"
-translationKey: "explainable-ai-medical"
+translationKey: "PhinGPT: A Homemade Language Model for the Financial Sector"
 ---
 
 # Explainable AI for Medical Diagnosis

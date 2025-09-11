@@ -1,16 +1,16 @@
 ---
-title: "IA Explicable para Diagnóstico Médico"
-description: "Desarrollo de modelos de aprendizaje profundo transparentes e interpretables para análisis de imágenes médicas con enfoque en aplicabilidad clínica y confianza."
-image: "/images/research/explainable-ai-medical.jpg"
-researchers: ["Juan Pérez", "María Rodríguez", "Carlos Torres"]
-status: "active"
+title: "PhinGPT : Un gran Modelo de Lenguaje hecho en casa para el sector Financiero"
+description: "Los grandes modelos de lenguaje están revolucionando diversos campos del conocimiento. Este trabajo busco entrenar un modelo especializado para el sector financiero optimizando costos computacionales con un entrenamiento óptimo. Presentamos Qlora, un método de fine-tuning que reduce costos computaciones. Evaluamos el rendimiento del modelo entrenado con este método y lo comparamos con el modelo original, en las tareas de análisis de  y reconocimiento de entidades nombradas ( NER )" 
+researchers: ["Tuli peña", "Robert Gomez, Francisco Gutiérrez Peña"]
+status: "completed"
 startDate: 2024-01-15
-tags: ["IA Explicable", "Imágenes Médicas", "Aprendizaje Profundo", "Salud"]
+tags: ["IA ", "LLMS", "Finance", "Finanzas"]
 lang: "es"
-translationKey: "explainable-ai-medical"
+translationKey: "phingpt-research-project"
 ---
+<!-- El translationKey es un campo que se utiliza en sitios multilingües para vincular contenido que es el mismo pero en diferentes idiomas -->
 
-# IA Explicable para Diagnóstico Médico
+# 
 
 ## Visión General
 

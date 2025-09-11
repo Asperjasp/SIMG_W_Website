@@ -3,7 +3,7 @@ name: "Alejandro Sánchez Poveda"
 position: "Research Assistant NLP Engineer and Web Developer"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me/"
-image: "/members/Alejandro-Sanchez.jpg"
+image: "/images/members/Alejandro-Sanchez.jpg"
 order: 1
 lang: "en"
 translationKey: "Alejandro-Sanchez"
