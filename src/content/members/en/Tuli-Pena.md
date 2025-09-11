@@ -1,12 +1,12 @@
 ---
-name: "Robert Gomez"
-position: "Principal Researcher, CTO AI Medic"
-email: "jrgomezp@gmail.com"
-website: "https://example.com/rgomez"
-image: "/images/members/Robert-Gomez.jpeg"
-order: 1
+name: "Alejandro Sánchez Poveda"
+position: "Research Assistant NLP and LLM
+email: "alesanchezpov@gmail.com"
+website: "https://alejandrosanchezpoveda.me/"
+image: "/images/members/Tuli-Pena.jpg"
+order: 2
 lang: "en"
-translationKey: "Robert-Gomez"
+translationKey: "Tuli-Peña"
 ---
 
 El Dr. Juan Pérez es profesor de Ciencias de la Computación especializado en Aprendizaje Automático y Visión por Computador. Su investigación se centra en el desarrollo de nuevas arquitecturas de aprendizaje profundo para el análisis y comprensión de imágenes.

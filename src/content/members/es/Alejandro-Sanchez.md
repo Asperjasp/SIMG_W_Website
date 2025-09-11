@@ -4,7 +4,7 @@ position: "Investigador Asistente, Ingeniero NLP y Desarrollador Web"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me"
 image: "/images/members/Alejandro-Sanchez.jpg"
-order: 1
+order: 3
 lang: "es"
 translationKey: "Alejandro-Sanchez"
 ---

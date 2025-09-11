@@ -1,10 +1,10 @@
 ---
 name: "Alejandro Sánchez Poveda"
-position: "Research Assistant NLP Engineer and Web Developer"
+position: "Research Assistant NLP and Music ML"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me/"
 image: "/images/members/Alejandro-Sanchez.jpg"
-order: 1
+order: 3
 lang: "en"
 translationKey: "Alejandro-Sanchez"
 ---

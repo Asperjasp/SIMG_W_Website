@@ -4,7 +4,7 @@ position: "Investigador Principal, CTO AI Medic"
 email: "jrgomezp@gmail.com"
 website: "https://example.com/rgomez"
 image: "/images/members/Robert-Gomez.jpeg"
-order: 2
+order: 1
 lang: "es"
 translationKey: "Robert-Gomez"
 ---

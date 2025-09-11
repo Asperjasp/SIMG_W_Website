@@ -6,7 +6,18 @@ status: "completed"
 startDate: 2024-01-15
 tags: ["Finance", "AI", "PhinGPT", "LLMS"]
 lang: "en"
-translationKey: "PhinGPT: A Homemade Language Model for the Financial Sector"
+translationKey: "phingpt-research-project"
+# Option 1: Single link
+link: "https://huggingface.co/RobertGomezDP/phingpt-cls"
+linkText: "View on Hugging Face"
+# Option 2: Multiple links (uncomment to use instead of single link)
+# links:
+#   - url: "https://huggingface.co/RobertGomezDP/phingpt-cls"
+#     text: "View on Hugging Face"
+#   - url: "https://arxiv.org/abs/2345.6789"
+#     text: "Read paper on ArXiv"
+#   - url: "https://github.com/username/project"
+#     text: "View source code"
 ---
 
 # Explainable AI for Medical Diagnosis

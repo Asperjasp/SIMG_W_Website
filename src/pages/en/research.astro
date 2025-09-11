@@ -3,6 +3,22 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import { getCollection } from "astro:content";
 
+// Texto para inglés
+const t = {
+  title: "Research",
+  description: "Explore our ongoing research projects and publications",
+  projects: "Research Projects",
+  publications: "Publications",
+  viewProject: "View Project",
+  authors: "Authors",
+  publishedIn: "Published in",
+  status: {
+    active: "Active",
+    completed: "Completed",
+    planned: "Planned",
+  },
+};
+
 // Obtener proyectos de investigación en inglés
 const researchProjects = await getCollection("research", ({ data }) => {
   return data.lang === "en";
@@ -35,22 +51,6 @@ const processedProjects = await Promise.all(
 const publications = await getCollection("publications", ({ data }) => {
   return data.lang === "en";
 });
-
-// Texto para inglés
-const t = {
-  title: "Research",
-  description: "Explore our ongoing research projects and publications",
-  projects: "Research Projects",
-  publications: "Publications",
-  viewProject: "View Project",
-  authors: "Authors",
-  publishedIn: "Published in",
-  status: {
-    active: "Active",
-    completed: "Completed",
-    planned: "Planned",
-  },
-};
 ---
 
 <Layout title={`${t.title} | SIMG`}>
