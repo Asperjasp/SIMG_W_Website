@@ -1,6 +1,6 @@
 ---
 name: "Alejandro Sánchez Poveda"
-position: "Investigador Asistente, Ingeniero NLP y Desarrollador Web"
+position: "Investigador Asistente en NLP y ML para Música"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me"
 image: "/images/members/Alejandro-Sanchez.jpg"

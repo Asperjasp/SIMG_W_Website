@@ -1,11 +1,11 @@
 ---
 name: "Tuli Peña"
-position: "Research Assistant NLP and LLM"
+position: "Asistente de Investigación en NLP y LLM"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me/"
-image: "/images/members/Tuli-Pena.jpg"
+image: "/images/members/Tuli-Pena.jpeg"
 order: 2
-lang: "en"
+lang: "es"
 translationKey: "Tuli-Peña"
 ---
 

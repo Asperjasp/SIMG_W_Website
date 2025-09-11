@@ -1,9 +1,9 @@
 ---
-name: "Alejandro Sánchez Poveda"
-position: "Research Assistant NLP and LLM
+name: "Tuli Peña"
+position: "Research Assistant NLP and LLM"
 email: "alesanchezpov@gmail.com"
 website: "https://alejandrosanchezpoveda.me/"
-image: "/images/members/Tuli-Pena.jpg"
+image: "/images/members/Tuli-Pena.jpeg"
 order: 2
 lang: "en"
 translationKey: "Tuli-Peña"
