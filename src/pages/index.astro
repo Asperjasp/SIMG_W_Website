@@ -13,27 +13,27 @@ const destination = lang === "es" ? "/es/" : "/en/";
 <Layout title="SIMG">
   <Header slot="header" />
   <main class="container">
-    <h1>
-      {lang === "es" ? "Desarrollando Potencial" : "Developing Potential"}
-    </h1>
-    <p>
-      {
-        lang === "es"
-          ? "Esta es la página de inicio del SIMG - Seminario de Investigación en Inteligencia Artificial."
-          : "This is the home page of the SIMG - Artificial Intelligence Research Seminar website."
-      }
-    </p>
-    <p>
-      {
-        lang === "es"
-          ? "Ubicado en el corazón de la innovación en Colombia en la Universidad Nacional de Colombia - UNAL, SIMG es una comunidad de investigadores, académicos y entusiastas dedicados a explorar y avanzar en el campo de la inteligencia artificial (IA), teoría de la información y aprendizaje automático, comprometidos con la excelencia y la innovación."
-          : "Located at the heart of innovation in Colombia at the National University of Colombia - UNAL, SIMG is a community of researchers, academics, and enthusiasts dedicated to exploring and advancing the field of artificial intelligence (AI), information theory, and machine learning, committed to excellence and innovation."
-      }
-    </p>
-
-    <button class="cta-button">
-      {lang === "es" ? "Leer Más" : "Read More"}
-    </button>
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1>
+          {lang === "es" ? "Construyendo el talento en IA de LATAM" : "Building the AI talent of LATAM"}
+        </h1>
+        
+        <p>
+          {
+            lang === "es"
+              ? "Ubicado en el corazón de la innovación en Colombia en la Universidad Nacional de Colombia - UNAL, SIMG es una comunidad de investigadores, académicos y entusiastas dedicados a explorar y avanzar en el campo de la inteligencia artificial (IA), teoría de la información y aprendizaje automático, comprometidos con la excelencia y la innovación."
+              : "Located at the heart of innovation in Colombia at the National University of Colombia - UNAL, SIMG is a community of researchers, academics, and enthusiasts dedicated to exploring and advancing the field of artificial intelligence (AI), information theory, and machine learning, committed to excellence and innovation."
+          }
+        </p>
+        <button class="cta-button">
+          {lang === "es" ? "Leer Más" : "Read More"}
+        </button>
+      </div>
+      <div class="hero-image">
+        <img src="/images/website/SIMG-semillero.png" alt="SIMG Semillero" />
+      </div>
+    </div>
 
     <!-- Añadimos el carrusel de patrocinadores -->
     <SponsorCarousel />
@@ -54,9 +54,55 @@ const destination = lang === "es" ? "/es/" : "/en/";
     padding: 2rem;
   }
 
+  .hero-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-content {
+    flex: 1;
+  }
+
+  .hero-image {
+    flex: 1;
+    max-width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .hero-image img:hover {
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      flex-direction: column;
+    }
+
+    .hero-image {
+      max-width: 100%;
+      margin-top: 1.5rem;
+    }
+  }
+
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: #2c3e50;
   }
 
   .cta-button {

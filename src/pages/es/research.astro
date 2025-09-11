@@ -195,19 +195,49 @@ const t = {
   .hero {
     margin-bottom: 4rem;
     text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
   }
 
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: #2c3e50;
+    position: relative;
+    display: inline-block;
+  }
+
+  h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #7dc8ff);
+    border-radius: 2px;
   }
 
   .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: #34495e;
     max-width: 800px;
-    margin: 0 auto 1rem;
+    margin: 1.5rem auto 1rem;
+    line-height: 1.6;
   }
 
   .rss-link {

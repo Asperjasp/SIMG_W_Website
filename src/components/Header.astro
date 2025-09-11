@@ -48,7 +48,9 @@ function getAlternateUrl(path: string, targetLang: string): string {
     <h1>SIMG Seminar</h1>
   </div>
   <nav>
-    <a href="/" class={currentPath === "/" ? "active" : ""}>Home</a>
+    <a href="/" class={currentPath === "/" ? "active" : ""}
+      >{isSpanish ? "Inicio" : "Home"}</a
+    >
     <a
       href={isSpanish ? "/es/about" : "/about"}
       class={currentPath.includes("about") ? "active" : ""}
@@ -63,39 +65,42 @@ function getAlternateUrl(path: string, targetLang: string): string {
     </a>
     <!-- Menú desplegable Sesiones -->
     <a
-    href={isSpanish ? "/es/members" : "/members"}
-    class={currentPath.includes("members") ? "active" : ""}
+      href={isSpanish ? "/es/members" : "/members"}
+      class={currentPath.includes("members") ? "active" : ""}
     >
-    {isSpanish ? "Miembros" : "Members"}
-  </a>
+      {isSpanish ? "Miembros" : "Members"}
+    </a>
     <a
-    href={isSpanish ? "/es/contact" : "/en/contact"}
-    class={currentPath.includes("contact") ? "active" : ""}
+      href={isSpanish ? "/es/contact" : "/en/contact"}
+      class={currentPath.includes("contact") ? "active" : ""}
     >
-    {isSpanish ? "Contacto" : "Contact"}
-  </a>
-  <!-- Dropdown de opciones  -->
-  <div class="dropdown">
-    <button class="dropbtn">{isSpanish ? "Sesiones" : "Sessions"}</button>
-    <div class="dropdown-content">
-      <a
-        href={isSpanish ? "/es/sessions/in-person" : "/en/sessions/in-person"}
-        >{isSpanish ? "Presencial" : "In Person"}</a
-      >
-      <a
-        href={isSpanish
-          ? "/es/sessions/recordings"
-          : "/en/sessions/recordings"}
-        >{isSpanish ? "Grabaciones" : "Recordings"}</a
-      >
-      <a
-        href={isSpanish
-          ? "/es/sessions/support-material"
-          : "/en/sessions/support-material"}
-        >{isSpanish ? "Material de apoyo" : "Support material"}</a
-      >
+      {isSpanish ? "Contacto" : "Contact"}
+    </a>
+    <!-- Dropdown de opciones  -->
+    <div class="dropdown">
+      <button class="dropbtn">
+        {isSpanish ? "Sesiones" : "Sessions"}
+        <span class="dropdown-arrow">&#9662;</span>
+      </button>
+      <div class="dropdown-content">
+        <a
+          href={isSpanish ? "/es/sessions/in-person" : "/en/sessions/in-person"}
+          >{isSpanish ? "Presencial" : "In Person"}</a
+        >
+        <a
+          href={isSpanish
+            ? "/es/sessions/recordings"
+            : "/en/sessions/recordings"}
+          >{isSpanish ? "Grabaciones" : "Recordings"}</a
+        >
+        <a
+          href={isSpanish
+            ? "/es/sessions/support-material"
+            : "/en/sessions/support-material"}
+          >{isSpanish ? "Material de apoyo" : "Support material"}</a
+        >
+      </div>
     </div>
-  </div>
 
     <!-- Selector de idioma con ícono de mundo -->
     <div class="language-selector">
@@ -199,6 +204,19 @@ function getAlternateUrl(path: string, targetLang: string): string {
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    margin-left: 3px;
+  }
+
+  .dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
   }
 
   .dropbtn:hover {
