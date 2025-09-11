@@ -11,9 +11,28 @@ import Header from "../../../components/Header.astro";
     <section class="intro-section">
       <p>
         Access recordings of our past sessions to catch up on missed content or
-        review important topics. All recordings are available exclusively to
-        SIMG members and registered students.
+        review important topics. Our sessions are available on our YouTube
+        channel for everyone interested in generative models and AI topics.
       </p>
+      <div class="youtube-channel-link">
+        <a
+          href="https://www.youtube.com/@simg-UN"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="#ff0000"
+            ><path
+              d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
+            ></path></svg
+          >
+          Visit our YouTube Channel
+        </a>
+      </div>
     </section>
 
     <section class="recordings-section">
@@ -21,63 +40,100 @@ import Header from "../../../components/Header.astro";
 
       <div class="recording-card">
         <div class="recording-info">
-          <h3>Introduction to Neural Networks for NLP</h3>
-          <p class="date">October 27, 2023</p>
+          <h3>Attention Mechanisms in Large Language Models</h3>
+          <p class="date">August 25, 2025</p>
           <p class="description">
-            This session covers fundamental concepts of neural networks and
-            their application in natural language processing. We explore word
-            embeddings and basic architectures for text processing.
+            This session explores the advanced attention mechanisms used in
+            today's largest language models. We discuss multi-head attention,
+            cross-attention, and how these mechanisms enable models to process
+            long context windows efficiently.
           </p>
           <div class="tags">
-            <span>NLP</span>
-            <span>Neural Networks</span>
-            <span>Embeddings</span>
-          </div>
-        </div>
-        <div class="recording-link">
-          <a href="#" class="watch-button">Watch Recording</a>
-          <p class="duration">Duration: 1:45:30</p>
-        </div>
-      </div>
-
-      <div class="recording-card">
-        <div class="recording-info">
-          <h3>Deep Dive into Transformer Architecture</h3>
-          <p class="date">October 20, 2023</p>
-          <p class="description">
-            A comprehensive exploration of the transformer architecture,
-            including attention mechanisms, positional encoding, and the
-            encoder-decoder structure.
-          </p>
-          <div class="tags">
-            <span>Transformers</span>
-            <span>Attention Mechanisms</span>
-          </div>
-        </div>
-        <div class="recording-link">
-          <a href="#" class="watch-button">Watch Recording</a>
-          <p class="duration">Duration: 1:52:15</p>
-        </div>
-      </div>
-
-      <div class="recording-card">
-        <div class="recording-info">
-          <h3>Fine-tuning Techniques for Generative Models</h3>
-          <p class="date">October 13, 2023</p>
-          <p class="description">
-            Learn about advanced techniques for fine-tuning large language
-            models and generative AI systems for specific tasks and domains.
-          </p>
-          <div class="tags">
-            <span>Fine-tuning</span>
             <span>LLMs</span>
-            <span>Transfer Learning</span>
+            <span>Attention</span>
+            <span>Transformers</span>
           </div>
         </div>
         <div class="recording-link">
-          <a href="#" class="watch-button">Watch Recording</a>
-          <p class="duration">Duration: 1:38:45</p>
+          <a
+            href="https://www.youtube.com/@simg-UN"
+            class="watch-button"
+            target="_blank">Watch on YouTube</a
+          >
+          <p class="duration">Duration: 1:42:15</p>
         </div>
+      </div>
+
+      <div class="recording-card">
+        <div class="recording-info">
+          <h3>Advanced Embeddings for Multimodal Applications</h3>
+          <p class="date">August 18, 2025</p>
+          <p class="description">
+            A deep dive into multimodal embeddings, exploring how to represent
+            images, text, and audio in unified vector spaces. We demonstrate
+            practical applications using open-source models.
+          </p>
+          <div class="tags">
+            <span>Embeddings</span>
+            <span>Multimodal</span>
+            <span>Vector Spaces</span>
+          </div>
+        </div>
+        <div class="recording-link">
+          <a
+            href="https://www.youtube.com/@simg-UN"
+            class="watch-button"
+            target="_blank">Watch on YouTube</a
+          >
+          <p class="duration">Duration: 1:56:30</p>
+        </div>
+      </div>
+
+      <div class="recording-card">
+        <div class="recording-info">
+          <h3>Building Efficient RAG Systems with Modern Techniques</h3>
+          <p class="date">August 11, 2025</p>
+          <p class="description">
+            Learn how to build Retrieval-Augmented Generation systems that
+            combine the power of knowledge bases with generative models. We
+            cover techniques like hybrid search, chunk optimization, and context
+            compression.
+          </p>
+          <div class="tags">
+            <span>RAG</span>
+            <span>Knowledge Retrieval</span>
+            <span>Vector Search</span>
+          </div>
+        </div>
+        <div class="recording-link">
+          <a
+            href="https://www.youtube.com/@simg-UN"
+            class="watch-button"
+            target="_blank">Watch on YouTube</a
+          >
+          <p class="duration">Duration: 1:49:20</p>
+        </div>
+      </div>
+
+      <div class="more-videos">
+        <a
+          href="https://www.youtube.com/@simg-UN"
+          class="more-videos-link"
+          target="_blank"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="more-icon"
+            ><path
+              d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"
+            ></path></svg
+          >
+          View more videos on our YouTube channel
+        </a>
       </div>
     </section>
 
@@ -95,12 +151,18 @@ import Header from "../../../components/Header.astro";
     </section>
 
     <section class="access-info">
-      <h2>Access Information</h2>
+      <h2>Subscribe to Our Channel</h2>
       <p>
-        To access recordings, you need to be a registered SIMG member. Please
-        contact us if you're having trouble accessing the content.
+        Don't miss any of our upcoming content! Subscribe to our YouTube channel
+        for notifications about new videos, live sessions, and educational
+        content about generative models and AI research.
       </p>
-      <a href="#" class="access-button">Request Access</a>
+      <a
+        href="https://www.youtube.com/@simg-UN"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="access-button">Subscribe Now</a
+      >
     </section>
   </main>
 </Layout>
@@ -496,6 +558,66 @@ import Header from "../../../components/Header.astro";
 
   .access-button:hover::after {
     opacity: 1;
+  }
+
+  .youtube-channel-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .youtube-channel-link a {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+  }
+
+  .youtube-channel-link a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 0, 0, 0.4);
+    background: linear-gradient(135deg, #cc0000, #990000);
+  }
+
+  .youtube-channel-link svg {
+    margin-right: 10px;
+  }
+
+  .more-videos {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .more-videos-link {
+    display: inline-flex;
+    align-items: center;
+    color: #3498db;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.8rem 1.8rem;
+    border: 2px solid rgba(52, 152, 219, 0.3);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #f0f7ff, #e6f2ff);
+    box-shadow: 0 3px 8px rgba(52, 152, 219, 0.1);
+  }
+
+  .more-videos-link:hover {
+    background: linear-gradient(to right, #e6f2ff, #d4e6ff);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+    border-color: rgba(52, 152, 219, 0.5);
+  }
+
+  .more-icon {
+    margin-right: 10px;
   }
 
   @media (max-width: 768px) {

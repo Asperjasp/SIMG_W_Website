@@ -1,16 +1,50 @@
 ---
 // Archivo index.astro en la raíz - redirige al idioma adecuado
 import { getLanguageFromURL } from "../utils/i18n.js";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import SponsorCarousel from "../components/SponsorCarousel.astro";
 
 // Detectar el idioma preferido del navegador o usar inglés por defecto
 const lang = getLanguageFromURL(Astro.url.pathname) || "en";
 const destination = lang === "es" ? "/es/" : "/en/";
 ---
 
-<meta http-equiv="refresh" content={`0;url=${destination}`} />
+<Layout title="SIMG">
+  <Header slot="header" />
+  <main class="container">
+    <h1>
+      {lang === "es" ? "Desarrollando Potencial" : "Developing Potential"}
+    </h1>
+    <p>
+      {
+        lang === "es"
+          ? "Esta es la página de inicio del SIMG - Seminario de Investigación en Inteligencia Artificial."
+          : "This is the home page of the SIMG - Artificial Intelligence Research Seminar website."
+      }
+    </p>
+    <p>
+      {
+        lang === "es"
+          ? "Ubicado en el corazón de la innovación en Colombia en la Universidad Nacional de Colombia - UNAL, SIMG es una comunidad de investigadores, académicos y entusiastas dedicados a explorar y avanzar en el campo de la inteligencia artificial (IA), teoría de la información y aprendizaje automático, comprometidos con la excelencia y la innovación."
+          : "Located at the heart of innovation in Colombia at the National University of Colombia - UNAL, SIMG is a community of researchers, academics, and enthusiasts dedicated to exploring and advancing the field of artificial intelligence (AI), information theory, and machine learning, committed to excellence and innovation."
+      }
+    </p>
+
+    <button class="cta-button">
+      {lang === "es" ? "Leer Más" : "Read More"}
+    </button>
+
+    <!-- Añadimos el carrusel de patrocinadores -->
+    <SponsorCarousel />
+  </main>
+</Layout>
 
 <script define:vars={{ destination }}>
-  window.location.href = destination;
+  // Redirección automática después de unos segundos
+  setTimeout(() => {
+    window.location.href = destination;
+  }, 5000); // Redirige después de 5 segundos
 </script>
 
 <style>
