@@ -36,7 +36,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
 }
 ---
 
-<!-- Header con selector de idioma -->
+<!-- Header con selector de idioma y menú responsive -->
 <header class="header">
   <div class="logo">
     <img
@@ -47,91 +47,106 @@ function getAlternateUrl(path: string, targetLang: string): string {
     />
     <h1>SIMG Seminar</h1>
   </div>
-  <nav>
-    <a href="/" class={currentPath === "/" ? "active" : ""}
-      >{isSpanish ? "Inicio" : "Home"}</a
-    >
-    <a
-      href={isSpanish ? "/es/about" : "/about"}
-      class={currentPath.includes("about") ? "active" : ""}
-    >
-      {isSpanish ? "Acerca de" : "About"}
-    </a>
-    <a
-      href={isSpanish ? "/es/research" : "/research"}
-      class={currentPath.includes("research") ? "active" : ""}
-    >
-      {isSpanish ? "Investigación" : "Research"}
-    </a>
-    <!-- Menú desplegable Sesiones -->
-    <a
-      href={isSpanish ? "/es/members" : "/members"}
-      class={currentPath.includes("members") ? "active" : ""}
-    >
-      {isSpanish ? "Miembros" : "Members"}
-    </a>
-    <a
-      href={isSpanish ? "/es/contact" : "/en/contact"}
-      class={currentPath.includes("contact") ? "active" : ""}
-    >
-      {isSpanish ? "Contacto" : "Contact"}
-    </a>
-    <!-- Dropdown de opciones  -->
-    <div class="dropdown">
-      <button class="dropbtn">
-        {isSpanish ? "Sesiones" : "Sessions"}
-        <span class="dropdown-arrow">&#9662;</span>
-      </button>
-      <div class="dropdown-content">
-        <a
-          href={isSpanish ? "/es/sessions/in-person" : "/en/sessions/in-person"}
-          >{isSpanish ? "Presencial" : "In Person"}</a
-        >
-        <a
-          href={isSpanish
-            ? "/es/sessions/recordings"
-            : "/en/sessions/recordings"}
-          >{isSpanish ? "Grabaciones" : "Recordings"}</a
-        >
-        <a
-          href={isSpanish
-            ? "/es/sessions/support-material"
-            : "/en/sessions/support-material"}
-          >{isSpanish ? "Material de apoyo" : "Support material"}</a
-        >
-      </div>
-    </div>
 
-    <!-- Selector de idioma con ícono de mundo -->
-    <div class="language-selector">
-      <div class="language-dropdown">
-        <button class="language-button" aria-label="Select Language">
-          <img
-            src="/images/website/world.png"
-            alt="Language Selection"
-            width="24"
-            height="24"
-            class="world-icon"
-          />
-          <span class="current-lang"
-            >{currentLanguage === "en" ? "EN" : "ES"}</span
-          >
+  <!-- Botón hamburguesa para móviles -->
+  <div class="mobile-menu-toggle">
+    <button id="menu-toggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Navegación principal -->
+  <nav id="main-nav">
+    <div class="nav-links">
+      <a href="/" class={currentPath === "/" ? "active" : ""}
+        >{isSpanish ? "Inicio" : "Home"}</a
+      >
+      <a
+        href={isSpanish ? "/es/about" : "/about"}
+        class={currentPath.includes("about") ? "active" : ""}
+      >
+        {isSpanish ? "Acerca de" : "About"}
+      </a>
+      <a
+        href={isSpanish ? "/es/research" : "/research"}
+        class={currentPath.includes("research") ? "active" : ""}
+      >
+        {isSpanish ? "Investigación" : "Research"}
+      </a>
+      <a
+        href={isSpanish ? "/es/members" : "/members"}
+        class={currentPath.includes("members") ? "active" : ""}
+      >
+        {isSpanish ? "Miembros" : "Members"}
+      </a>
+      <a
+        href={isSpanish ? "/es/contact" : "/en/contact"}
+        class={currentPath.includes("contact") ? "active" : ""}
+      >
+        {isSpanish ? "Contacto" : "Contact"}
+      </a>
+
+      <!-- Menú desplegable Sesiones -->
+      <div class="dropdown">
+        <button class="dropbtn">
+          {isSpanish ? "Sesiones" : "Sessions"}
+          <span class="dropdown-arrow">&#9662;</span>
         </button>
-        <div class="language-dropdown-content">
+        <div class="dropdown-content">
           <a
-            href={getAlternateUrl(currentPath, "en")}
-            class={currentLanguage === "en" ? "active" : ""}
-            title="English"
+            href={isSpanish
+              ? "/es/sessions/in-person"
+              : "/en/sessions/in-person"}
+            >{isSpanish ? "Presencial" : "In Person"}</a
           >
-            English
-          </a>
           <a
-            href={getAlternateUrl(currentPath, "es")}
-            class={currentLanguage === "es" ? "active" : ""}
-            title="Español"
+            href={isSpanish
+              ? "/es/sessions/recordings"
+              : "/en/sessions/recordings"}
+            >{isSpanish ? "Grabaciones" : "Recordings"}</a
           >
-            Español
-          </a>
+          <a
+            href={isSpanish
+              ? "/es/sessions/support-material"
+              : "/en/sessions/support-material"}
+            >{isSpanish ? "Material de apoyo" : "Support material"}</a
+          >
+        </div>
+      </div>
+
+      <!-- Selector de idioma con ícono de mundo -->
+      <div class="language-selector">
+        <div class="language-dropdown">
+          <button class="language-button" aria-label="Select Language">
+            <img
+              src="/images/website/world.png"
+              alt="Language Selection"
+              width="24"
+              height="24"
+              class="world-icon"
+            />
+            <span class="current-lang"
+              >{currentLanguage === "en" ? "EN" : "ES"}</span
+            >
+          </button>
+          <div class="language-dropdown-content">
+            <a
+              href={getAlternateUrl(currentPath, "en")}
+              class={currentLanguage === "en" ? "active" : ""}
+              title="English"
+            >
+              English
+            </a>
+            <a
+              href={getAlternateUrl(currentPath, "es")}
+              class={currentLanguage === "es" ? "active" : ""}
+              title="Español"
+            >
+              Español
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -143,6 +158,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 10;
   }
 
   .header {
@@ -152,6 +168,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
     padding: 1rem 2rem;
     background: #f5f5f5;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
 
   .logo h1 {
@@ -159,7 +176,12 @@ function getAlternateUrl(path: string, targetLang: string): string {
     font-size: 1.5rem;
   }
 
+  /* Estilos para navegación desktop */
   nav {
+    display: flex;
+  }
+
+  .nav-links {
     display: flex;
     gap: 1.5rem;
     align-items: center;
@@ -320,36 +342,224 @@ function getAlternateUrl(path: string, targetLang: string): string {
   .language-dropdown:hover .language-dropdown-content {
     display: block;
   }
+
+  /* Botón de menú hamburguesa (oculto en desktop) */
+  .mobile-menu-toggle {
+    display: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  #menu-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #333;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Estilos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .header {
+      padding: 1rem;
+    }
+
+    .logo h1 {
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-toggle {
+      display: block;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background-color: white;
+      z-index: 9;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      overflow-y: auto;
+    }
+
+    nav.active {
+      right: 0;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 4rem 1.5rem 2rem;
+      gap: 0;
+    }
+
+    .nav-links a {
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown {
+      width: 100%;
+    }
+
+    .dropbtn {
+      width: 100%;
+      text-align: left;
+      justify-content: space-between;
+      margin: 0.5rem 0;
+    }
+
+    .dropdown-content {
+      position: static;
+      box-shadow: none;
+      width: 100%;
+      background: #f0f0f0;
+      margin-bottom: 1rem;
+    }
+
+    .dropdown-content a {
+      padding-left: 1.5rem;
+    }
+
+    .language-selector {
+      margin: 1rem 0 0;
+      padding: 0;
+      border-left: none;
+      border-top: 1px solid #eee;
+      padding-top: 1rem;
+      width: 100%;
+    }
+
+    .language-dropdown {
+      width: 100%;
+    }
+
+    .language-button {
+      width: 100%;
+      padding: 0.75rem 0;
+    }
+
+    .language-dropdown-content {
+      width: 100%;
+      position: static;
+      box-shadow: none;
+      margin-top: 0.5rem;
+      background: #f0f0f0;
+    }
+
+    /* Estilo para cuando el menú está activo */
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* Animación para el botón de hamburguesa cuando está activo */
+    #menu-toggle.active span:nth-child(1) {
+      transform: translateY(8.5px) rotate(45deg);
+    }
+
+    #menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #menu-toggle.active span:nth-child(3) {
+      transform: translateY(-8.5px) rotate(-45deg);
+    }
+  }
 </style>
 
 <script>
-  // Script para manejar el menú de idiomas en dispositivos táctiles
+  // Script para manejar el menú móvil y los menús desplegables
   document.addEventListener("DOMContentLoaded", () => {
-    const langButton = document.querySelector(
-      ".language-button"
-    ) as HTMLElement;
-    const langDropdown = document.querySelector(
-      ".language-dropdown-content"
-    ) as HTMLElement;
+    // Elementos DOM
+    const menuToggle = document.getElementById("menu-toggle");
+    const mainNav = document.getElementById("main-nav");
+    const body = document.body;
+    const dropdowns = document.querySelectorAll(".dropdown");
+    const langButton = document.querySelector(".language-button");
+    const langDropdown = document.querySelector(".language-dropdown-content");
 
-    if (langButton && langDropdown) {
-      langButton.addEventListener("click", (e: Event) => {
-        e.preventDefault();
-        langDropdown.style.display =
-          langDropdown.style.display === "block" ? "none" : "block";
-      });
-
-      // Cerrar el menú si se hace clic fuera
-      document.addEventListener("click", (e: MouseEvent) => {
-        const target = e.target as Node;
-        if (
-          langButton &&
-          !langButton.contains(target) &&
-          !langDropdown.contains(target)
-        ) {
-          langDropdown.style.display = "none";
-        }
+    // Función para manejar el menú móvil
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+        body.classList.toggle("menu-open");
       });
     }
+
+    // Manejador de eventos táctiles para el menú desplegable en móvil
+    if (window.innerWidth <= 768) {
+      // Para el menú desplegable
+      if (dropdowns) {
+        for (const dropdown of dropdowns) {
+          const dropButton = dropdown.querySelector(".dropdown-button");
+          const dropContent = dropdown.querySelector(".dropdown-content") as HTMLElement;
+          
+          if (dropButton && dropContent) {
+            dropButton.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              dropContent.style.display =
+                dropContent.style.display === "block" ? "none" : "block";
+            });
+          }
+        }
+      }
+
+      // Para el selector de idioma
+      if (langButton && langDropdown) {
+        langButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          (langDropdown as HTMLElement).style.display =
+            (langDropdown as HTMLElement).style.display === "block" ? "none" : "block";
+        });
+      }
+    }
+
+    // Cerrar el menú móvil cuando se hace clic fuera
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      const isNavClick = mainNav && mainNav.contains(target);
+      const isToggleClick = menuToggle && menuToggle.contains(target);
+
+      if (
+        window.innerWidth <= 768 &&
+        mainNav &&
+        mainNav.classList.contains("active") &&
+        !isNavClick &&
+        !isToggleClick
+      ) {
+        mainNav.classList.remove("active");
+        menuToggle?.classList.remove("active");
+        body.classList.remove("menu-open");
+      }
+    });
+
+    // Ajustar al cambiar el tamaño de la ventana
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        if (mainNav) mainNav.classList.remove("active");
+        if (menuToggle) menuToggle.classList.remove("active");
+        body.classList.remove("menu-open");
+      }
+    });
   });
 </script>
