@@ -127,3 +127,56 @@ input:focus, textarea:focus, select:focus {
   font-weight: 500;
   display: inline-block;
 }
+
+/* Responsive fix: asegurar que el contenido ocupe todo el ancho en móviles */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.container, main, section {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+  main, section {
+    max-width: 1200px;
+  }
+}
+
+/* Imágenes y multimedia responsivas */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Flex containers para secciones principales */
+.hero-section,
+.intro-container,
+.projects-grid,
+.members-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-section,
+  .intro-container {
+    flex-direction: row;
+  }
+  .projects-grid,
+  .members-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
