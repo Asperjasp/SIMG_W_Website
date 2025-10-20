@@ -14,6 +14,8 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
     <!-- LinkedIn-->
     <a
       href="https://www.linkedin.com/company/semillero-modelos-generativos-un/"
+
+
       target="_blank"
       rel="noopener"
       class="social-link linkedin"
@@ -117,7 +119,7 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
     </a>
 
     <!-- RSS Feed -->
-    <div class="social-link-container rss-container">
+    
       <a
         href={isSpanish ? "/es/rss.xml" : "/en/rss.xml"}
         target="_blank"
@@ -138,8 +140,29 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
         </svg>
         <span>RSS</span>
       </a>
-    </div>
+
+      <!-- Hugging Face (official icon) -->
+      <a
+        href="https://huggingface.co/simg-un"
+        target="_blank"
+        rel="noopener"
+        class="social-link huggingface"
+        title="Hugging Face"
+      >
+        <img
+          src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg"
+          alt="Hugging Face"
+          width="32"
+          height="32"
+          loading="lazy"
+        />
+        <span>Hugging Face</span>
+      </a>
+        
+    
   </div>
+
+  
 </footer>
 
 <style>
@@ -191,6 +214,13 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
     height: 32px;
     margin-bottom: 0.5rem;
   }
+  .social-link img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: filter 0.3s ease;
+  }
 
   .social-link span {
     font-size: 0.9rem;
@@ -216,6 +246,17 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
   }
   .rss:hover {
     color: #f26522;
+  }
+  .huggingface:hover {
+    color: #FF9900;
+    filter: drop-shadow(0 0 4px rgba(255, 153, 0, 0.5));
+  }
+  /* Hugging Face logo in grayscale by default; show color on hover */
+  .huggingface img {
+    filter: grayscale(100%) brightness(0.35) contrast(1.1);
+  }
+  .huggingface:hover img {
+    filter: none;
   }
 
   .social-link-container {
