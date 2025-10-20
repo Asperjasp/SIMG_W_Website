@@ -1,6 +1,6 @@
 #  Description
 
-In this repository we introduce the website for the seminar SIMG ( Semillero de Investigación y Modelos Generativos ) affilated with the Universidad Nacional de Colombia - UNAL, in which 
+In this repository we introduce the website for the seminar SIMG ( Semillero de Investigación y Modelos Generativos ) affiliated with the Universidad Nacional de Colombia - UNAL, in which 
 
 ## Pages Structure
 To make your SIMG research seminar website effective and comprehensive, you should include the following pages. This structure is designed to inform, attract new members, and serve as a central hub for all your research activities, aligning with the "Ideas Principales" you outlined.
@@ -61,7 +61,7 @@ The location of your meetings at UNAL.
 
 ##  Research Areas
 - Natural Language Processing
-- Difusion models
+- Diffusion models
 
 
 ## 📺  Redes - Networks 
@@ -86,10 +86,12 @@ The location of your meetings at UNAL.
   <a href="https://www.instagram.com/alejosanchezpoveda/">
     <img src="https://img.shields.io/badge/instagram-black?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Badge"/>
   </a>
+
 <!-- Github -->
   <a href="https://github.com/Asperjasp">
     <img src="https://img.shields.io/badge/github-black?style=for-the-badge&logo=github&logoColor=white" alt="Github Badge"/>
   </a>
+
 <!-- Linktree -->
 <a href="https://linktr.ee/Asperjasp">
   <img src="https://img.shields.io/badge/linktr-black?style=for-the-badge&logo=linktr&logoColor=white" alt="Linktree Badge"/>

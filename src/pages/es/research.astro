@@ -142,46 +142,7 @@ const t = {
       </div>
     </section>
 
-    <section class="publications">
-      <h2>{t.publications}</h2>
-      <div class="publications-list">
-        {
-          publications.map((pub) => (
-            <div class="publication-item">
-              <h3>{pub.data.title}</h3>
-              <div class="publication-meta">
-                <p>
-                  <strong>{t.authors}:</strong> {pub.data.authors.join(", ")}
-                </p>
-                {pub.data.journal && (
-                  <p>
-                    <strong>{t.publishedIn}:</strong> {pub.data.journal},{" "}
-                    {pub.data.year}
-                  </p>
-                )}
-                {pub.data.conference && (
-                  <p>
-                    <strong>{t.publishedIn}:</strong> {pub.data.conference},{" "}
-                    {pub.data.year}
-                  </p>
-                )}
-              </div>
-              <p class="publication-abstract">{pub.data.abstract}</p>
-              {pub.data.url && (
-                <a
-                  href={pub.data.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="button"
-                >
-                  Ver Publicación
-                </a>
-              )}
-            </div>
-          ))
-        }
-      </div>
-    </section>
+    
   </main>
 </Layout>
 
