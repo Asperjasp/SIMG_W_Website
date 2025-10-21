@@ -1,379 +1,313 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
-import { getCollection } from "astro:content";
 
-// Obtener proyectos de investigación en español y procesar sus contenidos
-const researchProjects = await getCollection("research", ({ data }) => {
-  return data.lang === "es";
-});
+// 1. Obtener todos los proyectos de investigación en español
+const researchProjects = await getCollection("research", ({ data }) => data.lang === 'es');
 
-// Procesar cada proyecto para usar los enlaces definidos en los metadatos
-const processedProjects = await Promise.all(
-  researchProjects.map(async (project) => {
-    // Si el proyecto tiene enlaces definidos en los metadatos, usarlos directamente
-    const definedLinks = Array.isArray(project.data.links)
-      ? project.data.links
-      : project.data.link
-        ? [
-            {
-              url: project.data.link,
-              text: project.data.linkText || t.viewProject,
-            },
-          ]
-        : [];
+// 2. Formatear los items
+const allItems = researchProjects.map((project) => ({
+    title: project.data.title,
+    date: project.data.startDate,
+    description: project.data.description,
+    url: `/es/research/${project.slug}/`,
+    tags: project.data.tags || [],
+    category: project.data.category,
+}));
 
-    return {
-      ...project,
-      // Los enlaces se definen ahora en los metadatos como un array o como un único enlace
-      externalLinks: definedLinks.length > 0 ? definedLinks : null,
-    };
-  })
-);
+// 3. Ordenar items por fecha
+const sortedItems = allItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-// Obtener publicaciones en español
-const publications = await getCollection("publications", ({ data }) => {
-  return data.lang === "es";
-});
-
-// Texto para español
-const t = {
-  title: "Investigación",
-  description:
-    "Explora nuestros proyectos de investigación en curso y publicaciones",
-  projects: "Proyectos de Investigación",
-  publications: "Publicaciones",
-  viewProject: "Ver Proyecto",
-  authors: "Autores",
-  publishedIn: "Publicado en",
-  status: {
-    active: "Activo",
-    completed: "Completado",
-    planned: "Planificado",
-  },
-};
+// 4. Definir categorías para el filtrado
+const categories = ["Research", "Products", "Partnerships & Outreach"];
+const categoryTranslations = { "Research": "Investigación", "Products": "Productos", "Partnerships & Outreach": "Alianzas y Divulgación" };
 ---
 
-<Layout title={`${t.title} | SIMG`}>
-  <link
-    rel="alternate"
-    type="application/rss+xml"
-    title="Feed RSS para SIMG Investigación"
-    href="/es/rss.xml"
-    slot="head"
-  />
+<Layout title="Investigación | SIMG">
   <Header slot="header" />
-  <main class="container">
-    <section class="hero">
-      <h1>{t.title}</h1>
-      <p class="lead">{t.description}</p>
-      <div class="rss-link">
-        <a href="/es/rss.xml" target="_blank" rel="noopener" class="rss-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="rss-icon"
-          >
-            <path
-              d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
-            ></path>
-          </svg>
-          Suscríbete al RSS
-        </a>
-        <span class="rss-tip">
-          Prueba <a href="https://folo.is/" target="_blank" rel="noopener"
-            >Folo.is</a
-          > para una excelente experiencia de lectura RSS
-        </span>
-      </div>
-    </section>
+  <main>
+    <div class="title-container">
+        <h1>Catálogo de Investigación SIMG</h1>
+        <p>Explora nuestros últimos proyectos de investigación y publicaciones.</p>
+    </div>
 
-    <section class="research-projects">
-      <h2>{t.projects}</h2>
-      <div class="projects-grid">
-        {
-          processedProjects.map((project) => (
-            <div class="project-card">
-              {project.data.image && (
-                <div class="project-image">
-                  <img src={project.data.image} alt={project.data.title} />
-                </div>
-              )}
-              <div class="project-content">
-                <h3 class="project-title">{project.data.title}</h3>
-                <div class="project-status">
-                  <span class={`status-badge ${project.data.status}`}>
-                    {t.status[project.data.status]}
-                  </span>
-                </div>
-                <p>{project.data.description}</p>
-                {project.data.researchers && (
-                  <div class="project-researchers">
-                    <strong>Investigadores:</strong>{" "}
-                    {project.data.researchers.join(", ")}
-                  </div>
-                )}
-                <div class="project-links">
-                  {/* Enlaces externos encontrados en el contenido */}
-                  {project.externalLinks ? (
-                    project.externalLinks.map((link) => (
-                      <a
-                        href={link.url}
-                        class="button"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {link.text || t.viewProject}
-                      </a>
-                    ))
-                  ) : (
-                    <a href={`/es/research/${project.slug}`} class="button">
-                      {t.viewProject}
-                    </a>
-                  )}
-                </div>
-              </div>
+    <div class="search-controls-container">
+        <div class="filter-group">
+            <span class="filter-label">Filtrar por categoría:</span>
+            <div class="category-buttons" id="filter-buttons">
+                <button class="filter-btn active" data-category="all">Todas</button>
+                {categories.map((cat) => (
+                    <button class="filter-btn" data-category={cat}>{categoryTranslations[cat]}</button>
+                ))}
             </div>
-          ))
-        }
-      </div>
-    </section>
+        </div>
+        <div class="search-input-group">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z" stroke="black" stroke-width="2"/>
+                <path d="M10 10L14 14" stroke="black" stroke-width="2" stroke-linecap="square"/>
+            </svg>
+            <input type="text" id="search-input" placeholder="Buscar posts..." class="search-input" />
+        </div>
+    </div>
 
-    
+    <!-- Grilla de Items de Investigación -->
+    <div class="research-grid">
+      {
+        sortedItems.map((item) => (
+          <a href={item.url} class="research-card" data-category={item.category} data-title={item.title.toLowerCase()}>
+            <div class="card-content">
+                <div class="card-header">
+                    {item.category && (
+                        <span class="card-category">{categoryTranslations[item.category] || item.category}</span>
+                    )}
+                </div>
+                <h3 class="card-title">{item.title}</h3>
+                <p class="card-description">{item.description}</p>
+                <div class="card-tags">
+                    {item.tags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+                <div class="card-meta">
+                    <span class="card-date">{new Date(item.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
   </main>
 </Layout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const researchCards = document.querySelectorAll('.research-card');
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    // Set initial checkmark on the active button
+    const initialActiveBtn = document.querySelector('.filter-btn.active');
+    if (initialActiveBtn) {
+        initialActiveBtn.innerHTML += '<span class="checkmark"> ✓</span>';
+    }
+
+    function filterItems() {
+      researchCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-title');
+
+        const categoryMatch = activeCategory === 'all' || cardCategory === activeCategory;
+        const searchMatch = cardTitle.includes(searchTerm);
+
+        if (categoryMatch && searchMatch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class and checkmark from all buttons
+        filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+            const checkmark = btn.querySelector('.checkmark');
+            if (checkmark) {
+                checkmark.remove();
+            }
+        });
+
+        // Add active class and checkmark to the clicked button
+        button.classList.add('active');
+        button.innerHTML += '<span class="checkmark"> ✓</span>';
+
+        activeCategory = button.getAttribute('data-category') ?? 'all';
+
+        filterItems();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.toLowerCase();
+      filterItems();
+    });
+  });
+</script>
+
 <style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  .card-meta {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 1rem;
   }
 
-  .hero {
-    margin-bottom: 4rem;
-    text-align: center;
-    padding: 3rem 2rem;
-    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #3498db, #2980b9);
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
-    position: relative;
-    display: inline-block;
-  }
-
-  h1::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 25%;
-    width: 50%;
-    height: 4px;
-    background: linear-gradient(to right, #3498db, #7dc8ff);
-    border-radius: 2px;
-  }
-
-  .lead {
-    font-size: 1.25rem;
-    color: #34495e;
-    max-width: 800px;
-    margin: 1.5rem auto 1rem;
-    line-height: 1.6;
-  }
-
-  .rss-link {
-    margin-top: 1.5rem;
-  }
-
-  .rss-button {
-    display: inline-flex;
+  .card-header {
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-    background-color: #f26522;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s;
   }
 
-  .rss-button:hover {
-    background-color: #e74c0e;
-  }
-
-  .rss-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .rss-tip {
-    display: block;
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    color: #666;
+  .card-date {
+    font-size: 0.85rem;
+    color: #6c757d;
     font-style: italic;
   }
 
-  .rss-tip a {
-    color: #f26522;
-    text-decoration: underline;
-    transition: color 0.2s;
+  .card-category {
+    display: inline-block;
+    background-color: #3498db; /* Darker blue background */
+    color: white; /* White text for better contrast */
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+  }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
   }
 
-  .rss-tip a:hover {
-    color: #e74c0e;
+  .title-container {
+    text-align: center;
+    margin-bottom: 3rem;
   }
 
-  section {
-    margin-bottom: 4rem;
+  h1 {
+    font-size: 2.8rem;
+    color: var(--dark-text);
   }
 
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 0.5rem;
+  .title-container p {
+      font-size: 1.2rem;
+      color: var(--medium-text);
+      margin-top: -1rem;
   }
 
-  .projects-grid {
+  .search-controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .filter-label {
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .category-buttons {
+    display: flex;
+    border: 1px solid black;
+  }
+
+  .filter-btn {
+    padding: 10px 15px;
+    border: none;
+    border-left: 1px solid black;
+    background-color: #FDF5E6; /* Light background for non-active buttons */
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .category-buttons .filter-btn:first-child {
+    border-left: none;
+  }
+
+  .filter-btn.active {
+    background-color: black;
+    color: white;
+  }
+
+  .filter-btn .checkmark {
+    color: #FF6347; /* Orange-red color for the checkmark */
+    margin-left: 5px;
+  }
+
+  .search-input-group {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    image-rendering: pixelated; 
+  }
+
+  .search-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    padding: 8px 8px 8px 25px; /* Left padding to not overlap icon */
+    font-size: 1rem;
+    width: 200px; /* Adjust as needed */
+  }
+
+  .research-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
   }
 
-  .project-card {
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
+  .research-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
   }
 
-  .project-card:hover {
+  .research-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+    border-color: var(--primary-blue-light);
   }
 
-  .project-image {
-    height: 160px;
-    overflow: hidden;
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .card-title {
+    font-size: 1.25rem;
+    color: var(--dark-text);
+    margin: 0 0 0.75rem 0;
   }
 
-  .project-content {
-    padding: 1rem;
+  .card-description {
+    font-size: 0.95rem;
+    color: var(--medium-text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
 
-  .project-status {
-    margin: 0.5rem 0 1rem;
-  }
-
-  .status-badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .status-badge.active {
-    background-color: #d4edda;
-    color: #155724;
-  }
-
-  .status-badge.completed {
-    background-color: #cce5ff;
-    color: #004085;
-  }
-
-  .status-badge.planned {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-
-  .project-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .project-researchers {
-    margin: 0.8rem 0;
-    font-size: 0.85rem;
-  }
-
-  .project-links {
+  .card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.8rem;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.4rem 0.8rem;
-    background-color: #0077cc;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: background-color 0.3s;
-    font-size: 0.9rem;
-  }
-
-  .button:hover {
-    background-color: #005fa3;
-  }
-
-  .publications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .publication-item {
-    padding: 1.5rem;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .publication-meta {
-    margin: 1rem 0;
-    font-size: 0.9rem;
-    color: #555;
-  }
-
-  .publication-abstract {
-    margin-bottom: 1rem;
-    line-height: 1.6;
+    margin-top: auto;
   }
 </style>

@@ -1,597 +1,316 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
-import { getCollection } from "astro:content";
 
-// Texto para inglés
-const t = {
-  title: "Research",
-  description: "Explore our ongoing research projects and publications",
-  projects: "Research Projects",
-  publications: "Publications",
-  viewProject: "View Project",
-  authors: "Authors",
-  publishedIn: "Published in",
-  status: {
-    active: "Active",
-    completed: "Completed",
-    planned: "Planned",
-  },
-};
+// 1. Fetch all research projects
+const researchProjects = await getCollection("research", ({ data }) => data.lang === 'en');
 
-// Obtener proyectos de investigación en inglés
-const researchProjects = await getCollection("research", ({ data }) => {
-  return data.lang === "en";
+// 2. Format items
+const allItems = researchProjects.map((project) => {
+  const rawStart = project.data.startDate ?? project.data.date ?? project.data.start_date ?? '';
+  const startDate = rawStart ? new Date(String(rawStart)) : new Date();
+  return {
+    title: project.data.title,
+    date: startDate,
+    description: project.data.description,
+    url: `/en/research/${project.slug}/`,
+    tags: project.data.tags || [],
+    category: project.data.category,
+  };
 });
 
-// Process each project to use links defined in the metadata
-const processedProjects = await Promise.all(
-  researchProjects.map(async (project) => {
-    // If the project has links defined in metadata, use them directly
-    const definedLinks = Array.isArray(project.data.links)
-      ? project.data.links
-      : project.data.link
-        ? [
-            {
-              url: project.data.link,
-              text: project.data.linkText || t.viewProject,
-            },
-          ]
-        : [];
+// 3. Sort items by date
+const sortedItems = allItems.sort((a, b) => b.date.getTime() - a.date.getTime());
 
-    return {
-      ...project,
-      // Links are now defined in metadata as an array or as a single link
-      externalLinks: definedLinks.length > 0 ? definedLinks : null,
-    };
-  })
-);
-
-// Obtener publicaciones en inglés
-const publications = await getCollection("publications", ({ data }) => {
-  return data.lang === "en";
-});
+// 4. Define categories for filtering
+const categories = ["Research", "Products", "Partnerships & Outreach"];
 ---
 
-<Layout title={`${t.title} | SIMG`}>
-  <link
-    rel="alternate"
-    type="application/rss+xml"
-    title="RSS Feed for SIMG Research"
-    href="/en/rss.xml"
-    slot="head"
-  />
+<Layout title="Research | SIMG">
   <Header slot="header" />
-  <main class="container">
-    <section class="hero">
-      <h1>{t.title}</h1>
-      <p class="lead">{t.description}</p>
-      <div class="rss-link">
-        <a href="/en/rss.xml" target="_blank" rel="noopener" class="rss-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="rss-icon"
-          >
-            <path
-              d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
-            ></path>
-          </svg>
-          Subscribe to RSS
-        </a>
-        <span class="rss-tip">
-          Try <a href="https://folo.is/" target="_blank" rel="noopener"
-            >Folo.is</a
-          > for a great RSS reading experience
-        </span>
-      </div>
-    </section>
+  <main>
+    <div class="title-container">
+        <h1>SIMG Research Catalog</h1>
+        <p>Explore our latest research projects and publications.</p>
+    </div>
 
-    <section class="research-projects">
-      <h2>{t.projects}</h2>
-      <div class="projects-grid">
-        {
-          processedProjects.map((project) => (
-            <div class="project-card">
-              {project.data.image && (
-                <div class="project-image">
-                  <img src={project.data.image} alt={project.data.title} />
-                </div>
-              )}
-              <div class="project-content">
-                <h3 class="project-title">{project.data.title}</h3>
-                <div class="project-status">
-                  <span class={`status-badge ${project.data.status}`}>
-                    {t.status[project.data.status]}
-                  </span>
-                </div>
-                <p>{project.data.description}</p>
-                {project.data.researchers && (
-                  <div class="project-researchers">
-                    <strong>Researchers:</strong>{" "}
-                    {project.data.researchers.join(", ")}
-                  </div>
-                )}
-                <div class="project-links">
-                  {/* External links found in content */}
-                  {project.externalLinks ? (
-                    project.externalLinks.map((link) => (
-                      <a
-                        href={link.url}
-                        class="button"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {link.text || t.viewProject}
-                      </a>
-                    ))
-                  ) : (
-                    <a href={`/en/research/${project.slug}`} class="button">
-                      {t.viewProject}
-                    </a>
-                  )}
-                </div>
-              </div>
+    <div class="search-controls-container">
+        <div class="filter-group">
+            <span class="filter-label">Filter by category:</span>
+            <div class="category-buttons" id="filter-buttons">
+                <button class="filter-btn active" data-category="all">All</button>
+                {categories.map((cat) => (
+                    <button class="filter-btn" data-category={cat}>{cat}</button>
+                ))}
             </div>
-          ))
-        }
-      </div>
-    </section>
+        </div>
+        <div class="search-input-group">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z" stroke="black" stroke-width="2"/>
+                <path d="M10 10L14 14" stroke="black" stroke-width="2" stroke-linecap="square"/>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search posts..." class="search-input" />
+        </div>
+    </div>
 
-    <section class="publications">
-      <h2>{t.publications}</h2>
-      <div class="publications-list">
-        {
-          publications.map((pub) => (
-            <div class="publication-item">
-              <h3>{pub.data.title}</h3>
-              <div class="publication-meta">
-                <p>
-                  <strong>{t.authors}:</strong> {pub.data.authors.join(", ")}
-                </p>
-                {pub.data.journal && (
-                  <p>
-                    <strong>{t.publishedIn}:</strong> {pub.data.journal},{" "}
-                    {pub.data.year}
-                  </p>
-                )}
-                {pub.data.conference && (
-                  <p>
-                    <strong>{t.publishedIn}:</strong> {pub.data.conference},{" "}
-                    {pub.data.year}
-                  </p>
-                )}
-              </div>
-              <p class="publication-abstract">{pub.data.abstract}</p>
-              {pub.data.url && (
-                <a
-                  href={pub.data.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="button"
-                >
-                  View Publication
-                </a>
-              )}
+    <!-- Research Items Grid -->
+    <div class="research-grid">
+      {
+        sortedItems.map((item) => (
+          <a href={item.url} class="research-card" data-category={item.category} data-title={item.title.toLowerCase()}>
+            <div class="card-content">
+                <div class="card-header">
+                    {item.category && (
+                        <span class="card-category">{item.category}</span>
+                    )}
+                </div>
+                <h3 class="card-title">{item.title}</h3>
+                <p class="card-description">{item.description}</p>
+                <div class="card-tags">
+                    {item.tags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+                <div class="card-meta">
+                    <span class="card-date">{item.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
             </div>
-          ))
-        }
-      </div>
-    </section>
+          </a>
+        ))
+      }
+    </div>
   </main>
 </Layout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const researchCards = document.querySelectorAll('.research-card');
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    // Set initial checkmark on the active button
+    const initialActiveBtn = document.querySelector('.filter-btn.active');
+    if (initialActiveBtn) {
+        initialActiveBtn.innerHTML += '<span class="checkmark"> ✓</span>';
+    }
+
+    function filterItems() {
+      researchCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-title');
+
+        const categoryMatch = activeCategory === 'all' || cardCategory === activeCategory;
+        const searchMatch = cardTitle.includes(searchTerm);
+
+        if (categoryMatch && searchMatch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class and checkmark from all buttons
+        filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+            const checkmark = btn.querySelector('.checkmark');
+            if (checkmark) {
+                checkmark.remove();
+            }
+        });
+
+        // Add active class and checkmark to the clicked button
+        button.classList.add('active');
+        button.innerHTML += '<span class="checkmark"> ✓</span>';
+
+        activeCategory = button.getAttribute('data-category') ?? 'all';
+
+        filterItems();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.toLowerCase();
+      filterItems();
+    });
+  });
+</script>
+
 <style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  .card-meta {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 1rem;
   }
 
-  .hero {
-    margin-bottom: 4rem;
-    text-align: center;
-    padding: 3rem 2rem;
-    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #3498db, #2980b9);
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
-    position: relative;
-    display: inline-block;
-  }
-
-  h1::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 25%;
-    width: 50%;
-    height: 4px;
-    background: linear-gradient(to right, #3498db, #7dc8ff);
-    border-radius: 2px;
-  }
-
-  .lead {
-    font-size: 1.25rem;
-    color: #34495e;
-    max-width: 800px;
-    margin: 1.5rem auto 1rem;
-    line-height: 1.6;
-  }
-
-  .rss-link {
-    margin-top: 1.5rem;
-  }
-
-  .rss-button {
-    display: inline-flex;
+  .card-header {
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #f26522, #e74c0e);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(242, 101, 34, 0.3);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
   }
 
-  .rss-button::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #e74c0e, #d04009);
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.3s ease;
-  }
-
-  .rss-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(242, 101, 34, 0.4);
-  }
-
-  .rss-button:hover::after {
-    opacity: 1;
-  }
-
-  .rss-icon {
-    width: 18px;
-    height: 18px;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-  }
-
-  .rss-tip {
-    display: block;
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    color: #666;
+  .card-date {
+    font-size: 0.85rem;
+    color: #6c757d;
     font-style: italic;
   }
 
-  .rss-tip a {
-    color: #f26522;
-    text-decoration: underline;
+  .card-category {
+    display: inline-block;
+    background-color: #3498db; /* Darker blue background */
+    color: white; /* White text for better contrast */
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
     font-weight: 600;
-    transition: all 0.2s;
-    border-bottom: 1px dotted #f26522;
-    padding-bottom: 1px;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+  }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
   }
 
-  .rss-tip a:hover {
-    color: #e74c0e;
-    border-bottom: 1px solid #e74c0e;
+  .title-container {
+    text-align: center;
+    margin-bottom: 3rem;
   }
 
-  section {
-    margin-bottom: 4rem;
+  h1 {
+    font-size: 2.8rem;
+    color: var(--dark-text);
   }
 
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 0.5rem;
+  .title-container p {
+      font-size: 1.2rem;
+      color: var(--medium-text);
+      margin-top: -1rem;
   }
 
-  .projects-grid {
+  .search-controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .filter-label {
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .category-buttons {
+    display: flex;
+    border: 1px solid black;
+  }
+
+  .filter-btn {
+    padding: 10px 15px;
+    border: none;
+    border-left: 1px solid black;
+    background-color: #FDF5E6; /* Light background for non-active buttons */
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .category-buttons .filter-btn:first-child {
+    border-left: none;
+  }
+
+  .filter-btn.active {
+    background-color: black;
+    color: white;
+  }
+
+  .filter-btn .checkmark {
+    color: #FF6347; /* Orange-red color for the checkmark */
+    margin-left: 5px;
+  }
+
+  .search-input-group {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    image-rendering: pixelated; 
+  }
+
+  .search-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    padding: 8px 8px 8px 25px; /* Left padding to not overlap icon */
+    font-size: 1rem;
+    width: 200px; /* Adjust as needed */
+  }
+
+  .research-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
   }
 
-  .project-card {
-    border: none;
-    border-radius: 10px;
+  .research-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
     overflow: hidden;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-    position: relative;
-    background-color: #ffffff;
-    border-top: 5px solid #3498db;
   }
 
-  .project-card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  .research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+    border-color: var(--primary-blue-light);
   }
 
-  .project-card::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #3498db, #7dc8ff);
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.5s ease;
-  }
-
-  .project-card:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
-  .project-image {
-    height: 180px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .project-image::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(0deg, rgba(52, 152, 219, 0.2), transparent);
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .project-card:hover .project-image::before {
-    opacity: 1;
-  }
-
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .project-card:hover .project-image img {
-    transform: scale(1.05);
-  }
-
-  .project-content {
+  .card-content {
     padding: 1.5rem;
-    background-color: #ffffff;
-    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  .project-status {
-    margin: 0.5rem 0 1rem;
+  .card-title {
+    font-size: 1.25rem;
+    color: var(--dark-text);
+    margin: 0 0 0.75rem 0;
   }
 
-  .status-badge {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border-radius: 2rem;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
+  .card-description {
+    font-size: 0.95rem;
+    color: var(--medium-text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
 
-  .status-badge::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s;
-  }
-
-  .status-badge:hover::after {
-    transform: translateX(100%);
-  }
-
-  .status-badge.active {
-    background: linear-gradient(135deg, #20bf6b, #0fb9b1);
-    color: white;
-  }
-
-  .status-badge.completed {
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
-  }
-
-  .status-badge.planned {
-    background: linear-gradient(135deg, #f7b731, #fa8231);
-    color: white;
-  }
-
-  .project-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .project-researchers {
-    margin: 0.8rem 0;
-    font-size: 0.85rem;
-  }
-
-  .project-links {
+  .card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.8rem;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    font-size: 0.95rem;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(41, 128, 185, 0.2);
-    z-index: 1;
-  }
-
-  .button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #2980b9, #1a5fb4);
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    z-index: -1;
-  }
-
-  .button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.3);
-  }
-
-  .button:hover::before {
-    opacity: 1;
-  }
-
-  .button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(41, 128, 185, 0.2);
-  }
-
-  .publications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .publication-item {
-    padding: 2rem;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    background-color: #ffffff;
-    position: relative;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-    border-left: 5px solid #3498db;
-  }
-
-  .publication-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  }
-
-  .publication-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    background: linear-gradient(90deg, #3498db, #7dc8ff);
-    opacity: 0.7;
-    transition: height 0.3s ease;
-    border-radius: 10px 10px 0 0;
-    z-index: 0;
-  }
-
-  .publication-item:hover::before {
-    height: 5px;
-  }
-
-  .publication-item h3 {
-    color: #2c3e50;
-    position: relative;
-    padding-bottom: 0.75rem;
-    margin-top: 0;
-    z-index: 1;
-  }
-
-  .publication-item h3::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 3px;
-    background: linear-gradient(to right, #3498db, #7dc8ff);
-  }
-
-  .publication-meta {
-    margin: 1.25rem 0;
-    font-size: 0.95rem;
-    color: #34495e;
-    background-color: rgba(52, 152, 219, 0.05);
-    padding: 1rem;
-    border-radius: 5px;
-    border-left: 3px solid #3498db;
-  }
-
-  .publication-abstract {
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
-    color: #444;
-    font-size: 1.05rem;
+    margin-top: auto;
   }
 </style>

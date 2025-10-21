@@ -4,7 +4,8 @@ description: "Large language models are revolutionizing various fields of knowle
 researchers: ["Tuli peña", "Robert Gomez", "Francisco Jose"]
 status: "completed"
 startDate: 2024-01-15
-tags: ["Finance", "AI", "PhinGPT", "LLMS"]
+category: "Research"
+tags: ["Finance", "AI", "LLMS"]
 lang: "en"
 translationKey: "phingpt-research-project"
 # Option 1: Single link

@@ -1,4 +1,9 @@
+// Note que la configuracion esta dentro de la caarpeta content para que las subcarpeteas se consideren automaticamente contenidos
+// y no hay un src/content.config.ts
+
 import { defineCollection, z } from 'astro:content';
+
+// Remember z is from the Zod library to provide Zod validation
 
 // Esquema para miembros
 const membersCollection = defineCollection({
@@ -15,23 +20,6 @@ const membersCollection = defineCollection({
   })
 });
 
-// Esquema para publicaciones científicas
-const publicationsCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    authors: z.array(z.string()),
-    abstract: z.string(),
-    journal: z.string().optional(),
-    conference: z.string().optional(),
-    year: z.number(),
-    doi: z.string().optional(),
-    url: z.string().url().optional(),
-    tags: z.array(z.string()).default([]),
-    lang: z.enum(['en', 'es']),
-    translationKey: z.string(),
-  })
-});
 
 // Esquema para entradas de blog
 const blogCollection = defineCollection({
@@ -55,6 +43,7 @@ const researchCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     image: z.string().optional(),
+    category: z.enum(['Research', 'Products', 'Partnerships & Outreach']).optional(),
     researchers: z.array(z.string()).optional(),
     status: z.enum(['active', 'completed', 'planned']).default('active'),
     startDate: z.date().optional(),
@@ -77,10 +66,26 @@ const researchCollection = defineCollection({
   })
 });
 
+// Esquema para publicaciones
+const publicationsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    authors: z.array(z.string()),
+    abstract: z.string(),
+    year: z.number(),
+    journal: z.string().optional(),
+    url: z.string().url().optional(),
+    tags: z.array(z.string()).default([]),
+    lang: z.enum(['en', 'es']),
+    translationKey: z.string(),
+  })
+});
+
 // Exportar colecciones
 export const collections = {
   'members': membersCollection,
-  'publications': publicationsCollection,
   'blog': blogCollection,
   'research': researchCollection,
+  'publications': publicationsCollection,
 };
