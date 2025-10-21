@@ -16,12 +16,18 @@ const allItems = researchProjects.map((project) => ({
     category: project.data.category,
 }));
 
-// 3. Ordenar items por fecha
-const sortedItems = allItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+// 3. Ordenar items por fecha (solo items con fecha válida)
+const sortedItems = allItems
+  .filter(item => item.date != null)
+  .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime());
 
 // 4. Definir categorías para el filtrado
-const categories = ["Research", "Products", "Partnerships & Outreach"];
-const categoryTranslations = { "Research": "Investigación", "Products": "Productos", "Partnerships & Outreach": "Alianzas y Divulgación" };
+const categories = ["Research", "Products", "Partnerships & Outreach"] as const;
+const categoryTranslations: Record<typeof categories[number], string> = {
+  "Research": "Investigación",
+  "Products": "Productos",
+  "Partnerships & Outreach": "Alianzas y Divulgación"
+};
 ---
 
 <Layout title="Investigación | SIMG">
@@ -68,7 +74,7 @@ const categoryTranslations = { "Research": "Investigación", "Products": "Produc
                     {item.tags.map(tag => <span class="tag">{tag}</span>)}
                 </div>
                 <div class="card-meta">
-                    <span class="card-date">{new Date(item.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <span class="card-date">{item.date ? new Date(String(item.date)).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}</span>
                 </div>
             </div>
           </a>
@@ -95,15 +101,18 @@ const categoryTranslations = { "Research": "Investigación", "Products": "Produc
     function filterItems() {
       researchCards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
-        const cardTitle = card.getAttribute('data-title');
+        const cardTitle = card.getAttribute('data-title') || '';
 
         const categoryMatch = activeCategory === 'all' || cardCategory === activeCategory;
         const searchMatch = cardTitle.includes(searchTerm);
 
-        if (categoryMatch && searchMatch) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
+        // Narrow type to HTMLElement so ".style" is available
+        if (card instanceof HTMLElement) {
+          if (categoryMatch && searchMatch) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
         }
       });
     }
@@ -129,10 +138,14 @@ const categoryTranslations = { "Research": "Investigación", "Products": "Produc
       });
     });
 
-    searchInput.addEventListener('input', (e) => {
-      searchTerm = e.target.value.toLowerCase();
-      filterItems();
-    });
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const target = e.target;
+        const value = target instanceof HTMLInputElement ? target.value.toLowerCase() : '';
+        searchTerm = value;
+        filterItems();
+      });
+    }
   });
 </script>
 

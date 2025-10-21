@@ -8,7 +8,7 @@ const researchProjects = await getCollection("research", ({ data }) => data.lang
 
 // 2. Format items
 const allItems = researchProjects.map((project) => {
-  const rawStart = project.data.startDate ?? project.data.date ?? project.data.start_date ?? '';
+  const rawStart = project.data.startDate ?? (project.data as any).date ?? (project.data as any).start_date ?? '';
   const startDate = rawStart ? new Date(String(rawStart)) : new Date();
   return {
     title: project.data.title,
@@ -98,15 +98,18 @@ const categories = ["Research", "Products", "Partnerships & Outreach"];
     function filterItems() {
       researchCards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
-        const cardTitle = card.getAttribute('data-title');
+        const cardTitle = card.getAttribute('data-title') || '';
 
         const categoryMatch = activeCategory === 'all' || cardCategory === activeCategory;
         const searchMatch = cardTitle.includes(searchTerm);
 
-        if (categoryMatch && searchMatch) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
+        // Narrow type to HTMLElement so ".style" is available
+        if (card instanceof HTMLElement) {
+          if (categoryMatch && searchMatch) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
         }
       });
     }
@@ -132,10 +135,14 @@ const categories = ["Research", "Products", "Partnerships & Outreach"];
       });
     });
 
-    searchInput.addEventListener('input', (e) => {
-      searchTerm = e.target.value.toLowerCase();
-      filterItems();
-    });
+    // Only attach the input listener if the element exists and is an input
+    const searchInputEl = searchInput instanceof HTMLInputElement ? searchInput : null;
+    if (searchInputEl) {
+      searchInputEl.addEventListener('input', () => {
+        searchTerm = searchInputEl.value.toLowerCase();
+        filterItems();
+      });
+    }
   });
 </script>
 
