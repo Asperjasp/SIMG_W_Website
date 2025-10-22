@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
-    "astro": "^5.13.5",
+    "astro": "5.14.8",
     "vercel": "^48.0.0"
   }
 }

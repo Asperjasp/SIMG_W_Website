@@ -66,26 +66,11 @@ const researchCollection = defineCollection({
   })
 });
 
-// Esquema para publicaciones
-const publicationsCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    authors: z.array(z.string()),
-    abstract: z.string(),
-    year: z.number(),
-    journal: z.string().optional(),
-    url: z.string().url().optional(),
-    tags: z.array(z.string()).default([]),
-    lang: z.enum(['en', 'es']),
-    translationKey: z.string(),
-  })
-});
-
 // Exportar colecciones
+// Esquema para publicaciones
+// Esquema para publicaciones
 export const collections = {
   'members': membersCollection,
   'blog': blogCollection,
   'research': researchCollection,
-  'publications': publicationsCollection,
 };
