@@ -91,7 +91,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
       <!-- Menú desplegable Sesiones -->
       <div class="dropdown">
         <button class="dropbtn">
-          {isSpanish ? "Sesiones" : "Sessions"}
+          {isSpanish ? "Recursos" : "Resources"}
           <span class="dropdown-arrow">&#9662;</span>
         </button>
         <div class="dropdown-content">
@@ -166,7 +166,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: #f5f5f5;
+    background: #fdf5e6; /* Light creamy orange background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
   }
@@ -241,15 +241,16 @@ function getAlternateUrl(path: string, targetLang: string): string {
     transform: rotate(180deg);
   }
 
-  .dropbtn:hover {
+  /* Change button color when dropdown is open */
+  .dropdown:hover .dropbtn {
     background-color: #005fa3;
   }
 
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 180px;
+    background-color: #e9ecef; /* Light gray background for contrast */
+    min-width: 200px; /* Slightly wider */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
     border-radius: 4px;
@@ -258,7 +259,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .dropdown-content a {
-    color: #0077cc;
+    color: black; /* Black text as requested */
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -270,8 +271,8 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .dropdown-content a:hover {
-    background-color: #e6f0fa;
-    color: #005fa3;
+    background-color: #dde6ed; /* A slightly darker gray on hover */
+    color: #0077cc; /* Blue text on hover for feedback */
   }
 
   .dropdown:hover .dropdown-content {
@@ -313,7 +314,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
     display: none;
     position: absolute;
     right: 0;
-    background-color: white;
+    background-color: #e9ecef; /* Light gray to match other dropdown */
     min-width: 120px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
@@ -322,16 +323,19 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .language-dropdown-content a {
-    color: #333;
+    color: black; /* Black text for contrast */
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
-    transition: background-color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
   }
 
   .language-dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #dde6ed; /* Darker gray on hover */
+    color: #0077cc; /* Blue text on hover */
   }
 
   .language-dropdown-content a.active {
