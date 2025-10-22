@@ -67,8 +67,6 @@ const researchCollection = defineCollection({
 });
 
 // Exportar colecciones
-// Esquema para publicaciones
-// Esquema para publicaciones
 export const collections = {
   'members': membersCollection,
   'blog': blogCollection,
