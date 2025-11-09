@@ -30,7 +30,7 @@ Our mission is to create a dynamic learning environment that introduces students
 
 ## 🎨 Design System
 
-This website features a modern, Mistral AI-inspired design with:
+This website features a modern design with:
 
 - **Color Palette**: Orange primary (#f97316), Blue secondary (#0ea5e9)
 - **Visual Effects**: Glassmorphism, radial gradients, smooth animations

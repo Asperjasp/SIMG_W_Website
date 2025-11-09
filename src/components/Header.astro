@@ -721,15 +721,28 @@ function getAlternateUrl(path: string, targetLang: string): string {
     // Función para manejar el cambio de tema
     if (themeToggle) {
       themeToggle.addEventListener("click", () => {
-        document.documentElement.classList.toggle("light-mode");
-        body.classList.toggle("light-mode");
+        const html = document.documentElement;
+        const body = document.body;
         
-        // Guardar preferencia en localStorage
-        if (body.classList.contains("light-mode")) {
-          localStorage.setItem("theme", "light");
-        } else {
+        // Toggle en ambos elementos de manera sincronizada
+        const isCurrentlyLight = html.classList.contains("light-mode");
+        
+        if (isCurrentlyLight) {
+          // Cambiar a modo oscuro
+          html.classList.remove("light-mode");
+          body.classList.remove("light-mode");
           localStorage.setItem("theme", "dark");
+          console.log("Theme changed to: dark");
+        } else {
+          // Cambiar a modo claro
+          html.classList.add("light-mode");
+          body.classList.add("light-mode");
+          localStorage.setItem("theme", "light");
+          console.log("Theme changed to: light");
         }
+        
+        // Forzar repaint para que los cambios se apliquen inmediatamente
+        void html.offsetHeight;
       });
     }
 
