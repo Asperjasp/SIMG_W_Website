@@ -6,7 +6,7 @@ import Header from "../../../components/Header.astro";
 export async function getStaticPaths() {
   const members = await getCollection("members", ({ data }) => data.lang === "en");
   return members.map((member) => ({
-    params: { slug: member.slug },
+    params: { slug: member.id.replace('en/', '').replace('.md', '') },
     props: { member },
   }));
 }
