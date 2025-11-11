@@ -7,14 +7,18 @@ import Header from "../../components/Header.astro";
 const researchProjects = await getCollection("research", ({ data }) => data.lang === 'es');
 
 // 2. Formatear los items
-const allItems = researchProjects.map((project) => ({
+const allItems = researchProjects.map((project) => {
+  // Remove the "es/" prefix from slug to avoid duplication
+  const cleanSlug = project.slug.replace('es/', '');
+  return {
     title: project.data.title,
     date: project.data.startDate,
     description: project.data.description,
-    url: `/es/research/${project.slug}/`,
+    url: `/es/research/${cleanSlug}/`,
     tags: project.data.tags || [],
     category: project.data.category,
-}));
+  };
+});
 
 // 3. Ordenar items por fecha (solo items con fecha válida)
 const sortedItems = allItems

@@ -66,6 +66,61 @@ const researchCollection = defineCollection({
         })
       )
       .optional(),
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // NEW: Extended article fields for publications/announcements
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+    // Project type (e.g., "Research Paper", "Product Launch", "Announcement")
+    projectType: z.string().optional(),
+    
+    // Publication date for announcements/papers
+    publicationDate: z.date().optional(),
+    
+    // Academic publications (papers, preprints, etc.)
+    publications: z
+      .array(
+        z.object({
+          title: z.string(),
+          authors: z.array(z.string()).optional(),
+          venue: z.string().optional(), // e.g., "NeurIPS 2024", "arXiv"
+          date: z.date().optional(),
+          url: z.string().url().optional(),
+          pdf: z.string().url().optional(),
+          arxiv: z.string().optional(), // arXiv ID like "2507.13264"
+          doi: z.string().optional(),
+          type: z.enum(['preprint', 'conference', 'journal', 'workshop']).optional(),
+        })
+      )
+      .optional(),
+    
+    // Related resources (demos, code, datasets, etc.)
+    resources: z
+      .array(
+        z.object({
+          name: z.string(),
+          description: z.string().optional(),
+          url: z.string().url(),
+          type: z.enum(['demo', 'code', 'dataset', 'model', 'blog', 'other']).optional(),
+        })
+      )
+      .optional(),
+    
+    // Key highlights/features for the project
+    highlights: z.array(z.string()).optional(),
+    
+    // Team/collaborators information
+    collaborators: z
+      .array(
+        z.object({
+          name: z.string(),
+          affiliation: z.string().optional(),
+          url: z.string().url().optional(),
+        })
+      )
+      .optional(),
+    
+    // Funding/sponsors
+    funding: z.array(z.string()).optional(),
   })
 });
 

@@ -10,11 +10,13 @@ const researchProjects = await getCollection("research", ({ data }) => data.lang
 const allItems = researchProjects.map((project) => {
   const rawStart = project.data.startDate ?? (project.data as any).date ?? (project.data as any).start_date ?? '';
   const startDate = rawStart ? new Date(String(rawStart)) : new Date();
+  // Remove the "en/" prefix from slug to avoid duplication
+  const cleanSlug = project.slug.replace('en/', '');
   return {
     title: project.data.title,
     date: startDate,
     description: project.data.description,
-    url: `/en/research/${project.slug}/`,
+    url: `/en/research/${cleanSlug}/`,
     tags: project.data.tags || [],
     category: project.data.category,
   };
