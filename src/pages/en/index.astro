@@ -104,8 +104,8 @@ const latestResearch = researchProjects
               <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" stroke="white" stroke-Width="2" stroke-Linejoin="round"/>
               <defs>
                 <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40">
-                  <stop stop-Color="#f97316"/>
-                  <stop offset="1" stop-Color="#ea580c"/>
+                  <stop stop-Color="#F4C542"/>
+                  <stop offset="1" stop-Color="#d97706"/>
                 </linearGradient>
               </defs>
             </svg>
@@ -125,7 +125,7 @@ const latestResearch = researchProjects
               <circle cx="20" cy="20" r="3" fill="white"/>
               <defs>
                 <linearGradient id="gradient2" x1="0" y1="0" x2="40" y2="40">
-                  <stop stop-Color="#0ea5e9"/>
+                  <stop stop-Color="#2E6DB4"/>
                   <stop offset="1" stop-Color="#8b5cf6"/>
                 </linearGradient>
               </defs>
@@ -145,7 +145,7 @@ const latestResearch = researchProjects
               <path d="M12 20H28M20 12V28" stroke="white" stroke-Width="2" stroke-Linecap="round"/>
               <defs>
                 <linearGradient id="gradient3" x1="0" y1="0" x2="40" y2="40">
-                  <stop stop-Color="#f97316"/>
+                  <stop stop-Color="#F4C542"/>
                   <stop offset="1" stop-Color="#e11d48"/>
                 </linearGradient>
               </defs>
@@ -242,8 +242,8 @@ const latestResearch = researchProjects
     width: 100vw;
     left: 50%;
     transform: translateX(-50%);
-    background: radial-gradient(ellipse at top right, rgba(249, 115, 22, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
+    background: radial-gradient(ellipse at top right, rgba(244, 197, 66, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(46, 109, 180, 0.08) 0%, transparent 60%);
     z-index: 0;
     pointer-events: none;
   }
@@ -288,8 +288,8 @@ const latestResearch = researchProjects
   }
 
   .gradient-badge {
-    border: 1px solid rgba(249, 115, 22, 0.3);
-    background: rgba(249, 115, 22, 0.08);
+    border: 1px solid rgba(244, 197, 66, 0.3);
+    background: rgba(244, 197, 66, 0.08);
   }
 
   .badge-dot {
@@ -309,7 +309,7 @@ const latestResearch = researchProjects
   }
 
   .gradient-orange-blue {
-    background: linear-gradient(120deg, #f97316 0%, #ea580c 50%, #0ea5e9 100%);
+    background: linear-gradient(120deg, #F4C542 0%, #d97706 50%, #2E6DB4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -381,7 +381,7 @@ const latestResearch = researchProjects
   .visual-gradient {
     position: absolute;
     inset: 0;
-    background: rgba(249, 115, 22, 0.08);
+    background: rgba(244, 197, 66, 0.08);
     opacity: 0.4;
     z-index: 1;
     border-radius: var(--radius-xl);
@@ -390,13 +390,13 @@ const latestResearch = researchProjects
   .floating-badge {
     position: absolute;
     padding: var(--space-3) var(--space-5);
-    background: rgba(249, 115, 22, 0.08);
-    border: 1px solid rgba(249, 115, 22, 0.3);
+    background: rgba(244, 197, 66, 0.08);
+    border: 1px solid rgba(244, 197, 66, 0.3);
     border-radius: var(--radius-full);
     backdrop-filter: var(--glass-blur);
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
-    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.15);
+    box-shadow: 0 4px 16px rgba(244, 197, 66, 0.15);
     animation: float 4s ease-in-out infinite;
     white-space: nowrap;
   }
@@ -405,23 +405,23 @@ const latestResearch = researchProjects
     top: 5%;
     right: -5%;
     animation-delay: 0s;
-    border-color: rgba(249, 115, 22, 0.4);
+    border-color: rgba(244, 197, 66, 0.4);
   }
 
   .badge-2 {
     bottom: 25%;
     right: -8%;
     animation-delay: 1s;
-    background: rgba(14, 165, 233, 0.08);
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.15);
+    background: rgba(46, 109, 180, 0.08);
+    border-color: rgba(46, 109, 180, 0.4);
+    box-shadow: 0 4px 16px rgba(46, 109, 180, 0.15);
   }
 
   .badge-3 {
     top: 45%;
     left: -8%;
     animation-delay: 2s;
-    border-color: rgba(249, 115, 22, 0.4);
+    border-color: rgba(244, 197, 66, 0.4);
   }
 
   @media (max-width: 968px) {

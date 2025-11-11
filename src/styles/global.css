@@ -5,32 +5,44 @@
 */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   🎨 DESIGN TOKENS - Color System
+   🎨 DESIGN TOKENS - Van Gogh Starry Night + Yellow Turtle Color System
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
-  /* Primary Colors */
-  --primary-50: #fff7ed;
-  --primary-100: #ffedd5;
-  --primary-200: #fed7aa;
-  --primary-300: #fdba74;
-  --primary-400: #fb923c;
-  --primary-500: #f97316; /* Main orange */
-  --primary-600: #ea580c;
-  --primary-700: #c2410c;
-  --primary-800: #9a3412;
-  --primary-900: #7c2d12;
+  /* Primary Colors - Turtle Yellow */
+  --primary-50: #fffbeb;
+  --primary-100: #fef3c7;
+  --primary-200: #fde68a;
+  --primary-300: #fcd34d;
+  --primary-400: #fbbf24;
+  --primary-500: #F4C542; /* Turtle Yellow - Main */
+  --primary-600: #d97706;
+  --primary-700: #b45309;
+  --primary-800: #92400e;
+  --primary-900: #78350f;
 
-  /* Accent Colors */
-  --accent-50: #f0f9ff;
-  --accent-100: #e0f2fe;
-  --accent-200: #bae6fd;
-  --accent-300: #7dd3fc;
-  --accent-400: #38bdf8;
-  --accent-500: #0ea5e9;
-  --accent-600: #0284c7;
-  --accent-700: #0369a1;
-  --accent-800: #075985;
-  --accent-900: #0c4a6e;
+  /* Secondary Colors - Turtle Green */
+  --secondary-50: #f0fdf4;
+  --secondary-100: #dcfce7;
+  --secondary-200: #bbf7d0;
+  --secondary-300: #86efac;
+  --secondary-400: #4ade80;
+  --secondary-500: #5FA36A; /* Turtle Green - Main */
+  --secondary-600: #16a34a;
+  --secondary-700: #15803d;
+  --secondary-800: #166534;
+  --secondary-900: #14532d;
+
+  /* Accent Colors - Starry Blue */
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #2E6DB4; /* Starry Blue - Main */
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
 
   /* Neutral/Gray Scale - For dark mode */
   --gray-50: #fafafa;
@@ -45,38 +57,47 @@
   --gray-900: #18181b;
   --gray-950: #09090b;
 
-  /* Background Colors */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-tertiary: #1a1a1a;
-  --bg-elevated: #1f1f1f;
+  /* Background Colors - Deep Night Sky */
+  --bg-primary: #0C1A26; /* Deep navy-indigo (night sky) */
+  --bg-secondary: #142B3B; /* Slightly lighter blue */
+  --bg-tertiary: #1a3a4f;
+  --bg-elevated: #20445a;
 
   /* Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
-  --text-inverse: #18181b;
+  --text-primary: #E6E9EF; /* Soft white */
+  --text-secondary: #A8B3C3; /* Muted gray-blue */
+  --text-tertiary: #7a8898;
+  --text-inverse: #0C1A26;
 
-  /* Gradient Definitions */
-  --gradient-primary: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  --gradient-accent: linear-gradient(135deg, #f97316 0%, #e11d48 100%);
-  --gradient-blue: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
-  --gradient-mesh: radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.15) 0px, transparent 50%),
-                   radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
-                   radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+  /* Text Colors */
+  --text-primary: #E6E9EF; /* Soft white */
+  --text-secondary: #A8B3C3; /* Muted gray-blue */
+  --text-tertiary: #7a8898;
+  --text-inverse: #0C1A26;
+
+  /* Gradient Definitions - Van Gogh Inspired */
+  --gradient-primary: linear-gradient(135deg, #F4C542 0%, #d97706 100%); /* Yellow gradient */
+  --gradient-accent: linear-gradient(90deg, #F4C542 0%, #2E6DB4 100%); /* Yellow to Blue */
+  --gradient-blue: linear-gradient(135deg, #2E6DB4 0%, #1e40af 100%); /* Blue gradient */
+  --gradient-green: linear-gradient(135deg, #5FA36A 0%, #15803d 100%); /* Green gradient */
+  --gradient-starry: linear-gradient(135deg, #0C1A26 0%, #142B3B 50%, #1a3a4f 100%); /* Night sky */
+  --gradient-mesh: radial-gradient(at 20% 30%, rgba(244, 197, 66, 0.15) 0px, transparent 50%),
+                   radial-gradient(at 80% 20%, rgba(46, 109, 180, 0.12) 0px, transparent 50%),
+                   radial-gradient(at 50% 80%, rgba(95, 163, 106, 0.08) 0px, transparent 50%);
 
   /* Glass Effect */
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(20, 43, 59, 0.4);
+  --glass-border: rgba(230, 233, 239, 0.1);
   --glass-blur: blur(12px);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.3);
-  --shadow-glow-blue: 0 0 20px rgba(14, 165, 233, 0.3);
+  /* Shadows - Enhanced with color tints */
+  --shadow-sm: 0 1px 2px 0 rgba(12, 26, 38, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(12, 26, 38, 0.5), 0 2px 4px -1px rgba(12, 26, 38, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(12, 26, 38, 0.6), 0 4px 6px -2px rgba(12, 26, 38, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(12, 26, 38, 0.7), 0 10px 10px -5px rgba(12, 26, 38, 0.4);
+  --shadow-glow: 0 0 20px rgba(244, 197, 66, 0.3); /* Yellow glow */
+  --shadow-glow-blue: 0 0 20px rgba(46, 109, 180, 0.3); /* Blue glow */
+  --shadow-glow-green: 0 0 20px rgba(95, 163, 106, 0.25); /* Green glow */
 
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -279,11 +300,79 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ⭐ STARRY NIGHT EFFECT - Van Gogh Inspired
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    /* Large stars */
+    radial-gradient(2px 2px at 20% 30%, rgba(244, 197, 66, 0.9), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(244, 197, 66, 0.8), transparent),
+    radial-gradient(3px 3px at 50% 50%, rgba(230, 233, 239, 0.7), transparent),
+    radial-gradient(2px 2px at 80% 10%, rgba(46, 109, 180, 0.8), transparent),
+    radial-gradient(1px 1px at 90% 60%, rgba(244, 197, 66, 0.7), transparent),
+    /* Medium stars */
+    radial-gradient(1px 1px at 33% 50%, rgba(230, 233, 239, 0.6), transparent),
+    radial-gradient(2px 2px at 75% 80%, rgba(244, 197, 66, 0.6), transparent),
+    radial-gradient(1px 1px at 15% 85%, rgba(46, 109, 180, 0.7), transparent),
+    /* Small stars scattered */
+    radial-gradient(1px 1px at 45% 15%, rgba(230, 233, 239, 0.5), transparent),
+    radial-gradient(1px 1px at 25% 65%, rgba(244, 197, 66, 0.5), transparent),
+    radial-gradient(1px 1px at 95% 45%, rgba(230, 233, 239, 0.4), transparent),
+    radial-gradient(1px 1px at 10% 20%, rgba(46, 109, 180, 0.5), transparent),
+    radial-gradient(1px 1px at 70% 35%, rgba(230, 233, 239, 0.4), transparent),
+    radial-gradient(1px 1px at 40% 90%, rgba(244, 197, 66, 0.4), transparent),
+    radial-gradient(1px 1px at 85% 25%, rgba(230, 233, 239, 0.3), transparent),
+    radial-gradient(1px 1px at 30% 5%, rgba(46, 109, 180, 0.4), transparent);
+  background-size: 
+    250% 250%, 250% 250%, 250% 250%, 250% 250%, 250% 250%,
+    200% 200%, 200% 200%, 200% 200%,
+    300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%;
+  background-position: 
+    0% 0%, 40% 60%, 50% 50%, 80% 10%, 90% 60%,
+    33% 50%, 75% 80%, 15% 85%,
+    45% 15%, 25% 65%, 95% 45%, 10% 20%, 70% 35%, 40% 90%, 85% 25%, 30% 5%;
+  animation: twinkle 5s ease-in-out infinite, float-stars 120s linear infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes float-stars {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    📝 TYPOGRAPHY
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+main {
+  position: relative;
+  z-index: 1;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-bold);
@@ -295,7 +384,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: clamp(var(--text-4xl), 5vw, var(--text-7xl));
   font-weight: var(--font-extrabold);
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gray-400) 100%);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -640,7 +729,7 @@ a.button {
     box-shadow: var(--shadow-glow);
   }
   50% {
-    box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+    box-shadow: 0 0 30px rgba(244, 197, 66, 0.5);
   }
 }
 
