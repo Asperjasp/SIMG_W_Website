@@ -141,7 +141,7 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
         <span>RSS</span>
       </a>
 
-      <!-- Hugging Face (official icon) -->
+      <!-- Hugging Face -->
       <a
         href="https://huggingface.co/simg-un"
         target="_blank"
@@ -149,13 +149,66 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
         class="social-link huggingface"
         title="Hugging Face"
       >
-        <img
-          src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg"
-          alt="Hugging Face"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
-          loading="lazy"
-        />
+          viewBox="0 0 512 512"
+          fill="currentColor"
+          class="hf-logo"
+        >
+          <!-- Gradient definition for hover effect -->
+          <defs>
+            <linearGradient id="hf-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#FFD21E;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#FF9900;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- Hugging Face logo with hands -->
+          <!-- Main face circle -->
+          <circle cx="256" cy="256" r="200"/>
+          
+          <!-- Left eye -->
+          <circle cx="210" cy="230" r="25" fill="#fff"/>
+          <circle cx="215" cy="230" r="12" fill="currentColor"/>
+          
+          <!-- Right eye -->
+          <circle cx="302" cy="230" r="25" fill="#fff"/>
+          <circle cx="307" cy="230" r="12" fill="currentColor"/>
+          
+          <!-- Smile -->
+          <path d="M 180 280 Q 256 350 332 280" stroke="#fff" stroke-width="20" fill="none" stroke-linecap="round"/>
+          
+          <!-- Blush marks -->
+          <ellipse cx="145" cy="250" rx="20" ry="15" fill="#fff" opacity="0.5"/>
+          <ellipse cx="367" cy="250" rx="20" ry="15" fill="#fff" opacity="0.5"/>
+          
+          <!-- Left hand -->
+          <g transform="translate(80, 350)">
+            <!-- Palm -->
+            <ellipse cx="0" cy="0" rx="50" ry="60" transform="rotate(-20)"/>
+            <!-- Fingers -->
+            <ellipse cx="-25" cy="-40" rx="15" ry="35" transform="rotate(-35)"/>
+            <ellipse cx="-10" cy="-50" rx="15" ry="40" transform="rotate(-15)"/>
+            <ellipse cx="10" cy="-55" rx="15" ry="38" transform="rotate(5)"/>
+            <ellipse cx="30" cy="-50" rx="15" ry="35" transform="rotate(25)"/>
+            <!-- Thumb -->
+            <ellipse cx="-45" cy="10" rx="18" ry="30" transform="rotate(-70)"/>
+          </g>
+          
+          <!-- Right hand -->
+          <g transform="translate(432, 350)">
+            <!-- Palm -->
+            <ellipse cx="0" cy="0" rx="50" ry="60" transform="rotate(20)"/>
+            <!-- Fingers -->
+            <ellipse cx="25" cy="-40" rx="15" ry="35" transform="rotate(35)"/>
+            <ellipse cx="10" cy="-50" rx="15" ry="40" transform="rotate(15)"/>
+            <ellipse cx="-10" cy="-55" rx="15" ry="38" transform="rotate(-5)"/>
+            <ellipse cx="-30" cy="-50" rx="15" ry="35" transform="rotate(-25)"/>
+            <!-- Thumb -->
+            <ellipse cx="45" cy="10" rx="18" ry="30" transform="rotate(70)"/>
+          </g>
+        </svg>
         <span>Hugging Face</span>
       </a>
         
@@ -214,13 +267,6 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
     height: 32px;
     margin-bottom: 0.5rem;
   }
-  .social-link img {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 0.5rem;
-    display: block;
-    transition: filter 0.3s ease;
-  }
 
   .social-link span {
     font-size: 0.9rem;
@@ -247,16 +293,18 @@ const rssText = isSpanish ? "Suscríbete al RSS" : "Subscribe to RSS";
   .rss:hover {
     color: #f26522;
   }
+  
+  /* Hugging Face - starts as single tone, shows gradient on hover */
+  .huggingface svg {
+    transition: all 0.3s ease;
+  }
+  
+  .huggingface:hover svg {
+    fill: url(#hf-gradient);
+  }
+  
   .huggingface:hover {
-    color: #FF9900;
-    filter: drop-shadow(0 0 4px rgba(255, 153, 0, 0.5));
-  }
-  /* Hugging Face logo in grayscale by default; show color on hover */
-  .huggingface img {
-    filter: grayscale(100%) brightness(0.35) contrast(1.1);
-  }
-  .huggingface:hover img {
-    filter: none;
+    transform: translateY(-5px);
   }
 
   .social-link-container {
