@@ -3,8 +3,8 @@ title: "PhinGPT: Un Modelo de Lenguaje Especializado para el Sector Financiero"
 description: "Los grandes modelos de lenguaje están revolucionando diversos campos del conocimiento. Este trabajo busca entrenar un modelo especializado para el sector financiero optimizando costos computacionales con un entrenamiento eficiente."
 researchers: ["Tuli Peña", "Robert Gomez", "Francisco José Gutiérrez"]
 status: "completed"
-startDate: 2024-01-15
-publicationDate: 2024-06-20
+startDate: 2025-11-09
+publicationDate: 2024-11-10
 category: "Research"
 tags: ["Finanzas", "IA", "LLMs", "PLN", "QLoRA"]
 lang: "es"

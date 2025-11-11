@@ -3,8 +3,8 @@ title: "Collaboration with LatamGPT CENIA Project"
 description: "Strategic partnership with CENIA's LatamGPT initiative to advance Latin American language models and foster regional AI research collaboration."
 researchers: ["SIMG Research Group"]
 status: "active"
-startDate: 2024-10-15
-publicationDate: 2024-11-01
+startDate: 2025-10-30
+publicationDate: 2025-10-30
 category: "Partnerships & Outreach"
 tags: ["LatamGPT", "LLMs", "AI"]
 lang: "en"

@@ -3,8 +3,8 @@ title: "Vinculación con el Proyecto LatamGPT CENIA"
 description: "Asociación estratégica con la iniciativa LatamGPT de CENIA para avanzar en modelos de lenguaje latinoamericanos y fomentar la colaboración regional en investigación de IA."
 researchers: ["Grupo de Investigación SIMG"]
 status: "active"
-startDate: 2024-10-15
-publicationDate: 2024-11-01
+startDate: 2025-10-30
+publicationDate: 2025-10-30
 category: "Partnerships & Outreach"
 tags: ["LatamGPT", "LLMs", "IA"]
 lang: "es"
