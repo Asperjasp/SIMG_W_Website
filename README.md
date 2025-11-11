@@ -141,7 +141,27 @@ Run from the project root:
   - Success/error feedback with styled notifications
   - Free tier: 200 emails/month
 - Contact information (location, emails, meeting times)
+- Interactive Google Maps integration showing Building 404 - Yu Takeuchi location
 - Social media links
+
+### 6. **Session Recordings** (`/sessions/recordings`)
+
+- **YouTube Video Integration** powered by [YouTube Data API v3](https://developers.google.com/youtube/v3)
+  - Automatically fetches the latest 3 videos from the SIMG YouTube channel
+  - Displays high-quality video thumbnails
+  - Shows video duration and publication date
+  - Click-to-play functionality with hover effects
+  - Styled with Van Gogh color palette (yellow/blue gradients)
+  - Free tier: 10,000 quota units/day (sufficient for ~100 video fetches)
+- Direct links to full YouTube channel
+- Subscribe call-to-action section
+
+**Video Display Features**:
+- Grid layout (3 columns on desktop, responsive on mobile)
+- Glassmorphism effects with dark backgrounds
+- Yellow play button overlay (#F4C542)
+- Animated hover states with scaling effects
+- Error handling with fallback to direct YouTube links
 
 #### EmailJS Configuration
 
@@ -160,6 +180,29 @@ The contact form uses EmailJS to send emails without requiring a backend server.
 - `EMAILJS_TEMPLATE_ID`: Contact form template ID
 
 These values are configured in both `/en/contact.astro` and `/es/contact.astro`.
+
+#### YouTube Data API Configuration
+
+The session recordings page uses YouTube Data API v3 to fetch and display videos from the SIMG channel. Here's how it works:
+
+1. **API Setup**: Fetches latest videos from `@simg-UN` YouTube channel
+2. **Video Data Retrieved**: 
+   - Video thumbnails (high quality)
+   - Title and description
+   - Publication date
+   - Video duration
+   - Video ID for direct YouTube links
+3. **Display Features**:
+   - Automatic grid layout (3 videos)
+   - Click-to-watch on YouTube
+   - Styled with Van Gogh palette
+   - Fallback error messages if API fails
+
+**Required Configuration**:
+- `PUBLIC_YOUTUBE_API_KEY`: Your YouTube Data API v3 key
+- `PUBLIC_YOUTUBE_CHANNEL_ID`: SIMG YouTube channel ID
+
+These values are configured in both `/en/sessions/recordings.astro` and `/es/sessions/recordings.astro`.
 
 ---
 
@@ -272,6 +315,94 @@ The form sends these variables to EmailJS:
 - ✅ **Public keys are OK**: EmailJS public keys are meant to be visible in client-side code
 - ✅ **Rate limiting**: EmailJS has built-in rate limiting and spam protection
 - ✅ **Production ready**: Works seamlessly with Vercel, Netlify, and other platforms
+
+---
+
+## 📺 YouTube Integration Setup
+
+The session recordings page uses **YouTube Data API v3** to automatically fetch and display the latest videos from the SIMG channel.
+
+### Setup Instructions
+
+1. **Create Google Cloud Project**
+   - Visit [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing one
+   - Name it (e.g., "SIMG Website")
+
+2. **Enable YouTube Data API v3**
+   - In the Cloud Console, go to "APIs & Services" → "Library"
+   - Search for "YouTube Data API v3"
+   - Click "Enable"
+
+3. **Create API Credentials**
+   - Go to "APIs & Services" → "Credentials"
+   - Click "Create Credentials" → "API Key"
+   - Copy the generated API key
+   - (Optional) Restrict the key to YouTube Data API v3 for security
+
+4. **Get Your YouTube Channel ID**
+   - Visit your YouTube channel: `https://www.youtube.com/@simg-UN`
+   - Click "About" tab
+   - Click "Share channel" → "Copy channel ID"
+   - Alternative: Use the URL structure to find it
+
+5. **Configure Environment Variables**
+   
+   Edit your `.env` file and add the YouTube credentials:
+   ```env
+   # YouTube Data API v3
+   PUBLIC_YOUTUBE_API_KEY=your_youtube_api_key_here
+   PUBLIC_YOUTUBE_CHANNEL_ID=your_channel_id_here
+   ```
+
+   **Where to find these values:**
+   - `PUBLIC_YOUTUBE_API_KEY`: Google Cloud Console → APIs & Services → Credentials
+   - `PUBLIC_YOUTUBE_CHANNEL_ID`: YouTube Channel → About → Share → Copy channel ID
+
+6. **For Production Deployment (Vercel)**
+   
+   Add the environment variables in your Vercel project settings:
+   - Go to Project Settings → Environment Variables
+   - Add both `PUBLIC_YOUTUBE_API_KEY` and `PUBLIC_YOUTUBE_CHANNEL_ID`
+   - Redeploy your site
+
+7. **Test the Integration**
+   - Restart your dev server: `bun run dev`
+   - Navigate to `/en/sessions/recordings` or `/es/sessions/recordings`
+   - Verify that the latest 3 videos from your channel appear
+   - Click on a video to ensure it opens on YouTube
+
+### API Features
+
+The integration automatically fetches:
+- **Video Thumbnails**: High-quality images (480x360px)
+- **Video Titles**: Displayed with 2-line truncation
+- **Publication Dates**: Formatted in English/Spanish
+- **Video Duration**: Converted from ISO 8601 format (PT1H2M3S → 1:02:03)
+- **Direct Links**: Click any video card to watch on YouTube
+
+### Quota Limits
+
+YouTube Data API v3 has quota limits:
+- **Daily Quota**: 10,000 units per day (default)
+- **Search Request Cost**: ~100 units
+- **Videos Request Cost**: ~1 unit
+- **Total per page load**: ~101 units
+- **Daily page loads possible**: ~99 loads (more than enough for normal traffic)
+
+### Fallback Behavior
+
+If the API key is not configured or requests fail:
+- Displays friendly error message
+- Provides direct link to YouTube channel
+- Doesn't break the page functionality
+
+### Security Notes
+
+- ✅ **API restrictions recommended**: Limit the API key to YouTube Data API v3 only
+- ✅ **HTTP referrer restrictions**: Set allowed domains in Google Cloud Console
+- ✅ **Public exposure is safe**: Client-side API keys are normal for YouTube API
+- ✅ **Rate limiting**: Google handles quota limits automatically
 
 ---
 

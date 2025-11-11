@@ -26,9 +26,30 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
           <div>
             <h3>Ubicación</h3>
             <p>Universidad Nacional de Colombia</p>
-            <p>Facultad de Ciencias - Edificio 401 Yutakeuchi Salón 408</p>
+            <p>Facultad de Ciencias - Edificio 404 Yu Takeuchi</p>
             <p>Bogotá, Colombia</p>
           </div>
+        </div>
+
+        <div class="map-container">
+          <div class="google-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1988.3775674383194!2d-74.08357486487408!3d4.637716344836317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b5c4db7a78b%3A0xe6aae4b28bf665a2!2s404%20-%20Departamentos%20de%20Matem%C3%A1ticas%2C%20F%C3%ADsica%20y%20Estad%C3%ADstica%20Yu%20Takeuchi!5e0!3m2!1ses-419!2sco!4v1757602729545!5m2!1ses-419!2sco"
+              width="100%"
+              height="300"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+          </div>
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=Edificio+Yu+Takeuchi+Universidad+Nacional+de+Colombia+Bogota"
+            class="directions-link"
+            target="_blank"
+            rel="noopener noreferrer">Obtener Direcciones</a
+          >
         </div>
 
         <div class="info-item">
@@ -325,6 +346,45 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   .linktree:hover {
     color: #43e660;
   }
+
+  .map-container {
+    margin: 1.5rem 0;
+    background: rgba(46, 109, 180, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(46, 109, 180, 0.2);
+  }
+
+  .google-map {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .google-map iframe {
+    display: block;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .directions-link {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #F4C542 0%, #d97706 100%);
+    color: #0C1A26;
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
+  }
+
+  .directions-link:hover {
+    background: linear-gradient(135deg, #d97706 0%, #F4C542 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 197, 66, 0.4);
+  }
 </style>
 
 <script define:vars={{ EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID }}>
@@ -348,11 +408,11 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   };
   document.head.appendChild(script);
 
-  const contactForm = document.getElementById("contact-form") as HTMLFormElement;
-  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
-  const btnText = submitBtn?.querySelector('.btn-text') as HTMLElement;
-  const btnLoader = submitBtn?.querySelector('.btn-loader') as HTMLElement;
-  const formStatus = document.getElementById("form-status") as HTMLElement;
+  const contactForm = document.getElementById("contact-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const btnText = submitBtn?.querySelector('.btn-text');
+  const btnLoader = submitBtn?.querySelector('.btn-loader');
+  const formStatus = document.getElementById("form-status");
 
   if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
@@ -369,10 +429,10 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
       try {
         // Get form data
         const formData = new FormData(contactForm);
-        const name = formData.get('from_name') as string;
-        const email = formData.get('reply_to') as string;
-        const subject = formData.get('subject') as string;
-        const message = formData.get('message') as string;
+        const name = formData.get('from_name');
+        const email = formData.get('reply_to');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
 
         console.log('Form data:', { name, email, subject, messageLength: message.length });
 
