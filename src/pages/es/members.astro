@@ -26,7 +26,7 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     <section class="members-grid">
       {
         sortedMembers.map((member) => (
-          <div class="member-card">
+          <a href={`/es/members/${member.slug}`} class="member-card">
             <div class="member-image">
               <img
                 src={member.data.image || "/members/default-profile.jpg"}
@@ -36,28 +36,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
             <div class="member-info">
               <h2>{member.data.name}</h2>
               <p class="position">{member.data.position}</p>
-              <div class="member-links">
-                {member.data.email && (
-                  <a
-                    href={`mailto:${member.data.email}`}
-                    class="member-link email"
-                  >
-                    <span>Email</span>
-                  </a>
-                )}
-                {member.data.website && (
-                  <a
-                    href={member.data.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="member-link website"
-                  >
-                    <span>Sitio Web</span>
-                  </a>
-                )}
-              </div>
+              <p class="view-profile">Ver Perfil →</p>
             </div>
-          </div>
+          </a>
         ))
       }
     </section>
@@ -113,6 +94,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
   }
 
   .member-card:hover {
@@ -147,31 +131,22 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   }
 
   .position {
-    color: #0077cc;
+    color: #2E6DB4;
     font-size: 1rem;
     margin-bottom: 1rem;
     font-weight: 500;
   }
 
-  .member-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .member-link {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #333;
+  .view-profile {
+    color: #F4C542;
     font-size: 0.9rem;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: transform 0.3s ease;
   }
 
-  .member-link:hover {
-    background-color: #e0e0e0;
+  .member-card:hover .view-profile {
+    transform: translateX(4px);
   }
 
   .join-us {
@@ -196,19 +171,21 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   }
 
   .cta-button {
-    background-color: #0077cc;
-    color: white;
+    background-color: #F4C542;
+    color: #0C1A26;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 4px;
     font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
   }
 
   .cta-button:hover {
-    background-color: #005fa3;
+    background-color: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(244, 197, 66, 0.25);
   }
 
   @media (max-width: 768px) {

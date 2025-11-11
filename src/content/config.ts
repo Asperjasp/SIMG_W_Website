@@ -13,7 +13,10 @@ const membersCollection = defineCollection({
     position: z.string(),
     email: z.string().email().optional(),
     website: z.string().url().optional(),
+    github: z.string().url().optional(),
+    linkedin: z.string().url().optional(),
     image: z.string().optional(),
+    bio: z.string().optional(), // Short bio for card
     order: z.number().default(99), // Para ordenar los miembros
     lang: z.enum(['en', 'es']), // Idioma del contenido
     translationKey: z.string(), // Clave para relacionar contenido en diferentes idiomas
