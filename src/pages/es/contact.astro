@@ -385,6 +385,78 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(244, 197, 66, 0.4);
   }
+
+  /* Light Mode Styles */
+  :global(html.light-mode) .lead,
+  :global(body.light-mode) .lead {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  :global(html.light-mode) .contact-info,
+  :global(body.light-mode) .contact-info,
+  :global(html.light-mode) .contact-form,
+  :global(body.light-mode) .contact-form {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 248, 248, 0.98) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(html.light-mode) .info-item,
+  :global(body.light-mode) .info-item {
+    background: rgba(46, 109, 180, 0.05);
+    border: 1px solid rgba(46, 109, 180, 0.15);
+  }
+
+  :global(html.light-mode) .info-item p,
+  :global(body.light-mode) .info-item p {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  :global(html.light-mode) .info-item a,
+  :global(body.light-mode) .info-item a {
+    color: #2E6DB4;
+  }
+
+  :global(html.light-mode) .info-item a:hover,
+  :global(body.light-mode) .info-item a:hover {
+    color: #d97706;
+  }
+
+  :global(html.light-mode) label,
+  :global(body.light-mode) label {
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  :global(html.light-mode) input,
+  :global(body.light-mode) input,
+  :global(html.light-mode) textarea,
+  :global(body.light-mode) textarea {
+    background: rgba(46, 109, 180, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  :global(html.light-mode) input:focus,
+  :global(body.light-mode) input:focus,
+  :global(html.light-mode) textarea:focus,
+  :global(body.light-mode) textarea:focus {
+    border-color: #d97706;
+    background: rgba(46, 109, 180, 0.08);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+  }
+
+  :global(html.light-mode) input::placeholder,
+  :global(body.light-mode) input::placeholder,
+  :global(html.light-mode) textarea::placeholder,
+  :global(body.light-mode) textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :global(html.light-mode) .map-container,
+  :global(body.light-mode) .map-container {
+    background: rgba(46, 109, 180, 0.05);
+    border: 1px solid rgba(46, 109, 180, 0.15);
+  }
 </style>
 
 <script define:vars={{ EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID }}>

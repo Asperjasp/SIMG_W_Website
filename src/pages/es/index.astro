@@ -179,20 +179,23 @@ const latestResearch = researchProjects
         </div>
 
         <div class="research-grid">
-          {latestResearch.map((project) => (
-            <a href={`/es/research/${project.slug}/`} class="research-card card">
-              <div class="research-category">
-                {project.data.category || 'Research'}
-              </div>
-              <h3 class="research-title">{project.data.title}</h3>
-              <p class="research-description">{project.data.description}</p>
-              <div class="research-tags">
-                {(project.data.tags || []).slice(0, 3).map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
-            </a>
-          ))}
+          {latestResearch.map((project) => {
+            const cleanSlug = project.slug.replace('es/', '');
+            return (
+              <a href={`/es/research/${cleanSlug}/`} class="research-card card">
+                <div class="research-category">
+                  {project.data.category || 'Research'}
+                </div>
+                <h3 class="research-title">{project.data.title}</h3>
+                <p class="research-description">{project.data.description}</p>
+                <div class="research-tags">
+                  {(project.data.tags || []).slice(0, 3).map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
