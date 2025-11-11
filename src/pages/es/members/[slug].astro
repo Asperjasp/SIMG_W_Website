@@ -1,0 +1,370 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+
+export async function getStaticPaths() {
+  const members = await getCollection("members", ({ data }) => data.lang === "es");
+  return members.map((member) => ({
+    params: { slug: member.id.replace('es/', '').replace('.md', '') },
+    props: { member },
+  }));
+}
+
+const { member } = Astro.props;
+const { Content } = await member.render();
+---
+
+<Layout title={`${member.data.name} | SIMG`}>
+  <Header slot="header" />
+  <main>
+    <!-- Hero Section -->
+    <section class="member-hero">
+      <div class="hero-container">
+        <div class="member-profile">
+          <div class="profile-image-wrapper">
+            <img
+              src={member.data.image || "/images/members/default-profile.jpg"}
+              alt={member.data.name}
+              class="profile-image"
+            />
+          </div>
+          <div class="profile-info">
+            <h1 class="member-name">{member.data.name}</h1>
+            <p class="member-position">{member.data.position}</p>
+            
+            {member.data.bio && (
+              <p class="member-bio">{member.data.bio}</p>
+            )}
+
+            <!-- Social Links -->
+            <div class="social-links">
+              {member.data.email && (
+                <a href={`mailto:${member.data.email}`} class="social-link email" title="Correo">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <span>Correo</span>
+                </a>
+              )}
+              
+              {member.data.linkedin && (
+                <a href={member.data.linkedin} target="_blank" rel="noopener noreferrer" class="social-link linkedin" title="LinkedIn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+              )}
+              
+              {member.data.github && (
+                <a href={member.data.github} target="_blank" rel="noopener noreferrer" class="social-link github" title="GitHub">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+              )}
+              
+              {member.data.website && (
+                <a href={member.data.website} target="_blank" rel="noopener noreferrer" class="social-link website" title="Sitio Web">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  <span>Sitio Web</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="member-content">
+      <div class="content-container">
+        <article class="prose">
+          <Content />
+        </article>
+      </div>
+    </section>
+
+    <!-- Back to Team -->
+    <section class="back-section">
+      <div class="content-container">
+        <a href="/es/members" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 10H5M5 10L10 5M5 10L10 15"/>
+          </svg>
+          <span>Volver al Equipo</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🎯 HERO SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  
+  .member-hero {
+    position: relative;
+    padding: var(--space-24) 0 var(--space-16);
+    overflow: hidden;
+  }
+
+  .member-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at top center, rgba(244, 197, 66, 0.08) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    position: relative;
+    z-index: 1;
+  }
+
+  .member-profile {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  @media (max-width: 968px) {
+    .member-profile {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      text-align: center;
+    }
+  }
+
+  .profile-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 20px 40px rgba(244, 197, 66, 0.15);
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .member-name {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-extrabold);
+    line-height: 1.2;
+    margin: 0;
+    background: linear-gradient(120deg, #F4C542 0%, #d97706 50%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .member-position {
+    font-size: var(--text-xl);
+    color: #2E6DB4;
+    font-weight: var(--font-semibold);
+    margin: 0;
+  }
+
+  .member-bio {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🔗 SOCIAL LINKS
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .social-links {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 968px) {
+    .social-links {
+      justify-content: center;
+    }
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    backdrop-filter: var(--glass-blur);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(244, 197, 66, 0.15);
+  }
+
+  .social-link.email:hover {
+    border-color: #F4C542;
+    background: rgba(244, 197, 66, 0.1);
+  }
+
+  .social-link.linkedin:hover {
+    border-color: #0077B5;
+    background: rgba(0, 119, 181, 0.1);
+  }
+
+  .social-link.github:hover {
+    border-color: #E6E9EF;
+    background: rgba(230, 233, 239, 0.1);
+  }
+
+  .social-link.website:hover {
+    border-color: #2E6DB4;
+    background: rgba(46, 109, 180, 0.1);
+  }
+
+  .social-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     📝 CONTENT SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .member-content {
+    padding: var(--space-16) 0;
+  }
+
+  .content-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .prose {
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .prose :global(h2) {
+    color: var(--text-primary);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--glass-border);
+    padding-bottom: var(--space-2);
+  }
+
+  .prose :global(h3) {
+    color: var(--text-primary);
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+
+  .prose :global(ul) {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .prose :global(li) {
+    position: relative;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-2);
+  }
+
+  .prose :global(li::before) {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #F4C542;
+    font-weight: var(--font-bold);
+  }
+
+  .prose :global(a) {
+    color: #F4C542;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(244, 197, 66, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .prose :global(a:hover) {
+    border-bottom-color: #F4C542;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     ⬅️ BACK LINK
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .back-section {
+    padding: var(--space-8) 0 var(--space-16);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    backdrop-filter: var(--glass-blur);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+    border-color: #F4C542;
+    transform: translateX(-4px);
+  }
+
+  .back-link svg {
+    transition: transform 0.3s ease;
+  }
+
+  .back-link:hover svg {
+    transform: translateX(-2px);
+  }
+</style>

@@ -26,7 +26,7 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     <section class="members-grid">
       {
         sortedMembers.map((member) => (
-          <div class="member-card">
+          <a href={`/en/members/${member.id.replace('en/', '').replace('.md', '')}`} class="member-card">
             <div class="member-image">
               <img
                 src={member.data.image || "/members/default-profile.jpg"}
@@ -36,28 +36,9 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
             <div class="member-info">
               <h2>{member.data.name}</h2>
               <p class="position">{member.data.position}</p>
-              <div class="member-links">
-                {member.data.email && (
-                  <a
-                    href={`mailto:${member.data.email}`}
-                    class="member-link email"
-                  >
-                    <span>Email</span>
-                  </a>
-                )}
-                {member.data.website && (
-                  <a
-                    href={member.data.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="member-link website"
-                  >
-                    <span>Website</span>
-                  </a>
-                )}
-              </div>
+              <p class="view-profile">View Profile →</p>
             </div>
-          </div>
+          </a>
         ))
       }
     </section>
@@ -88,12 +69,15 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: var(--text-secondary);
     max-width: 800px;
     margin: 0 auto;
   }
@@ -106,23 +90,39 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   }
 
   .member-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(18, 35, 52, 0.95) 0%, rgba(12, 26, 38, 0.98) 100%);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     transition:
       transform 0.3s ease,
-      box-shadow 0.3s ease;
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
   }
 
   .member-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(244, 197, 66, 0.3);
+    border-color: rgba(244, 197, 66, 0.5);
   }
 
   .member-image {
     height: 250px;
     overflow: hidden;
+    position: relative;
+  }
+
+  .member-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(12, 26, 38, 0.3) 100%);
+    pointer-events: none;
   }
 
   .member-image img {
@@ -133,7 +133,7 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   }
 
   .member-card:hover .member-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 
   .member-info {
@@ -143,49 +143,47 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
   .member-info h2 {
     font-size: 1.5rem;
     margin: 0 0 0.5rem 0;
-    color: #2c3e50;
+    color: var(--text-primary);
+    font-weight: var(--font-bold);
   }
 
   .position {
-    color: #0077cc;
+    color: #2E6DB4;
     font-size: 1rem;
     margin-bottom: 1rem;
     font-weight: 500;
   }
 
-  .member-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .member-link {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #333;
+  .view-profile {
+    color: #F4C542;
     font-size: 0.9rem;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: transform 0.3s ease;
   }
 
-  .member-link:hover {
-    background-color: #e0e0e0;
+  .member-card:hover .view-profile {
+    transform: translateX(4px);
   }
 
   .join-us {
     text-align: center;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, rgba(18, 35, 52, 0.95) 0%, rgba(12, 26, 38, 0.98) 100%);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    backdrop-filter: blur(10px);
     padding: 3rem 2rem;
-    border-radius: 8px;
+    border-radius: var(--radius-2xl);
     margin-top: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
   .join-us h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .join-us p {
@@ -193,22 +191,27 @@ const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    color: var(--text-secondary);
   }
 
   .cta-button {
-    background-color: #0077cc;
-    color: white;
+    background: linear-gradient(135deg, #F4C542 0%, #d97706 100%);
+    color: #0C1A26;
     border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius-full);
     font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    display: inline-block;
+    box-shadow: 0 4px 16px rgba(244, 197, 66, 0.3);
   }
 
   .cta-button:hover {
-    background-color: #005fa3;
+    background: linear-gradient(135deg, #d97706 0%, #F4C542 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(244, 197, 66, 0.4);
   }
 
   @media (max-width: 768px) {

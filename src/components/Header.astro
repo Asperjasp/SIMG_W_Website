@@ -60,7 +60,7 @@ function getAlternateUrl(path: string, targetLang: string): string {
   <!-- Navegación principal -->
   <nav id="main-nav">
     <div class="nav-links">
-      <a href="/" class={currentPath === "/" ? "active" : ""}
+      <a href={isSpanish ? "/es/" : "/en/"} class={currentPath === "/" || currentPath === "/es/" || currentPath === "/en/" ? "active" : ""}
         >{isSpanish ? "Inicio" : "Home"}</a
       >
       <a
@@ -116,6 +116,24 @@ function getAlternateUrl(path: string, targetLang: string): string {
         </div>
       </div>
 
+      <!-- Botón de cambio de tema -->
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
       <!-- Selector de idioma con ícono de mundo -->
       <div class="language-selector">
         <div class="language-dropdown">
@@ -166,14 +184,19 @@ function getAlternateUrl(path: string, targetLang: string): string {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: #fdf5e6; /* Light creamy orange background */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
   }
 
   .logo h1 {
     margin: 0;
     font-size: 1.5rem;
+    color: #ffffff !important;
+    font-weight: 700;
   }
 
   /* Estilos para navegación desktop */
@@ -189,25 +212,30 @@ function getAlternateUrl(path: string, targetLang: string): string {
 
   nav a {
     text-decoration: none;
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
   }
 
   nav a:hover {
-    color: #0077cc;
+    color: #f97316;
+    border-bottom-color: #f97316;
   }
 
   nav a.active {
-    color: #0077cc;
-    font-weight: bold;
+    color: #f97316;
+    border-bottom-color: #f97316;
+    font-weight: 700;
   }
 
   .language-selector {
     margin-left: 1rem;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     padding-left: 1rem;
     position: relative;
+    z-index: 1001;
   }
 
   /* Estilos para el menú desplegable Sesiones */
@@ -282,28 +310,38 @@ function getAlternateUrl(path: string, targetLang: string): string {
   .language-dropdown {
     position: relative;
     display: inline-block;
+    z-index: 1001;
   }
 
   .language-button {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 8px;
-    border-radius: 4px;
-    color: #333;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
   }
 
   .language-button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(249, 115, 22, 0.1);
+    border-color: #f97316;
+    color: #f97316;
   }
 
   .world-icon {
     vertical-align: middle;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .language-button:hover .world-icon {
+    filter: brightness(0) invert(1);
+    opacity: 1;
   }
 
   .current-lang {
@@ -311,40 +349,218 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .language-dropdown-content {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     right: 0;
-    background-color: #e9ecef; /* Light gray to match other dropdown */
-    min-width: 120px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    border-radius: 4px;
+    top: 100%;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(12px);
+    min-width: 140px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    border-radius: 8px;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    pointer-events: auto;
+    transition: opacity 0.2s ease, visibility 0s linear 0.3s;
   }
 
   .language-dropdown-content a {
-    color: black; /* Black text for contrast */
+    color: rgba(255, 255, 255, 0.9);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
+    transition: all 0.2s ease;
+    font-weight: 500;
   }
 
   .language-dropdown-content a:hover {
-    background-color: #dde6ed; /* Darker gray on hover */
-    color: #0077cc; /* Blue text on hover */
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #f97316;
   }
 
   .language-dropdown-content a.active {
-    color: #0077cc;
-    font-weight: bold;
+    color: #f97316;
+    font-weight: 700;
+    background-color: rgba(249, 115, 22, 0.05);
   }
 
   .language-dropdown:hover .language-dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+
+  /* Crear un área invisible que conecte el botón con el dropdown */
+  .language-dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    right: -0.5rem;
+    height: 0.5rem;
+    background: transparent;
+  }
+
+  /* Botón de cambio de tema */
+  .theme-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #f97316;
+    transform: translateY(-1px);
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .sun-icon {
     display: block;
+  }
+
+  .moon-icon {
+    display: none;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     LIGHT MODE OVERRIDES
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  
+  /* Header en modo claro */
+  :global(html.light-mode) .header,
+  :global(body.light-mode) .header {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :global(html.light-mode) .logo h1,
+  :global(body.light-mode) .logo h1 {
+    color: #18181b !important;
+  }
+
+  /* Links de navegación en modo claro */
+  :global(html.light-mode) nav a,
+  :global(body.light-mode) nav a {
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  :global(html.light-mode) nav a:hover,
+  :global(body.light-mode) nav a:hover {
+    color: #f97316 !important;
+  }
+
+  :global(html.light-mode) nav a.active,
+  :global(body.light-mode) nav a.active {
+    color: #f97316 !important;
+  }
+
+  /* Botón del dropdown en modo claro */
+  :global(html.light-mode) .dropbtn,
+  :global(body.light-mode) .dropbtn {
+    background-color: #f97316 !important;
+    color: white !important;
+  }
+
+  :global(html.light-mode) .dropdown:hover .dropbtn,
+  :global(body.light-mode) .dropdown:hover .dropbtn {
+    background-color: #ea580c !important;
+  }
+
+  /* Tema toggle en modo claro */
+  :global(html.light-mode) .theme-toggle,
+  :global(body.light-mode) .theme-toggle {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  :global(html.light-mode) .theme-toggle:hover,
+  :global(body.light-mode) .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :global(html.light-mode) .theme-toggle .sun-icon,
+  :global(body.light-mode) .theme-toggle .sun-icon {
+    display: none;
+  }
+
+  :global(html.light-mode) .theme-toggle .moon-icon,
+  :global(body.light-mode) .theme-toggle .moon-icon {
+    display: block;
+  }
+
+  /* Language button en modo claro */
+  :global(html.light-mode) .language-button,
+  :global(body.light-mode) .language-button {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  :global(html.light-mode) .language-button:hover,
+  :global(body.light-mode) .language-button:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :global(html.light-mode) .current-lang,
+  :global(body.light-mode) .current-lang {
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  :global(html.light-mode) .world-icon,
+  :global(body.light-mode) .world-icon {
+    filter: brightness(0) !important;
+    opacity: 0.8;
+  }
+
+  /* Language dropdown en modo claro */
+  :global(html.light-mode) .language-dropdown-content,
+  :global(body.light-mode) .language-dropdown-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :global(html.light-mode) .language-dropdown-content a,
+  :global(body.light-mode) .language-dropdown-content a {
+    color: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  :global(html.light-mode) .language-dropdown-content a:hover,
+  :global(body.light-mode) .language-dropdown-content a:hover {
+    background-color: rgba(249, 115, 22, 0.1) !important;
+    color: #f97316 !important;
+  }
+
+  :global(html.light-mode) .language-dropdown-content a.active,
+  :global(body.light-mode) .language-dropdown-content a.active {
+    color: #f97316 !important;
+    background-color: rgba(249, 115, 22, 0.05) !important;
+  }
+
+  /* Language selector border */
+  :global(html.light-mode) .language-selector,
+  :global(body.light-mode) .language-selector {
+    border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
   }
 
   /* Botón de menú hamburguesa (oculto en desktop) */
@@ -498,6 +714,37 @@ function getAlternateUrl(path: string, targetLang: string): string {
     const dropdowns = document.querySelectorAll(".dropdown");
     const langButton = document.querySelector(".language-button");
     const langDropdown = document.querySelector(".language-dropdown-content");
+    const themeToggle = document.getElementById("theme-toggle");
+
+    console.log("Header script loaded", { langButton, langDropdown });
+
+    // Función para manejar el cambio de tema
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const html = document.documentElement;
+        const body = document.body;
+        
+        // Toggle en ambos elementos de manera sincronizada
+        const isCurrentlyLight = html.classList.contains("light-mode");
+        
+        if (isCurrentlyLight) {
+          // Cambiar a modo oscuro
+          html.classList.remove("light-mode");
+          body.classList.remove("light-mode");
+          localStorage.setItem("theme", "dark");
+          console.log("Theme changed to: dark");
+        } else {
+          // Cambiar a modo claro
+          html.classList.add("light-mode");
+          body.classList.add("light-mode");
+          localStorage.setItem("theme", "light");
+          console.log("Theme changed to: light");
+        }
+        
+        // Forzar repaint para que los cambios se apliquen inmediatamente
+        void html.offsetHeight;
+      });
+    }
 
     // Función para manejar el menú móvil
     if (menuToggle && mainNav) {
@@ -506,6 +753,29 @@ function getAlternateUrl(path: string, targetLang: string): string {
         mainNav.classList.toggle("active");
         body.classList.toggle("menu-open");
       });
+    }
+
+    // Manejador del selector de idioma solo para móvil (en desktop usa hover CSS)
+    if (langButton && langDropdown) {
+      // Solo en móvil, usar click
+      if (window.innerWidth <= 768) {
+        langButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const isVisible = (langDropdown as HTMLElement).style.display === "block";
+          (langDropdown as HTMLElement).style.display = isVisible ? "none" : "block";
+          console.log("Language selector clicked (mobile), visible:", !isVisible);
+        });
+        
+        // Cerrar cuando se haga click fuera (solo móvil)
+        document.addEventListener("click", (e) => {
+          const target = e.target as Node;
+          if (!langButton.contains(target) && !langDropdown.contains(target)) {
+            (langDropdown as HTMLElement).style.display = "none";
+          }
+        });
+      }
+      // En desktop, el hover CSS se encarga automáticamente
     }
 
     // Manejador de eventos táctiles para el menú desplegable en móvil
@@ -525,16 +795,6 @@ function getAlternateUrl(path: string, targetLang: string): string {
             });
           }
         }
-      }
-
-      // Para el selector de idioma
-      if (langButton && langDropdown) {
-        langButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          (langDropdown as HTMLElement).style.display =
-            (langDropdown as HTMLElement).style.display === "block" ? "none" : "block";
-        });
       }
     }
 

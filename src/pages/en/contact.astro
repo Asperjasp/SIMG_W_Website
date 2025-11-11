@@ -1,6 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
+
+// Get EmailJS credentials from environment variables
+const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 ---
 
 <Layout title="Contact | SIMG">
@@ -19,9 +24,30 @@ import Header from "../../components/Header.astro";
           <div>
             <h3>Location</h3>
             <p>Universidad Nacional de Colombia - UNAL</p>
-            <p>Facultad de Ciencias - Edificio 401 Yutakeuchi Salón 408</p>
+            <p>Faculty of Sciences - Building 404 Yu Takeuchi</p>
             <p>Bogotá, Colombia</p>
           </div>
+        </div>
+
+        <div class="map-container">
+          <div class="google-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1988.3775674383194!2d-74.08357486487408!3d4.637716344836317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b5c4db7a78b%3A0xe6aae4b28bf665a2!2s404%20-%20Departamentos%20de%20Matem%C3%A1ticas%2C%20F%C3%ADsica%20y%20Estad%C3%ADstica%20Yu%20Takeuchi!5e0!3m2!1sen!2sco!4v1757602729545!5m2!1sen!2sco"
+              width="100%"
+              height="300"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+          </div>
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=Edificio+Yu+Takeuchi+Universidad+Nacional+de+Colombia+Bogota"
+            class="directions-link"
+            target="_blank"
+            rel="noopener noreferrer">Get Directions</a
+          >
         </div>
 
         <div class="info-item">
@@ -29,8 +55,13 @@ import Header from "../../components/Header.astro";
           <div>
             <h3>Email</h3>
             <p>
-              <a href="robertgomez.datascience@gmail.com"
+              <a href="mailto:robertgomez.datascience@gmail.com"
                 >robertgomez.datascience@gmail.com</a
+              >
+            </p>
+            <p>
+              <a href="mailto:alesanchezpov@gmail.com"
+                >alesanchezpov@gmail.com</a
               >
             </p>
           </div>
@@ -47,14 +78,14 @@ import Header from "../../components/Header.astro";
 
       <section class="contact-form">
         <h2>Send Us a Message</h2>
-        <form id="contact-form" action="#" method="POST">
+        <form id="contact-form">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required />
+            <input type="text" id="name" name="from_name" required />
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="reply_to" required />
           </div>
           <div class="form-group">
             <label for="subject">Subject</label>
@@ -64,7 +95,11 @@ import Header from "../../components/Header.astro";
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
-          <button type="submit" class="button">Send Message</button>
+          <button type="submit" class="button" id="submit-btn">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-loader" style="display: none;">Sending...</span>
+          </button>
+          <div id="form-status" style="margin-top: 1rem; text-align: center;"></div>
         </form>
       </section>
     </div>
@@ -86,12 +121,15 @@ import Header from "../../components/Header.astro";
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: var(--text-secondary);
   }
 
   .contact-grid {
@@ -109,23 +147,32 @@ import Header from "../../components/Header.astro";
 
   .contact-info,
   .contact-form {
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(18, 35, 52, 0.95) 0%, rgba(12, 26, 38, 0.98) 100%);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-2xl);
     padding: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
   h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: #2c3e50;
-    border-bottom: 2px solid #eaeaea;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border-bottom: 2px solid rgba(244, 197, 66, 0.2);
     padding-bottom: 0.5rem;
   }
 
   .info-item {
     display: flex;
     margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(46, 109, 180, 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(46, 109, 180, 0.2);
   }
 
   .icon {
@@ -138,7 +185,23 @@ import Header from "../../components/Header.astro";
   h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #3498db;
+    color: #F4C542;
+    font-weight: var(--font-semibold);
+  }
+
+  .info-item p {
+    color: var(--text-secondary);
+    margin: 0.25rem 0;
+  }
+
+  .info-item a {
+    color: #2E6DB4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .info-item a:hover {
+    color: #F4C542;
   }
 
   .form-group {
@@ -149,46 +212,188 @@ import Header from "../../components/Header.astro";
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: var(--text-primary);
   }
 
   input,
   textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: rgba(46, 109, 180, 0.1);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    border-radius: var(--radius-lg);
     font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #F4C542;
+    background: rgba(46, 109, 180, 0.15);
+    box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.1);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
   }
 
   .button {
-    background-color: #0077cc;
-    color: white;
+    background: linear-gradient(135deg, #F4C542 0%, #d97706 100%);
+    color: #0C1A26;
     border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    padding: 0.75rem 2rem;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(244, 197, 66, 0.3);
+    width: 100%;
   }
 
   .button:hover {
-    background-color: #005fa3;
+    background: linear-gradient(135deg, #d97706 0%, #F4C542 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(244, 197, 66, 0.4);
+  }
+
+  .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #form-status {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+  }
+
+  #form-status.success {
+    background: rgba(95, 163, 106, 0.2);
+    border: 1px solid rgba(95, 163, 106, 0.4);
+    color: #5FA36A;
+  }
+
+  #form-status.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+  }
+
+  .map-container {
+    margin: 1.5rem 0;
+    background: rgba(46, 109, 180, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(46, 109, 180, 0.2);
+  }
+
+  .google-map {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .google-map iframe {
+    display: block;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .directions-link {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #F4C542 0%, #d97706 100%);
+    color: #0C1A26;
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
+  }
+
+  .directions-link:hover {
+    background: linear-gradient(135deg, #d97706 0%, #F4C542 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 197, 66, 0.4);
   }
 
   /* Estilos para social-media ahora están en el componente Footer.astro */
 </style>
 
-<script>
-  // Simple form validation
+<script define:vars={{ EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID }}>
+  // Load EmailJS SDK
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  script.onload = () => {
+    // @ts-ignore
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  };
+  document.head.appendChild(script);
+
   const contactForm = document.getElementById("contact-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const btnText = submitBtn?.querySelector('.btn-text');
+  const btnLoader = submitBtn?.querySelector('.btn-loader');
+  const formStatus = document.getElementById("form-status");
 
   if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      alert(
-        "Thank you for your message! This form is not actually connected to a server yet, but in a real implementation, your message would be sent."
-      );
+
+      // Disable button and show loader
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'inline';
+      formStatus.textContent = '';
+      formStatus.className = '';
+
+      try {
+        // Get form data
+        const formData = new FormData(contactForm);
+        const name = formData.get('from_name');
+        const email = formData.get('reply_to');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
+
+        // Prepare template params
+        const templateParams = {
+          from_name: name,
+          reply_to: email,
+          subject: subject,
+          message: message,
+          to_emails: 'alesanchezpov@gmail.com, robertgomez.datascience@gmail.com'
+        };
+
+        // @ts-ignore
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          templateParams
+        );
+
+        // Success
+        formStatus.textContent = '✅ Message sent successfully! We\'ll get back to you soon.';
+        formStatus.className = 'success';
+        contactForm.reset();
+
+      } catch (error) {
+        // Error
+        console.error('EmailJS Error:', error);
+        formStatus.textContent = '❌ Failed to send message. Please try emailing us directly.';
+        formStatus.className = 'error';
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+      }
     });
   }
 </script>

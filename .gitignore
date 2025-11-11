@@ -20,6 +20,15 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Windows metadata files
+*:Zone.Identifier
+Thumbs.db
+
 # jetbrains setting folder
 .idea/
 .vercel
+
+# Temporary files
+*.tmp
+*.temp
+*.log

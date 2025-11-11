@@ -1,8 +1,10 @@
 ---
 name: "Robert Gomez"
 position: "Investigador Principal, CTO AI Medic"
-email: "jrgomezp@gmail.com"
-website: "https://example.com/rgomez"
+email: "Robertgomez.datascience@gmail.com"
+linkedin: "https://co.linkedin.com/in/robert-gomez-6361571b6/es"
+github: "https://github.com/Robert-Gomez-AI/"
+bio: "Investigador Principal y CTO en AI Medic, especializado en aplicaciones de inteligencia artificial en el sector salud y ciencia de datos."
 image: "/images/members/Robert-Gomez.jpeg"
 order: 1
 lang: "es"

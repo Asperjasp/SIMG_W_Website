@@ -19,37 +19,44 @@ const alternativeLogoUrl =
   "https://unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/escudoUnal.svg";
 ---
 
-<!-- Sección de instituciones de confianza que ocupa todo el ancho de la pantalla -->
-<section class="trusted-section-wrapper">
-  <div class="trusted-section">
-    <div class="content-container">
-      <h3 class="trusted-title">
-        <strong>
+<!-- Sección de sponsors con diseño moderno -->
+<section class="sponsors-section">
+  <div class="sponsors-container">
+    <div class="sponsors-content">
+      <div class="sponsors-header">
+        <span class="sponsors-badge">
+          {isSpanish ? "🏛️ Afiliación" : "🏛️ Affiliation"}
+        </span>
+        <h2 class="sponsors-title">
           {
             isSpanish
-              ? "Organizaciones Lideres confían en nosotros"
-              : "Trusted by top Institutions"
+              ? "Respaldados por Instituciones Líderes"
+              : "Backed by Leading Institutions"
           }
-        </strong>
-      </h3>
-      <div class="sponsors-container">
+        </h2>
+      </div>
+      
+      <div class="sponsors-grid">
         {
-          /* Mostramos solo el logo principal sin texto ni decoración */
           sponsors.map((sponsor) => (
             <a
               href={sponsor.url}
               target="_blank"
-              rel="noopener"
-              class="sponsor-link-clean"
+              rel="noopener noreferrer"
+              class="sponsor-card glass"
               aria-label={`Visit ${sponsor.name} website`}
             >
-              <img
-                src={sponsor.logo}
-                alt={sponsor.name}
-                class="sponsor-logo-clean"
-                width="180"
-                onerror={`this.onerror=null; this.src='${alternativeLogoUrl}';`}
-              />
+              <div class="sponsor-logo-wrapper">
+                <img
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  class="sponsor-logo"
+                  width="200"
+                  height="100"
+                  loading="lazy"
+                  onerror={`this.onerror=null; this.src='${alternativeLogoUrl}';`}
+                />
+              </div>
             </a>
           ))
         }
@@ -59,91 +66,139 @@ const alternativeLogoUrl =
 </section>
 
 <style>
-  /* Estilos para la sección de instituciones de confianza */
-  .trusted-section-wrapper {
-    width: 100%;
-    background-color: #0a1930; /* Azul oscuro casi negro */
-    padding: 0;
-    margin: 3rem 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  }
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🏛️ SPONSORS SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-  .trusted-section {
-    width: 100%;
-    padding: 3rem 0;
-  }
-
-  .content-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .trusted-title {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    /* Texto claro para contrastar con fondo oscuro */
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 500;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  .sponsors-section {
+    position: relative;
+    padding: var(--space-24) 0;
   }
 
   .sponsors-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
   }
 
-  /* Estilo minimalista sin cuadro ni decoración */
-  .sponsor-link-clean {
-    display: inline-block;
-    transition: transform 0.3s ease;
+  .sponsors-content {
+    text-align: center;
+  }
+
+  .sponsors-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .sponsors-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-4);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .sponsors-title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  .sponsor-card {
+    position: relative;
+    padding: var(--space-8);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    backdrop-filter: var(--glass-blur);
     text-decoration: none;
-    margin: 0 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
   }
 
-  .sponsor-link-clean:hover {
-    transform: translateY(-5px);
+  .sponsor-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-500);
+    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.2);
   }
 
-  .sponsor-logo-clean {
-    height: 110px;
-    max-width: 280px;
+  .sponsor-logo-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sponsor-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 100px;
     object-fit: contain;
-    opacity: 0.95;
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
-    filter: brightness(1.1); /* Ajustamos el brillo para destacar el blanco */
+    filter: brightness(1.1);
+    transition: all 0.3s ease;
   }
 
-  .sponsor-logo-clean:hover {
+  .sponsor-card:hover .sponsor-logo {
+    filter: brightness(1.2);
     transform: scale(1.05);
-    opacity: 1;
   }
 
+  /* Modo claro - logo negro */
+  :global(html.light-mode) .sponsor-logo,
+  :global(body.light-mode) .sponsor-logo {
+    filter: brightness(0);
+  }
+
+  :global(html.light-mode) .sponsor-card:hover .sponsor-logo,
+  :global(body.light-mode) .sponsor-card:hover .sponsor-logo {
+    filter: brightness(0);
+    transform: scale(1.05);
+  }
+
+  /* Responsive */
   @media (max-width: 768px) {
-    .sponsor-link {
-      padding: 15px 20px;
-      min-width: 180px;
+    .sponsors-section {
+      padding: var(--space-16) 0;
+    }
+
+    .sponsors-container {
+      padding: 0 var(--space-4);
+    }
+
+    .sponsors-title {
+      font-size: var(--text-2xl);
+    }
+
+    .sponsors-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .sponsor-card {
+      min-height: 180px;
+      padding: var(--space-6);
     }
 
     .sponsor-logo {
-      height: 70px;
-      max-width: 180px;
-    }
-
-    .unal-logo {
-      height: 80px !important;
-    }
-
-    .trusted-title {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
+      max-height: 80px;
     }
   }
 </style>

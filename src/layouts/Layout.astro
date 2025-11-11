@@ -25,6 +25,28 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    
+    <!-- Script para prevenir flash de tema incorrecto (FOUC) - DEBE IR PRIMERO -->
+    <script is:inline>
+      // Ejecutar inmediatamente antes de que se cargue cualquier cosa
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const html = document.documentElement;
+        
+        if (theme === 'light') {
+          html.classList.add('light-mode');
+          // Agregar a body cuando esté disponible
+          if (document.body) {
+            document.body.classList.add('light-mode');
+          } else {
+            document.addEventListener('DOMContentLoaded', function() {
+              document.body.classList.add('light-mode');
+            });
+          }
+        }
+      })();
+    </script>
+    
     <link rel="icon" type="image/x-icon" href="/images/website/SIMG_LOGO.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>

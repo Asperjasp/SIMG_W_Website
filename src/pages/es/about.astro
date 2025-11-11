@@ -6,129 +6,311 @@ import Header from "../../components/Header.astro";
 <Layout title="Acerca de | SIMG">
   <Header slot="header" />
   <main>
-    <h1>Acerca del Seminario SIMG</h1>
-
-    <section class="about-section">
-      <div class="intro-container">
-        <div class="intro-text">
-          <h4>
-            Una Comunidad de Científicos y equipos multifacéticos, comprometidos
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <span class="badge">🎯 Acerca de SIMG</span>
+          <h1 class="hero-title">
+            Impulsando la Investigación en IA en <span class="gradient-text">Colombia</span>
+          </h1>
+          <p class="hero-description">
+            Una comunidad de científicos y equipos multifacéticos, comprometidos
             con la investigación y desarrollo del ecosistema de inteligencia
             artificial en Colombia
-          </h4>
-          <p>
-            El SIMG (Semillero de Investigación en Modelos Generativos) tiene
-            como objetivo crear formación e introducción al grupo de
-            investigación, enfocándose únicamente en procesos de investigación.
-            Este grupo cubrirá los siguientes temas:
           </p>
-          <ul>
-            <li>Introducción al Procesamiento de Lenguaje Natural (NLP)</li>
-            <li>LSTM (Memoria de Largo-Corto Plazo)</li>
-            <li>Transformers</li>
-            <li>Agentes</li>
-            <li>Benchmarks y Fine-tuning</li>
-          </ul>
-        </div>
-        <div class="intro-image">
-          <img src="/images/website/Charlas.png" alt="Charlas SIMG" />
         </div>
       </div>
     </section>
 
-    
+    <!-- Mission Section -->
+    <section class="mission-section">
+      <div class="container">
+        <div class="mission-grid">
+          <div class="mission-content">
+            <h2 class="section-title">Nuestra Misión</h2>
+            <p class="mission-text">
+              El SIMG (Semillero de Investigación en Modelos Generativos) tiene
+              como objetivo crear formación e introducción al grupo de
+              investigación, enfocándose únicamente en procesos de investigación.
+              Estamos dedicados a avanzar en las fronteras de la inteligencia
+              artificial a través de investigación rigurosa e innovación colaborativa.
+            </p>
+            
+            <h3 class="subsection-title">Áreas de Investigación</h3>
+            <ul class="topics-list">
+              <li>
+                <span class="topic-icon">🔤</span>
+                <div>
+                  <strong>Procesamiento de Lenguaje Natural (NLP)</strong>
+                  <p>Explorando la comprensión y generación del lenguaje</p>
+                </div>
+              </li>
+              <li>
+                <span class="topic-icon">🧠</span>
+                <div>
+                  <strong>LSTM (Memoria de Largo-Corto Plazo)</strong>
+                  <p>Técnicas avanzadas de modelado de secuencias</p>
+                </div>
+              </li>
+              <li>
+                <span class="topic-icon">⚡</span>
+                <div>
+                  <strong>Transformers</strong>
+                  <p>Mecanismos de atención de última generación</p>
+                </div>
+              </li>
+              <li>
+                <span class="topic-icon">🤖</span>
+                <div>
+                  <strong>Agentes</strong>
+                  <p>Sistemas de IA autónomos y toma de decisiones</p>
+                </div>
+              </li>
+              <li>
+                <span class="topic-icon">📊</span>
+                <div>
+                  <strong>Benchmarks y Fine-tuning</strong>
+                  <p>Optimización de modelos y evaluación de rendimiento</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="mission-image">
+            <div class="image-card">
+              <img src="/images/website/Charlas.png" alt="Charlas SIMG" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>
 
 <style>
   main {
-    padding: 2rem;
-    max-width: 900px;
+    position: relative;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-24);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at top center, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(14, 165, 233, 0.06) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-container {
+    max-width: 1280px;
     margin: 0 auto;
-    font-family: "Arial", sans-serif;
-    color: #333;
+    padding: 0 var(--space-6);
+    position: relative;
+    z-index: 1;
   }
 
-  h1 {
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
-    margin-bottom: 2.5rem;
-    color: #2c3e50;
   }
 
-  .about-section {
-    margin-bottom: 3rem;
-    background-color: #f9f9f9;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(249, 115, 22, 0.08);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--primary-400);
+    margin-bottom: var(--space-6);
   }
 
-  .intro-container {
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: var(--font-black);
+    line-height: 1.1;
+    margin-bottom: var(--space-6);
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(120deg, #f97316 0%, #ea580c 50%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Mission Section */
+  .mission-section {
+    padding: var(--space-24) 0;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .section-title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.02em;
+  }
+
+  .mission-text {
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  .subsection-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .topics-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-4);
   }
 
-  .intro-text {
-    flex: 1;
-  }
-
-  .intro-image {
-    flex: 1;
-    max-width: 45%;
+  .topics-list li {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: var(--glass-blur);
+    transition: all 0.3s ease;
   }
 
-  .intro-image img {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+  .topics-list li:hover {
+    border-color: var(--primary-500);
+    box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
+    transform: translateX(4px);
   }
 
-  .intro-image img:hover {
-    transform: scale(1.02);
+  .topic-icon {
+    font-size: var(--text-2xl);
+    flex-shrink: 0;
   }
 
-  @media (max-width: 768px) {
-    .intro-container {
+  .topics-list strong {
+    display: block;
+    color: var(--text-primary);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-1);
+  }
+
+  .topics-list p {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+
+  /* Mission Image */
+  .mission-image {
+    position: sticky;
+    top: calc(var(--space-20) + 80px);
+  }
+
+  .image-card {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    padding: var(--space-6);
+  }
+
+  .image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+    display: block;
+  }
+
+  /* Responsive */
+  @media (max-width: 968px) {
+    .mission-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .mission-image {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: var(--text-base);
+    }
+
+    .mission-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+    }
+
+    .topics-list li {
       flex-direction: column;
+      gap: var(--space-2);
     }
-
-    .intro-image {
-      max-width: 100%;
-      margin-top: 1.5rem;
-    }
-  }
-
-  h2 {
-    color: #3498db;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    line-height: 1.4;
-  }
-
-  h3 {
-    color: #2980b9;
-    font-size: 1.25rem;
-    margin: 1.5rem 0 0.75rem;
-  }
-
-  p {
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  ul {
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-
-  li {
-    margin-bottom: 0.5rem;
   }
 </style>

@@ -1,0 +1,878 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const researchProjects = await getCollection(
+    "research",
+    ({ data }) => data.lang === "es"
+  );
+
+  return researchProjects.map((project) => ({
+    params: { slug: project.slug.replace("es/", "") },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"research">;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+// Format dates
+const formatDate = (date: Date | undefined) => {
+  if (!date) return "";
+  return new Intl.DateTimeFormat("es-ES", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+};
+
+// Get English version link
+const englishSlug = project.slug.replace("es/", "");
+
+// Spanish translations for status
+const statusTranslations: Record<string, string> = {
+  active: "activo",
+  completed: "completado",
+  planned: "planeado",
+};
+---
+
+<Layout title={`${project.data.title} | SIMG`}>
+  <Header slot="header" />
+  
+  <main class="article-page">
+    <!-- Breadcrumb navigation -->
+    <nav class="breadcrumb">
+      <a href="/es">Inicio</a>
+      <span class="separator">→</span>
+      <a href="/es/research">Investigación</a>
+      <span class="separator">→</span>
+      <span class="current">{project.data.title}</span>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      {project.data.projectType && (
+        <span class="project-type">{project.data.projectType}</span>
+      )}
+      
+      <h1 class="article-title">{project.data.title}</h1>
+      
+      <p class="article-description">{project.data.description}</p>
+
+      <!-- Meta information -->
+      <div class="article-meta">
+        {project.data.publicationDate && (
+          <time class="publication-date">
+            {formatDate(project.data.publicationDate)}
+          </time>
+        )}
+        {project.data.status && (
+          <span class={`status status-${project.data.status}`}>
+            {statusTranslations[project.data.status] || project.data.status}
+          </span>
+        )}
+        {project.data.category && (
+          <span class="category">{project.data.category}</span>
+        )}
+      </div>
+
+      <!-- Tags -->
+      {project.data.tags && project.data.tags.length > 0 && (
+        <div class="tags">
+          {project.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <!-- Language switcher -->
+      <div class="language-switcher">
+        <a href={`/en/research/${englishSlug}`}>English</a>
+        <span class="separator">|</span>
+        <span class="active">Español</span>
+      </div>
+    </header>
+
+    <!-- Highlights/Key Features -->
+    {project.data.highlights && project.data.highlights.length > 0 && (
+      <section class="highlights">
+        <h2>Características Principales</h2>
+        <ul class="highlights-list">
+          {project.data.highlights.map((highlight) => (
+            <li>{highlight}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Main Content -->
+    <article class="article-content">
+      <Content />
+    </article>
+
+    <!-- Publications Section -->
+    {project.data.publications && project.data.publications.length > 0 && (
+      <section class="publications-section">
+        <h2>Publicaciones</h2>
+        <div class="publications-grid">
+          {project.data.publications.map((pub) => (
+            <div class="publication-card">
+              <h3 class="pub-title">{pub.title}</h3>
+              
+              {pub.authors && pub.authors.length > 0 && (
+                <p class="pub-authors">{pub.authors.join(", ")}</p>
+              )}
+              
+              <div class="pub-meta">
+                {pub.venue && <span class="pub-venue">{pub.venue}</span>}
+                {pub.date && (
+                  <span class="pub-date">{formatDate(pub.date)}</span>
+                )}
+                {pub.type && <span class="pub-type">{pub.type}</span>}
+              </div>
+              
+              <div class="pub-links">
+                {pub.url && (
+                  <a href={pub.url} target="_blank" rel="noopener" class="pub-link">
+                    📄 Artículo
+                  </a>
+                )}
+                {pub.pdf && (
+                  <a href={pub.pdf} target="_blank" rel="noopener" class="pub-link">
+                    📑 PDF
+                  </a>
+                )}
+                {pub.arxiv && (
+                  <a
+                    href={`https://arxiv.org/abs/${pub.arxiv}`}
+                    target="_blank"
+                    rel="noopener"
+                    class="pub-link"
+                  >
+                    arXiv
+                  </a>
+                )}
+                {pub.doi && (
+                  <a
+                    href={`https://doi.org/${pub.doi}`}
+                    target="_blank"
+                    rel="noopener"
+                    class="pub-link"
+                  >
+                    DOI
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Resources Section -->
+    {project.data.resources && project.data.resources.length > 0 && (
+      <section class="resources-section">
+        <h2>Recursos</h2>
+        <div class="resources-grid">
+          {project.data.resources.map((resource) => (
+            <a
+              href={resource.url}
+              target="_blank"
+              rel="noopener"
+              class="resource-card"
+            >
+              <div class="resource-icon">
+                {resource.type === "demo" && "🚀"}
+                {resource.type === "code" && "💻"}
+                {resource.type === "dataset" && "📊"}
+                {resource.type === "model" && "🤖"}
+                {resource.type === "blog" && "📝"}
+                {!resource.type || resource.type === "other" ? "🔗" : ""}
+              </div>
+              <h3 class="resource-name">{resource.name}</h3>
+              {resource.description && (
+                <p class="resource-description">{resource.description}</p>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Team/Collaborators -->
+    {(project.data.researchers || project.data.collaborators) && (
+      <section class="team-section">
+        <h2>Equipo y Colaboradores</h2>
+        
+        {project.data.researchers && project.data.researchers.length > 0 && (
+          <div class="researchers">
+            <h3>Investigadores</h3>
+            <ul class="researchers-list">
+              {project.data.researchers.map((name) => (
+                <li>{name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        {project.data.collaborators && project.data.collaborators.length > 0 && (
+          <div class="collaborators">
+            <h3>Colaboradores</h3>
+            <div class="collaborators-grid">
+              {project.data.collaborators.map((collab) => (
+                <div class="collaborator-card">
+                  {collab.url ? (
+                    <a href={collab.url} target="_blank" rel="noopener">
+                      <strong>{collab.name}</strong>
+                    </a>
+                  ) : (
+                    <strong>{collab.name}</strong>
+                  )}
+                  {collab.affiliation && (
+                    <p class="affiliation">{collab.affiliation}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    )}
+
+    <!-- Funding -->
+    {project.data.funding && project.data.funding.length > 0 && (
+      <section class="funding-section">
+        <h3>Con el apoyo de</h3>
+        <ul class="funding-list">
+          {project.data.funding.map((funder) => (
+            <li>{funder}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Back to Research -->
+    <div class="back-link">
+      <a href="/es/research">← Volver a Investigación</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Van Gogh Color Palette
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  :root {
+    --navy: #0c1a26;
+    --dark-navy: #122334;
+    --yellow: #f4c542;
+    --blue: #2e6db4;
+    --green: #5fa36a;
+    --soft-white: #e6e9ef;
+  }
+
+  .article-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    min-height: 100vh;
+    background: linear-gradient(
+      135deg,
+      rgba(18, 35, 52, 0.98) 0%,
+      rgba(12, 26, 38, 0.98) 100%
+    );
+    color: var(--soft-white);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Breadcrumb
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: rgba(230, 233, 239, 0.7);
+  }
+
+  .breadcrumb a {
+    color: var(--yellow);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: #ffd966;
+  }
+
+  .breadcrumb .separator {
+    color: rgba(230, 233, 239, 0.4);
+  }
+
+  .breadcrumb .current {
+    color: var(--soft-white);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Article Header
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .article-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(244, 197, 66, 0.2);
+  }
+
+  .project-type {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, var(--blue), var(--green));
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .article-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--yellow);
+    margin: 1rem 0;
+    line-height: 1.2;
+  }
+
+  .article-description {
+    font-size: 1.2rem;
+    color: rgba(230, 233, 239, 0.9);
+    line-height: 1.6;
+    margin: 1.5rem 0;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+
+  .publication-date {
+    color: rgba(230, 233, 239, 0.7);
+  }
+
+  .status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .status-active {
+    background: rgba(95, 163, 106, 0.2);
+    color: #7ed389;
+    border: 1px solid rgba(95, 163, 106, 0.4);
+  }
+
+  .status-completed {
+    background: rgba(46, 109, 180, 0.2);
+    color: #5fa8e8;
+    border: 1px solid rgba(46, 109, 180, 0.4);
+  }
+
+  .status-planned {
+    background: rgba(244, 197, 66, 0.2);
+    color: var(--yellow);
+    border: 1px solid rgba(244, 197, 66, 0.4);
+  }
+
+  .category {
+    padding: 0.3rem 0.8rem;
+    background: rgba(244, 197, 66, 0.15);
+    color: var(--yellow);
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .tag {
+    padding: 0.4rem 0.9rem;
+    background: rgba(46, 109, 180, 0.2);
+    color: #5fa8e8;
+    border: 1px solid rgba(46, 109, 180, 0.3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Language Switcher */
+  .language-switcher {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .language-switcher .active {
+    color: var(--yellow);
+    font-weight: 600;
+  }
+
+  .language-switcher .separator {
+    margin: 0 0.5rem;
+    color: rgba(230, 233, 239, 0.4);
+  }
+
+  .language-switcher a {
+    color: rgba(230, 233, 239, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .language-switcher a:hover {
+    color: var(--yellow);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Highlights Section
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .highlights {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(
+      135deg,
+      rgba(244, 197, 66, 0.08) 0%,
+      rgba(46, 109, 180, 0.08) 100%
+    );
+    border-left: 4px solid var(--yellow);
+    border-radius: 8px;
+  }
+
+  .highlights h2 {
+    color: var(--yellow);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .highlights-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .highlights-list li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+    color: rgba(230, 233, 239, 0.9);
+  }
+
+  .highlights-list li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--yellow);
+    font-size: 1.2rem;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Main Article Content
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .article-content {
+    margin: 3rem 0;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    color: rgba(230, 233, 239, 0.95);
+  }
+
+  .article-content :global(h2) {
+    color: var(--yellow);
+    font-size: 1.8rem;
+    margin: 2.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(244, 197, 66, 0.2);
+  }
+
+  .article-content :global(h3) {
+    color: #ffd966;
+    font-size: 1.4rem;
+    margin: 2rem 0 1rem 0;
+  }
+
+  .article-content :global(p) {
+    margin: 1rem 0;
+    line-height: 1.8;
+  }
+
+  .article-content :global(a) {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(46, 109, 180, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .article-content :global(a:hover) {
+    color: #5fa8e8;
+    border-bottom-color: #5fa8e8;
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+  }
+
+  .article-content :global(li) {
+    margin: 0.5rem 0;
+  }
+
+  .article-content :global(code) {
+    background: rgba(46, 109, 180, 0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    color: #5fa8e8;
+  }
+
+  .article-content :global(pre) {
+    background: rgba(12, 26, 38, 0.6);
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(46, 109, 180, 0.2);
+  }
+
+  .article-content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .article-content :global(blockquote) {
+    border-left: 4px solid var(--blue);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: rgba(230, 233, 239, 0.8);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Publications Section
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .publications-section {
+    margin: 3rem 0;
+  }
+
+  .publications-section h2 {
+    color: var(--yellow);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .publications-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .publication-card {
+    padding: 2rem;
+    background: linear-gradient(
+      135deg,
+      rgba(18, 35, 52, 0.95) 0%,
+      rgba(12, 26, 38, 0.95) 100%
+    );
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .publication-card:hover {
+    border-color: var(--yellow);
+    box-shadow: 0 4px 20px rgba(244, 197, 66, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .pub-title {
+    color: var(--soft-white);
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .pub-authors {
+    color: rgba(230, 233, 239, 0.7);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .pub-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  .pub-venue {
+    color: var(--blue);
+    font-weight: 600;
+  }
+
+  .pub-date {
+    color: rgba(230, 233, 239, 0.6);
+  }
+
+  .pub-type {
+    padding: 0.2rem 0.6rem;
+    background: rgba(46, 109, 180, 0.2);
+    color: #5fa8e8;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+  }
+
+  .pub-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .pub-link {
+    padding: 0.5rem 1rem;
+    background: rgba(244, 197, 66, 0.1);
+    color: var(--yellow);
+    border: 1px solid rgba(244, 197, 66, 0.3);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .pub-link:hover {
+    background: rgba(244, 197, 66, 0.2);
+    border-color: var(--yellow);
+    transform: translateY(-1px);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Resources Section
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .resources-section {
+    margin: 3rem 0;
+  }
+
+  .resources-section h2 {
+    color: var(--yellow);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .resource-card {
+    padding: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      rgba(46, 109, 180, 0.1) 0%,
+      rgba(95, 163, 106, 0.1) 100%
+    );
+    border: 1px solid rgba(46, 109, 180, 0.3);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .resource-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 4px 15px rgba(46, 109, 180, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .resource-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .resource-name {
+    color: var(--soft-white);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .resource-description {
+    color: rgba(230, 233, 239, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Team Section
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .team-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(18, 35, 52, 0.5);
+    border-radius: 12px;
+  }
+
+  .team-section h2 {
+    color: var(--yellow);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .team-section h3 {
+    color: #ffd966;
+    font-size: 1.3rem;
+    margin: 1.5rem 0 1rem 0;
+  }
+
+  .researchers-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .researchers-list li {
+    padding: 0.5rem 1rem;
+    background: rgba(46, 109, 180, 0.2);
+    color: #5fa8e8;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .collaborators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .collaborator-card {
+    padding: 1rem;
+    background: rgba(46, 109, 180, 0.1);
+    border: 1px solid rgba(46, 109, 180, 0.2);
+    border-radius: 8px;
+  }
+
+  .collaborator-card a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .collaborator-card a:hover {
+    color: #5fa8e8;
+  }
+
+  .affiliation {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    color: rgba(230, 233, 239, 0.7);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Funding Section
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .funding-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(95, 163, 106, 0.1);
+    border-left: 4px solid var(--green);
+    border-radius: 8px;
+  }
+
+  .funding-section h3 {
+    color: var(--green);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .funding-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .funding-list li {
+    padding: 0.5rem 1rem;
+    background: rgba(95, 163, 106, 0.2);
+    color: #7ed389;
+    border-radius: 15px;
+    font-weight: 500;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Back Link
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .back-link {
+    margin: 3rem 0 2rem 0;
+    text-align: center;
+  }
+
+  .back-link a {
+    color: var(--yellow);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+
+  .back-link a:hover {
+    color: #ffd966;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Responsive Design
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media (max-width: 768px) {
+    .article-page {
+      padding: 1.5rem 1rem;
+    }
+
+    .article-title {
+      font-size: 2rem;
+    }
+
+    .article-description {
+      font-size: 1.1rem;
+    }
+
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .collaborators-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -2,106 +2,608 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import SponsorCarousel from "../../components/SponsorCarousel.astro";
+import { getCollection } from "astro:content";
+
+// Get latest research projects
+const researchProjects = await getCollection("research", (entry) => entry.data.lang === 'en');
+const latestResearch = researchProjects
+  .sort((a, b) => {
+    const aTime = a.data.startDate ? a.data.startDate.getTime() : 0;
+    const bTime = b.data.startDate ? b.data.startDate.getTime() : 0;
+    return bTime - aTime;
+  })
+  .slice(0, 3);
 ---
 
-<Layout title="Home | SIMG">
+<Layout title="Home | SIMG - Generative AI Research">
   <Header slot="header" />
-  <main class="container">
-    <div class="hero-section">
+  
+  <!-- Hero Section - Mistral Style -->
+  <section class="hero">
+    <div class="hero-container">
       <div class="hero-content">
-        <h1>Building the AI talent of LATAM</h1>
-        <p>
-          Located at the capital city of Bogotá, the heart of innovation in
-          Colombia at the National University of Colombia - UNAL, SIMG is a
-          community of researchers, academics, and enthusiasts dedicated to
-          exploring and advancing the field of artificial intelligence (AI),
-          information theory, and machine learning, committed to excellence and
-          innovation.
+        <div class="hero-badge gradient-badge">
+          <span class="badge-dot"></span>
+          <span>Frontier AI Research</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Generative Models.<br />
+          <span class="text-gradient gradient-orange-blue">In Your Hands.</span>
+        </h1>
+        
+        <p class="hero-description">
+          We are SIMG, the leading <strong>Generative AI</strong> research group 
+          at the National University of Colombia. We explore NLP, diffusion models, 
+          and transformers to build the future of AI in LATAM.
         </p>
-        <a href="/en/about" class="cta-button">Read More</a>
+        
+        <div class="hero-actions">
+          <a href="/en/research" class="button button-primary button-large">
+            <span>View Research</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-Width="2" stroke-Linecap="round" stroke-Linejoin="round"/>
+            </svg>
+          </a>
+          <a href="/en/about" class="button button-secondary button-large">
+            Learn More
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value">3+</div>
+            <div class="stat-label">Active Projects</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">10+</div>
+            <div class="stat-label">Researchers</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">Open</div>
+            <div class="stat-label">Source</div>
+          </div>
+        </div>
       </div>
-      <div class="hero-image">
-        <img src="/images/website/SIMG-semillero.png" alt="SIMG Seminar" />
+      
+      <div class="hero-visual">
+        <div class="visual-card glass glow">
+          <img 
+            src="/images/website/SIMG-semillero.png" 
+            alt="SIMG - Research Seminar" 
+            class="turtle-logo"
+          />
+          <div class="visual-gradient"></div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="floating-badge badge-1">
+          <span>🤖 NLP</span>
+        </div>
+        <div class="floating-badge badge-2">
+          <span>🎨 Diffusion</span>
+        </div>
+        <div class="floating-badge badge-3">
+          <span>⚡ Transformers</span>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Añadimos el carrusel de patrocinadores -->
-    <SponsorCarousel />
-  </main>
+  <!-- Features Section -->
+  <section class="features section">
+    <div class="container">
+      <h2 class="section-title">What We Do</h2>
+      <p class="section-subtitle">Frontier Generative AI Research</p>
+      
+      <div class="features-grid">
+        <div class="feature-card card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="12" fill="url(#gradient1)"/>
+              <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" stroke="white" stroke-Width="2" stroke-Linejoin="round"/>
+              <defs>
+                <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40">
+                  <stop stop-Color="#F4C542"/>
+                  <stop offset="1" stop-Color="#d97706"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">NLP & Transformers</h3>
+          <p class="feature-description">
+            Natural language processing with transformer architectures. 
+            Fine-tuning LLMs and specialized language models.
+          </p>
+        </div>
+
+        <div class="feature-card card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="12" fill="url(#gradient2)"/>
+              <circle cx="20" cy="20" r="6" stroke="white" stroke-Width="2"/>
+              <circle cx="20" cy="20" r="3" fill="white"/>
+              <defs>
+                <linearGradient id="gradient2" x1="0" y1="0" x2="40" y2="40">
+                  <stop stop-Color="#2E6DB4"/>
+                  <stop offset="1" stop-Color="#8b5cf6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Diffusion Models</h3>
+          <p class="feature-description">
+            Research on diffusion models for generation of images, 
+            audio, and high-quality multimodal content.
+          </p>
+        </div>
+
+        <div class="feature-card card">
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="12" fill="url(#gradient3)"/>
+              <path d="M12 20H28M20 12V28" stroke="white" stroke-Width="2" stroke-Linecap="round"/>
+              <defs>
+                <linearGradient id="gradient3" x1="0" y1="0" x2="40" y2="40">
+                  <stop stop-Color="#F4C542"/>
+                  <stop offset="1" stop-Color="#e11d48"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Open Source</h3>
+          <p class="feature-description">
+            We share code, models, and datasets. We believe in open 
+            and accessible AI for everyone in LATAM.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Research -->
+  {latestResearch.length > 0 && (
+    <section class="research-preview section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Recent Research</h2>
+            <p class="section-subtitle">Latest projects and team advances</p>
+          </div>
+          <a href="/en/research" class="button button-ghost">
+            View All
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-Width="2" stroke-Linecap="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="research-grid">
+          {latestResearch.map((project) => (
+            <a href={`/es/research/${project.slug}/`} class="research-card card">
+              <div class="research-category">
+                {project.data.category || 'Research'}
+              </div>
+              <h3 class="research-title">{project.data.title}</h3>
+              <p class="research-description">{project.data.description}</p>
+              <div class="research-tags">
+                {(project.data.tags || []).slice(0, 3).map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="cta-section section">
+    <div class="container">
+      <div class="cta-card glass">
+        <h2 class="cta-title">Ready to Innovate?</h2>
+        <p class="cta-description">
+          Join our community of researchers and help build 
+          the future of AI in Latin America.
+        </p>
+        <div class="cta-actions">
+          <a href="/en/contact" class="button button-primary button-large">
+            Join SIMG
+          </a>
+          <a href="/en/members" class="button button-secondary button-large">
+            Meet the Team
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <SponsorCarousel />
 </Layout>
 
 <style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🎯 HERO SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  
+  .hero {
+    position: relative;
+    padding: var(--space-24) 0;
+    overflow: visible;
+    width: 100%;
   }
 
-  .hero-section {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at top right, rgba(244, 197, 66, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(46, 109, 180, 0.08) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 968px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+      padding: 0 var(--space-4);
+    }
   }
 
   .hero-content {
-    flex: 1;
+    animation: slideInLeft 0.8s ease-out;
   }
 
-  .hero-image {
-    flex: 1;
-    max-width: 45%;
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .gradient-badge {
+    border: 1px solid rgba(244, 197, 66, 0.3);
+    background: rgba(244, 197, 66, 0.08);
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-500);
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: var(--font-extrabold);
+    line-height: 1.1;
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.02em;
+  }
+
+  .gradient-orange-blue {
+    background: linear-gradient(120deg, #F4C542 0%, #d97706 50%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+  }
+
+  .hero-actions {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+    flex-wrap: wrap;
   }
 
-  .hero-image img {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+  .hero-stats {
+    display: flex;
+    gap: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--glass-border);
   }
 
-  .hero-image img:hover {
-    transform: scale(1.02);
+  .stat {
+    flex: 1;
+  }
+
+  .stat-value {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    position: relative;
+    animation: slideInRight 0.8s ease-out;
+    padding: var(--space-8);
+  }
+
+  .visual-card {
+    position: relative;
+    padding: var(--space-8);
+    border-radius: var(--radius-2xl);
+    overflow: visible;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .turtle-logo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+    position: relative;
+    z-index: 2;
+  }
+
+  .visual-gradient {
+    position: absolute;
+    inset: 0;
+    background: rgba(244, 197, 66, 0.08);
+    opacity: 0.4;
+    z-index: 1;
+    border-radius: var(--radius-xl);
+  }
+
+  .floating-badge {
+    position: absolute;
+    padding: var(--space-3) var(--space-5);
+    background: rgba(244, 197, 66, 0.08);
+    border: 1px solid rgba(244, 197, 66, 0.3);
+    border-radius: var(--radius-full);
+    backdrop-filter: var(--glass-blur);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    box-shadow: 0 4px 16px rgba(244, 197, 66, 0.15);
+    animation: float 4s ease-in-out infinite;
+    white-space: nowrap;
+  }
+
+  .badge-1 {
+    top: 5%;
+    right: -5%;
+    animation-delay: 0s;
+    border-color: rgba(244, 197, 66, 0.4);
+  }
+
+  .badge-2 {
+    bottom: 25%;
+    right: -8%;
+    animation-delay: 1s;
+    background: rgba(46, 109, 180, 0.08);
+    border-color: rgba(46, 109, 180, 0.4);
+    box-shadow: 0 4px 16px rgba(46, 109, 180, 0.15);
+  }
+
+  .badge-3 {
+    top: 45%;
+    left: -8%;
+    animation-delay: 2s;
+    border-color: rgba(244, 197, 66, 0.4);
+  }
+
+  @media (max-width: 968px) {
+    .floating-badge {
+      display: none;
+    }
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     ✨ FEATURES SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .section-title {
+    text-align: center;
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-3);
+  }
+
+  .section-subtitle {
+    text-align: center;
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-12);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .feature-card {
+    padding: var(--space-8);
+    text-align: center;
+  }
+
+  .feature-icon {
+    margin: 0 auto var(--space-6);
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-3);
+    color: var(--text-primary);
+  }
+
+  .feature-description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     📚 RESEARCH PREVIEW
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-10);
   }
 
   @media (max-width: 768px) {
-    .hero-section {
+    .section-header {
       flex-direction: column;
-    }
-
-    .hero-image {
-      max-width: 100%;
-      margin-top: 1.5rem;
+      align-items: flex-start;
+      gap: var(--space-4);
     }
   }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
   }
 
-  .cta-button {
-    background-color: #0077cc;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: inline-block;
+  .research-card {
+    padding: var(--space-6);
     text-decoration: none;
+    display: block;
   }
 
-  .cta-button:hover {
-    background-color: #005fa3;
+  .research-category {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--gradient-primary);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-4);
+  }
+
+  .research-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .research-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+
+  .research-tags {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    padding: var(--space-1) var(--space-3);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     📢 CTA SECTION
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .cta-section {
+    padding: var(--space-20) 0;
+  }
+
+  .cta-card {
+    padding: var(--space-16);
+    text-align: center;
+    border-radius: var(--radius-2xl);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    opacity: 0;
+    z-index: 0;
+  }
+
+  .cta-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-title {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-4);
+    color: var(--primary-500);
+  }
+
+  .cta-description {
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
   }
 </style>
+
+
