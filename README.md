@@ -44,6 +44,7 @@ This website features a modern design with:
 
 - **[Astro 5.14.8](https://astro.build)** - Static Site Generator
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development
+- **[EmailJS](https://www.emailjs.com/)** - Client-side email service for contact form
 - **CSS Custom Properties** - Comprehensive design token system
 - **Content Collections** - Markdown-based content management
 - **Node.js v24.11.0** - Runtime environment
@@ -132,9 +133,33 @@ Run from the project root:
 
 ### 5. **Contact** (`/contact`)
 
-- Contact form
+- **Email Contact Form** powered by [EmailJS](https://www.emailjs.com/)
+  - Sends emails directly from the browser without a backend server
+  - Messages are sent to: `alesanchezpov@gmail.com` and `robertgomez.datascience@gmail.com`
+  - Includes sender's name, email, subject, and message
+  - Real-time validation and loading states
+  - Success/error feedback with styled notifications
+  - Free tier: 200 emails/month
+- Contact information (location, emails, meeting times)
 - Social media links
-- Meeting location information
+
+#### EmailJS Configuration
+
+The contact form uses EmailJS to send emails without requiring a backend server. Here's how it works:
+
+1. **Service Setup**: Connected to Gmail account (`alesanchezpov@gmail.com`)
+2. **Email Template**: Custom HTML template with SIMG branding
+3. **Recipients**: 
+   - Primary: `alesanchezpov@gmail.com`
+   - Bcc: `robertgomez.datascience@gmail.com`
+4. **Reply-To**: Automatically set to the sender's email from the form
+
+**Required Configuration**:
+- `EMAILJS_PUBLIC_KEY`: Your EmailJS public key
+- `EMAILJS_SERVICE_ID`: Gmail service ID
+- `EMAILJS_TEMPLATE_ID`: Contact form template ID
+
+These values are configured in both `/en/contact.astro` and `/es/contact.astro`.
 
 ---
 
@@ -160,6 +185,11 @@ Run from the project root:
 - Language selector with hover dropdown
 - Smooth scroll animations
 - Hover effects with orange accents
+- **Contact Form Integration**:
+  - Client-side email delivery via EmailJS
+  - No backend required
+  - Form validation and error handling
+  - Loading states and user feedback
 
 ---
 
@@ -170,6 +200,78 @@ The website supports both **English** and **Spanish** with:
 - Automatic language detection from browser
 - Manual language switching via header dropdown
 - Bilingual content collections
+
+---
+
+## 📧 Contact Form Setup
+
+The contact form uses **EmailJS** to send emails directly from the browser without a backend server.
+
+### Setup Instructions
+
+1. **Create EmailJS Account**
+   - Visit [emailjs.com](https://www.emailjs.com/)
+   - Sign up for free (200 emails/month)
+
+2. **Configure Email Service**
+   - Add Gmail service
+   - Connect with `alesanchezpov@gmail.com`
+
+3. **Create Email Template**
+   - Template ID: Save this for step 4
+   - Subject: `Nuevo mensaje de contacto SIMG: {{subject}}`
+   - To: `alesanchezpov@gmail.com`
+   - Bcc: `robertgomez.datascience@gmail.com`
+   - Reply-To: `{{reply_to}}`
+
+4. **Configure Environment Variables**
+   
+   Copy the example file and fill in your credentials:
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` with your EmailJS credentials:
+   ```env
+   PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key_here
+   PUBLIC_EMAILJS_SERVICE_ID=your_service_id_here
+   PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id_here
+   ```
+
+   **Where to find these values:**
+   - `PUBLIC_EMAILJS_PUBLIC_KEY`: EmailJS Dashboard → Account → API Keys
+   - `PUBLIC_EMAILJS_SERVICE_ID`: EmailJS Dashboard → Email Services (shows next to your Gmail service)
+   - `PUBLIC_EMAILJS_TEMPLATE_ID`: EmailJS Dashboard → Email Templates (shows next to your template)
+
+   **Important:** The `.env` file is already in `.gitignore` and won't be committed to Git.
+
+5. **For Production Deployment (Vercel)**
+   
+   Add the environment variables in your Vercel project settings:
+   - Go to Project Settings → Environment Variables
+   - Add all three `PUBLIC_EMAILJS_*` variables
+   - Deploy or redeploy your site
+
+6. **Test the Form**
+   - Restart your dev server: `npm run dev`
+   - Fill out the contact form on the website
+   - Check both email inboxes for the message
+   - Verify reply-to functionality
+
+### Email Template Variables
+
+The form sends these variables to EmailJS:
+- `{{from_name}}` - Sender's name
+- `{{reply_to}}` - Sender's email address
+- `{{subject}}` - Message subject
+- `{{message}}` - Message content
+
+### Security Notes
+
+- ✅ **Environment variables are safe**: The `.env` file is gitignored and never committed
+- ✅ **Public keys are OK**: EmailJS public keys are meant to be visible in client-side code
+- ✅ **Rate limiting**: EmailJS has built-in rate limiting and spam protection
+- ✅ **Production ready**: Works seamlessly with Vercel, Netlify, and other platforms
 
 ---
 

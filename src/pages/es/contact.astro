@@ -1,6 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
+
+// Get EmailJS credentials from environment variables
+const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 ---
 
 <Layout title="Contacto | SIMG">
@@ -31,8 +36,13 @@ import Header from "../../components/Header.astro";
           <div>
             <h3>Correo Electrónico</h3>
             <p>
-              <a href="robertgomez.datascience@gmail.com"
+              <a href="mailto:robertgomez.datascience@gmail.com"
                 >robertgomez.datascience@gmail.com</a
+              >
+            </p>
+            <p>
+              <a href="mailto:alesanchezpov@gmail.com"
+                >alesanchezpov@gmail.com</a
               >
             </p>
           </div>
@@ -49,14 +59,14 @@ import Header from "../../components/Header.astro";
 
       <section class="contact-form">
         <h2>Envíanos un Mensaje</h2>
-        <form id="contact-form" action="#" method="POST">
+        <form id="contact-form">
           <div class="form-group">
             <label for="name">Nombre</label>
-            <input type="text" id="name" name="name" required />
+            <input type="text" id="name" name="from_name" required />
           </div>
           <div class="form-group">
             <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="reply_to" required />
           </div>
           <div class="form-group">
             <label for="subject">Asunto</label>
@@ -66,7 +76,11 @@ import Header from "../../components/Header.astro";
             <label for="message">Mensaje</label>
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
-          <button type="submit" class="button">Enviar Mensaje</button>
+          <button type="submit" class="button" id="submit-btn">
+            <span class="btn-text">Enviar Mensaje</span>
+            <span class="btn-loader" style="display: none;">Enviando...</span>
+          </button>
+          <div id="form-status" style="margin-top: 1rem; text-align: center;"></div>
         </form>
       </section>
     </div>
@@ -88,12 +102,15 @@ import Header from "../../components/Header.astro";
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: var(--text-secondary);
   }
 
   .contact-grid {
@@ -111,23 +128,32 @@ import Header from "../../components/Header.astro";
 
   .contact-info,
   .contact-form {
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(18, 35, 52, 0.95) 0%, rgba(12, 26, 38, 0.98) 100%);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-2xl);
     padding: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
   h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: #2c3e50;
-    border-bottom: 2px solid #eaeaea;
+    background: linear-gradient(120deg, #F4C542 0%, #2E6DB4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border-bottom: 2px solid rgba(244, 197, 66, 0.2);
     padding-bottom: 0.5rem;
   }
 
   .info-item {
     display: flex;
     margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(46, 109, 180, 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(46, 109, 180, 0.2);
   }
 
   .icon {
@@ -140,7 +166,23 @@ import Header from "../../components/Header.astro";
   h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #3498db;
+    color: #F4C542;
+    font-weight: var(--font-semibold);
+  }
+
+  .info-item p {
+    color: var(--text-secondary);
+    margin: 0.25rem 0;
+  }
+
+  .info-item a {
+    color: #2E6DB4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .info-item a:hover {
+    color: #F4C542;
   }
 
   .form-group {
@@ -151,31 +193,77 @@ import Header from "../../components/Header.astro";
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: var(--text-primary);
   }
 
   input,
   textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: rgba(46, 109, 180, 0.1);
+    border: 1px solid rgba(244, 197, 66, 0.2);
+    border-radius: var(--radius-lg);
     font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #F4C542;
+    background: rgba(46, 109, 180, 0.15);
+    box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.1);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
   }
 
   .button {
-    background-color: #0077cc;
-    color: white;
+    background: linear-gradient(135deg, #F4C542 0%, #d97706 100%);
+    color: #0C1A26;
     border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    padding: 0.75rem 2rem;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(244, 197, 66, 0.3);
+    width: 100%;
   }
 
   .button:hover {
-    background-color: #005fa3;
+    background: linear-gradient(135deg, #d97706 0%, #F4C542 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(244, 197, 66, 0.4);
+  }
+
+  .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #form-status {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+  }
+
+  #form-status.success {
+    background: rgba(95, 163, 106, 0.2);
+    border: 1px solid rgba(95, 163, 106, 0.4);
+    color: #5FA36A;
+  }
+
+  #form-status.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
   }
 
   .social-media {
@@ -239,16 +327,73 @@ import Header from "../../components/Header.astro";
   }
 </style>
 
-<script>
-  // Validación simple del formulario
-  const contactForm = document.getElementById("contact-form");
+<script define:vars={{ EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID }}>
+  // Load EmailJS SDK
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  script.onload = () => {
+    // @ts-ignore
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  };
+  document.head.appendChild(script);
+
+  const contactForm = document.getElementById("contact-form") as HTMLFormElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const btnText = submitBtn?.querySelector('.btn-text') as HTMLElement;
+  const btnLoader = submitBtn?.querySelector('.btn-loader') as HTMLElement;
+  const formStatus = document.getElementById("form-status") as HTMLElement;
 
   if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      alert(
-        "¡Gracias por tu mensaje! Este formulario no está conectado a un servidor todavía, pero en una implementación real, tu mensaje sería enviado."
-      );
+
+      // Disable button and show loader
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'inline';
+      formStatus.textContent = '';
+      formStatus.className = '';
+
+      try {
+        // Get form data
+        const formData = new FormData(contactForm);
+        const name = formData.get('from_name') as string;
+        const email = formData.get('reply_to') as string;
+        const subject = formData.get('subject') as string;
+        const message = formData.get('message') as string;
+
+        // Prepare template params
+        const templateParams = {
+          from_name: name,
+          reply_to: email,
+          subject: subject,
+          message: message,
+          to_emails: 'alesanchezpov@gmail.com, robertgomez.datascience@gmail.com'
+        };
+
+        // @ts-ignore
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          templateParams
+        );
+
+        // Success
+        formStatus.textContent = '✅ ¡Mensaje enviado exitosamente! Te responderemos pronto.';
+        formStatus.className = 'success';
+        contactForm.reset();
+
+      } catch (error) {
+        // Error
+        console.error('EmailJS Error:', error);
+        formStatus.textContent = '❌ Error al enviar el mensaje. Por favor, intenta enviarnos un correo directo.';
+        formStatus.className = 'error';
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoader.style.display = 'none';
+      }
     });
   }
 </script>
