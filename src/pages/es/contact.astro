@@ -328,12 +328,23 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 </style>
 
 <script define:vars={{ EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID }}>
+  // Debug: Check if env variables are loaded
+  console.log('EmailJS Config Check:');
+  console.log('Public Key:', EMAILJS_PUBLIC_KEY ? '✓ Loaded' : '✗ Missing');
+  console.log('Service ID:', EMAILJS_SERVICE_ID ? '✓ Loaded' : '✗ Missing');
+  console.log('Template ID:', EMAILJS_TEMPLATE_ID ? '✓ Loaded' : '✗ Missing');
+
   // Load EmailJS SDK
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
   script.onload = () => {
+    console.log('EmailJS SDK loaded successfully');
     // @ts-ignore
     emailjs.init(EMAILJS_PUBLIC_KEY);
+    console.log('EmailJS initialized');
+  };
+  script.onerror = () => {
+    console.error('Failed to load EmailJS SDK');
   };
   document.head.appendChild(script);
 
@@ -346,6 +357,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      console.log('Form submitted, processing...');
 
       // Disable button and show loader
       submitBtn.disabled = true;
@@ -362,6 +374,8 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
         const subject = formData.get('subject') as string;
         const message = formData.get('message') as string;
 
+        console.log('Form data:', { name, email, subject, messageLength: message.length });
+
         // Prepare template params
         const templateParams = {
           from_name: name,
@@ -371,12 +385,18 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
           to_emails: 'alesanchezpov@gmail.com, robertgomez.datascience@gmail.com'
         };
 
+        console.log('Sending email with params:', templateParams);
+        console.log('Using Service ID:', EMAILJS_SERVICE_ID);
+        console.log('Using Template ID:', EMAILJS_TEMPLATE_ID);
+
         // @ts-ignore
-        await emailjs.send(
+        const response = await emailjs.send(
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
           templateParams
         );
+
+        console.log('EmailJS Response:', response);
 
         // Success
         formStatus.textContent = '✅ ¡Mensaje enviado exitosamente! Te responderemos pronto.';
@@ -385,7 +405,11 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 
       } catch (error) {
         // Error
-        console.error('EmailJS Error:', error);
+        console.error('EmailJS Error Details:', error);
+        console.error('Error type:', typeof error);
+        console.error('Error message:', error.message || error);
+        console.error('Error stack:', error.stack);
+        
         formStatus.textContent = '❌ Error al enviar el mensaje. Por favor, intenta enviarnos un correo directo.';
         formStatus.className = 'error';
       } finally {
@@ -395,5 +419,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
         btnLoader.style.display = 'none';
       }
     });
+  } else {
+    console.error('Contact form not found!');
   }
 </script>
