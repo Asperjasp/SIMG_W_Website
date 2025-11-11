@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2025-11-11
+
+### 🎨 Theme & Color Updates
+
+#### Changed
+
+- **Header Color Scheme Update**
+  - Replaced all orange colors (#f97316, #ea580c) with new turtle yellow (#F4C542)
+  - Updated 21 instances across navigation links, hover states, active states, and mobile menu
+  - Resources dropdown button now uses yellow (#F4C542) instead of blue (#0077cc)
+  - Resources dropdown hover state uses darker yellow (#d4a935)
+  - Dropdown link hover color changed to yellow (#F4C542)
+  - Maintains consistency with SIMG turtle branding
+
+#### Fixed
+
+- **Mobile Header Improvements**
+  - Added dark mode support for mobile navigation panel
+  - Changed mobile nav default from hardcoded white to dark glassmorphism (rgba(26, 26, 26, 0.98))
+  - Added comprehensive light mode overrides for mobile nav elements
+  - Reduced top padding from 4rem to 2rem for better space utilization
+  - Optimized mobile nav width from 80% (max 300px) to auto (min 200px, max 250px)
+  - Updated mobile nav borders and backgrounds to be theme-aware
+  - Fixed mobile dropdown styles for both light and dark modes
+
+- **Contact Page Light Mode**
+  - Added complete light mode styling for both English and Spanish versions
+  - Contact form inputs and textareas now properly styled in light mode
+  - Info cards, map container, and all interactive elements adapted for light theme
+  - Improved text contrast and readability in light mode
+
+- **Research Pages Light Mode**
+  - Added comprehensive light mode styles to all project detail pages (English and Spanish)
+  - Fixed article page backgrounds, breadcrumbs, and navigation elements
+  - Updated publication cards, resource cards, and team sections for light mode
+  - Improved code blocks, blockquotes, and inline code styling in light mode
+  - Status badges, tags, and category labels properly themed
+  - All headings, links, and text elements now readable in light mode
+
+#### Improved
+
+- **Research Link Structure**
+  - Fixed home page research card links in English version (was pointing to /es/, now correctly points to /en/)
+  - Cleaned up slug handling to prevent duplication of language prefixes
+  - Both English and Spanish home pages now correctly link to their respective research detail pages
+
+---
+
 ## [2.0.0] - 2025-11-08
 
 ### 🎨 Major Redesign
