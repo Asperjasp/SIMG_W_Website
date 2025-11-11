@@ -4,7 +4,7 @@ description: "Los grandes modelos de lenguaje están revolucionando diversos cam
 
 researchers: ["Tuli peña", "Robert Gomez, Francisco Gutiérrez Peña"]
 status: "completed"
-startCDate: 2024-01-15
+startDate: 2024-01-15
 category: "Research"
 tags: ["IA ", "LLMS", "Finance", "Finanzas"]
 lang: "es"
