@@ -4,6 +4,15 @@ const currentPath = Astro.url.pathname;
 const isSpanish = currentPath.startsWith("/es/");
 const currentLanguage = isSpanish ? "es" : "en";
 
+// Dropdown state for Resources menu
+let dropdownOpen = false;
+function toggleDropdown() {
+  dropdownOpen = !dropdownOpen;
+}
+function closeDropdown() {
+  dropdownOpen = false;
+}
+
 // Función para traducir la ruta entre idiomas
 function getAlternateUrl(path: string, targetLang: string): string {
   const isSpanishPath = path.startsWith("/es/");
@@ -89,12 +98,15 @@ function getAlternateUrl(path: string, targetLang: string): string {
       </a>
 
       <!-- Menú desplegable Sesiones -->
-      <div class="dropdown">
-        <button class="dropbtn">
+      <div class={"dropdown" + (dropdownOpen ? " open" : "")}
+        on:mouseenter={() => dropdownOpen = true}
+        on:mouseleave={closeDropdown}
+      >
+        <button class="dropbtn" on:click={toggleDropdown} aria-expanded={dropdownOpen} aria-haspopup="true">
           {isSpanish ? "Recursos" : "Resources"}
-          <span class="dropdown-arrow">&#9662;</span>
+          <span class="dropdown-arrow" style={dropdownOpen ? 'transform: rotate(180deg);' : ''}>&#9662;</span>
         </button>
-        <div class="dropdown-content">
+        <div class="dropdown-content" style={dropdownOpen ? 'display: block;' : ''}>
           <a
             href={isSpanish
               ? "/es/sessions/in-person"
@@ -277,17 +289,18 @@ function getAlternateUrl(path: string, targetLang: string): string {
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #e9ecef; /* Light gray background for contrast */
-    min-width: 200px; /* Slightly wider */
+    background-color: #23272f; /* Dark background for contrast */
+    min-width: 200px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
     border-radius: 4px;
     overflow: hidden;
     right: 0;
+    border: 1px solid #F4C542;
   }
 
   .dropdown-content a {
-    color: black; /* Black text as requested */
+    color: #fff;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -299,10 +312,11 @@ function getAlternateUrl(path: string, targetLang: string): string {
   }
 
   .dropdown-content a:hover {
-    background-color: #dde6ed; /* A slightly darker gray on hover */
-    color: #F4C542; /* Yellow text on hover for feedback */
+    background-color: #F4C542;
+    color: #23272f;
   }
 
+  .dropdown.open .dropdown-content,
   .dropdown:hover .dropdown-content {
     display: block;
   }
