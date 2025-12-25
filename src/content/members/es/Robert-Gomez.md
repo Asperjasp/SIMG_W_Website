@@ -11,15 +11,18 @@ lang: "es"
 translationKey: "Robert-Gomez"
 ---
 
-El Dr. Juan Pérez es profesor de Ciencias de la Computación especializado en Aprendizaje Automático y Visión por Computador. Su investigación se centra en el desarrollo de nuevas arquitecturas de aprendizaje profundo para el análisis y comprensión de imágenes.
+Robert Gomez es estudiante de pregrado en Matemáticas en la Universidad Nacional de Colombia (UNAL). Es CTO de AI Medic, una empresa de tecnología en salud de vanguardia, y lidera el seminario SIMG en la UNAL.
+
+## Experiencia y Liderazgo
+- CTO en AI Medic (Empresa de tecnología en salud de vanguardia)
+- Líder del Seminario SIMG en la Universidad Nacional de Colombia
+
+## Formación
+- Pregrado en Matemáticas, Universidad Nacional de Colombia (UNAL)
 
 ## Intereses de Investigación
-- Aprendizaje Profundo para Visión por Computador
-- Modelos Generativos
-- Optimización de Redes Neuronales
-- Aprendizaje por Transferencia
+- Geometría de la Información
+- Modelado Generativo
+- Deep Learning
 
-## Educación
-- Doctorado en Ciencias de la Computación, Universidad de Stanford
-- Maestría en Inteligencia Artificial, MIT
-- Ingeniería de Sistemas, Universidad Nacional de Colombia
+Robert es increíble.
