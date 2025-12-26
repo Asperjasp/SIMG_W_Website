@@ -9,40 +9,31 @@ import Header from "../../../components/Header.astro";
     <h1>Sesiones Presenciales</h1>
 
     <section class="session-section">
-      <h2>Sesiones del Semillero</h2>
-      <h4>Cada viernes de 2:00-4:00 pm</h4>
+      <h4 class="friday-time">Cada viernes <span>2:00-4:00 pm</span></h4>
       <p>
-        El Semillero de Investigación en Modelos Generativos tiene como objetivo
-        presentar una introducción formal a los modelos generativos y explorar
-        sus aplicaciones prácticas. Nuestras sesiones presenciales incluyen:
+        El Semillero de Investigación en Modelos Generativos presenta una introducción formal a los modelos generativos y explora sus aplicaciones prácticas. Las sesiones incluyen:
       </p>
       <ul>
         <li>Contexto general del semillero y su estado actual</li>
         <li>Formalización de los diferentes enfoques de modelos generativos</li>
         <li>Exploración práctica de implementaciones y aplicaciones</li>
       </ul>
-
       <div class="location-info">
         <h3>Lugar de Encuentro</h3>
         <p>
-          Nuestras reuniones tienen lugar en la Universidad Nacional de
-          Colombia, sede Bogotá.
+          Nuestras reuniones tienen lugar en la Universidad Nacional de Colombia, sede Bogotá.
         </p>
         <p>
-          <strong>Dirección:</strong> Edificio 404 - Yu Takeuchi, Departamentos de
-          Matemáticas, Física y Estadística
+          <strong>Dirección:</strong> Edificio 404 - Yu Takeuchi, Departamentos de Matemáticas, Física y Estadística
         </p>
         <p>
-          <strong>Nota:</strong> Por favor, revisa nuestras redes sociales para cualquier
-          cambio en la ubicación o el horario de las reuniones.
+          <strong>Nota:</strong> Por favor, revisa nuestras redes sociales para cualquier cambio en la ubicación o el horario de las reuniones.
         </p>
       </div>
-
       <div class="map-container">
         <h3>Mapa</h3>
         <p style="padding: 0 1.5rem;">
-          Navega hacia el Edificio 404 - Yu Takeuchi en la Universidad Nacional
-          de Colombia, sede Bogotá.
+          Navega hacia el Edificio 404 - Yu Takeuchi en la Universidad Nacional de Colombia, sede Bogotá.
         </p>
         <div class="google-map">
           <iframe
@@ -60,29 +51,40 @@ import Header from "../../../components/Header.astro";
           href="https://www.google.com/maps/dir/?api=1&destination=Edificio+Yu+Takeuchi+Universidad+Nacional+de+Colombia+Bogota"
           class="directions-link"
           target="_blank"
-          rel="noopener noreferrer">Obtener Indicaciones</a
-        >
+          rel="noopener noreferrer">Obtener Indicaciones</a>
       </div>
     </section>
 
     <section class="session-section">
-      <h2>Próximas Sesiones</h2>
+      <h2>Próxima Sesión</h2>
       <div class="upcoming-session">
-        <h3>Próxima Sesión: Introducción a los Modelos Generativos</h3>
-        <img
-          src="/images/website/Sesion-1__19-09-2025.jpg"
-          alt="Sesion Semillero 19-09-2025"
-          class="session-image"
-        />
-        <p><strong>Fecha:</strong> Viernes, 19 de septiembre de 2025</p>
-        <p><strong>Hora:</strong> 2:00 PM</p>
-        <p><strong>Ubicación:</strong> SALÓN 202-405</p>
-        <p>
-          <strong>Descripción:</strong> En esta primer sesión, se presentará una
-          introducción formal a los modelos generativos. Se iniciará desde un contexto
-          general del semillero y su estado actual, para luego realizar una formalización
-          más precisa de los diferentes enfoques y posibles aplicaciones.
-        </p>
+        {(() => {
+          // Calcular el próximo viernes desde hoy, o desde mediados de febrero si es antes
+          const today = new Date();
+          const start = new Date(today.getFullYear(), 1, 14); // 15 de febrero (mes 0-indexado)
+          let next = new Date(today);
+          if (today < start) next = new Date(start);
+          // Buscar el próximo viernes
+          next.setDate(next.getDate() + ((5 - next.getDay() + 7) % 7));
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          return (
+            <>
+              <h3>Próxima Sesión: Introducción a los Modelos Generativos</h3>
+              <img
+                src="/images/website/intro-modelos-generativos-tortuga.jpg"
+                alt="Introducción a los Modelos Generativos - Tortuga"
+                class="session-image"
+                style="max-width: 350px; border-radius: 18px; box-shadow: 0 4px 16px rgba(44,62,80,0.12); margin-bottom: 1rem;"
+              />
+              <p><strong>Fecha:</strong> {next.toLocaleDateString('es-ES', options)}</p>
+              <p><strong>Hora:</strong> 2:00 PM - 4:00 PM</p>
+              <p><strong>Ubicación:</strong> SALÓN 202-405</p>
+              <p>
+                <strong>Descripción:</strong> Cada semana, se presenta una introducción formal a los modelos generativos, comenzando con un contexto general y avanzando hacia la formalización y aplicaciones.
+              </p>
+            </>
+          );
+        })()}
       </div>
     </section>
 
@@ -239,14 +241,20 @@ import Header from "../../../components/Header.astro";
   .upcoming-session {
     padding: 2rem;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(to right, #ffffff, #f0f7ff);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e0eafc 100%);
+    box-shadow: 0 8px 24px rgba(52, 152, 219, 0.12);
     position: relative;
     overflow: hidden;
-    border-top: 4px solid #3498db;
+    border-top: 5px solid #3498db;
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s, background 0.3s;
+  }
+  .upcoming-session:hover {
+    box-shadow: 0 12px 32px rgba(52, 152, 219, 0.18);
+    background: linear-gradient(135deg, #e0eafc 0%, #f0f7ff 100%);
   }
 
   .upcoming-session::after {
@@ -273,6 +281,24 @@ import Header from "../../../components/Header.astro";
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(52, 152, 219, 0.2);
     font-size: 1.5rem;
+  }
+  .friday-time {
+    color: #1769aa;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    text-shadow: 0 2px 8px rgba(44,62,80,0.08);
+  }
+  .friday-time span {
+    color: #0a3d62;
+    font-weight: 900;
+    background: #e0eafc;
+    padding: 0.15em 0.5em;
+    border-radius: 6px;
+    margin-left: 0.5em;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
   }
 
   .map-container {

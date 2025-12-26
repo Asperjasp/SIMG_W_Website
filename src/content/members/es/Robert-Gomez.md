@@ -24,5 +24,3 @@ Robert Gomez es estudiante de pregrado en Matemáticas en la Universidad Naciona
 - Geometría de la Información
 - Modelado Generativo
 - Deep Learning
-
-Robert es increíble.
